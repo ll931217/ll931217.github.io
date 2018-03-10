@@ -1,91 +1,81 @@
 <template lang="pug">
-  .container-fluid.main
-    .row
-      .col-md-12
-        app-header
-    transition(name="fade", mode="out-in").content
-      router-view
+  .container
+    .content
+      p Hello! I'm Liang-Shih Lin (林良士)
+      p I am a Full Stack Web Developer/Designer
+      p currently based in Taipei, Taiwan
+      link-boxes
+      .footer
+        a(href="https://github.com/ll931217/ll931217.github.io", target="_blank") Source Code
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
-
-  import Header from './components/Header.vue'
-
-  import * as types from './store/types'
+  import LinkBoxes from './components/LinkBoxes.vue'
 
   export default {
     name: 'app',
-    computed: {
-      ...mapGetters({
-        bgImg: types.BG_IMAGE
-      })
-    },
     components: {
-      'app-header': Header
-    },
-    created() {
-      this.$store.watch(
-        () => this.$store.getters[types.BG_IMAGE],
-        bgValues => {
-          document.body.style.backgroundImage = 'url(' + bgValues.alt + '), url(' + bgValues.main + ')'
-          document.body.style.backgroundSize = '90% 100%, cover'
-        }
-      )
+      LinkBoxes
     }
   }
 </script>
 
 <style lang="sass">
-  @import url('https://fonts.googleapis.com/css?family=Montserrat')
+  @import url('https://fonts.googleapis.com/css?family=Play')
+
+  *
+    margin: 0
+    padding: 0
 
   body
-    background-color: black
-    background-repeat: no-repeat, no-repeat
-    background-position: left center, bottom center
-    background-attachment: fixed, fixed
-    font-family: 'Montserrat', sans-serif
-    color: white
-    max-width: 100vw
-    transition: all 1s ease-in-out
+    background-image: url('/src/assets/images/wallhaven-100678.jpg')
+    background-size: cover
+    background-repeat: no-repeat
+    background-position: bottom center
+    font-family: 'Play', sans-serif
 
-  h1
-    font-size: 80px
-    line-height: 130px
-    margin-bottom: 30px
+  .container
+    display: flex
+    align-items: center
+    width: 100%
+    min-height: 100vh
 
-    @media only screen and (max-width: 1766px)
-      font-size: 60px
-      line-height: 100px
-      margin-bottom: 15px
+  .content
+    color: rgb(221, 221, 221)
+    margin: 10vw
+    font-size: 2em
+    font-weight: bold
 
-    @media only screen and (max-width: 1366px)
-      font-size: 40px
-      line-height: 90px
-      margin-bottom: 15px
+    p
+      margin: .7rem 0
 
-    @media only screen and (max-width: 768px)
-      font-size: 20px
-      line-height: 60px
-      margin-bottom: 10px
+    @media (max-width: 768px)
+      font-size: 2em
 
-    span
-      background-color: rgba(0, 0, 0, 0.4)
-      padding: 10px 20px
+    @media (max-width: 1024px)
+      width: 100%
 
-  .main
-    height: 100vh
+  .footer
+    font-size: 16px
+    margin-top: 1rem
 
-  .container-fluid
-    color: white
-
-  .col-md-12
-    padding-right: 0
-    padding-left: 0
-
-  .fade-enter-active, .fade-leave-active
-    transition: all 1s ease-in-out
-
-  .fade-enter, .fade-leave-to
-    opacity: 0
+    a:link, a:visited
+      color: white
+      margin-right: 5px
+      position: relative
+      text-decoration: none
+      &:after, &:before
+        content: ""
+        position: absolute
+        border-bottom: 3px solid white
+        width: 0
+        bottom: -5px
+        transition: all .5s ease-in-out
+      &:after
+        left: calc(50%)
+      &:before
+        right: calc(50%)
+      &:hover
+        &:after, &:before
+          width: 50%
 </style>

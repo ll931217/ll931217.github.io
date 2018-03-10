@@ -3,48 +3,26 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="Liang-Shih Lin">
+    <meta name="description" content="Hello to everyone that searched for me or is viewing my page. I am a website developer who uses Node.js to build full stack websites. I am a very optimistic and passionate individual who is always keen to learn something new.">
+    <meta name="keywords" content="Liang, Liang-Shih, Lin, web, dev, developer, website, node.js, node, full, stack">
 
-    <title>Liang's Space</title>
+    <title>Liang-Shih Lin: Codes with a Smile</title>
 
     <link rel="icon" href="src/assets/images/favicon.ico">
-
-    <link rel="stylesheet" href="src/assets/css/main.css" />
-
-    <script src="src/assets/js/nprogress.js"></script>
   </head>
   <body>
     <div id="app"></div>
     <script type="text/javascript">
       function downloadJSAtOnload() {
-        // Insert build.js
         var build = document.createElement("script");
         build.src = "dist/build.js";
 
-        // Insert jQuery
-        var jquery = document.createElement("script");
-        jquery.src = "https://code.jquery.com/jquery-3.2.1.slim.min.js";
-
-        // Insert tether
-        var popper = document.createElement("script");
-        popper.src = "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js";
-
-        // Insert Bootstrap
-        var bootstrap = document.createElement("script");
-        bootstrap.src = "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js";
-
         document.body.appendChild(build);
-        document.body.appendChild(jquery);
-        document.body.appendChild(popper);
-        setTimeout(function() {
-          document.body.appendChild(bootstrap);
-        }, 1000);
       }
-      if (window.addEventListener)
-        window.addEventListener("load", downloadJSAtOnload, false);
-      else if (window.attachEvent)
-        window.attachEvent("onload", downloadJSAtOnload);
-      else
-        window.onload = downloadJSAtOnload;
+      if (window.addEventListener) window.addEventListener("load", downloadJSAtOnload, false);
+      else if (window.attachEvent) window.attachEvent("onload", downloadJSAtOnload);
+      else window.onload = downloadJSAtOnload;
     </script>
   </body>
 </html>

@@ -1,20 +1,15 @@
 import Vue from 'vue'
-import VueResource from 'vue-resource'
-import VueResourceNProgress from 'vue-resource-nprogress'
+import fontawesome from '@fortawesome/fontawesome'
+import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+import brands from '@fortawesome/fontawesome-free-brands'
 
 import App from './App.vue'
-import router from './router'
-import store from './store'
 
-Vue.use(VueResource)
-Vue.use(VueResourceNProgress)
+fontawesome.library.add(brands)
 
-Vue.http.options.root = 'https://api.imgur.com/'
-Vue.http.headers.common['Authorization'] = 'Client-ID a476f4cf659c7a1'
+Vue.component('fa-icon', FontAwesomeIcon)
 
 new Vue({
   el: '#app',
-  router,
-  store,
   render: h => h(App)
 })
