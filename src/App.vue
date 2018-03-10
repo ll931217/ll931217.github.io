@@ -31,7 +31,7 @@
     background-image: url('/src/assets/images/wallhaven-100678.jpg')
     background-size: cover
     background-repeat: no-repeat
-    background-position: bottom center
+    background-position: bottom right
     font-family: 'Play', sans-serif
 
   .container
@@ -49,8 +49,8 @@
     p
       margin: .7rem 0
 
-    @media (max-width: 768px)
-      font-size: 2em
+    @media (max-width: 500px)
+      font-size: 1.3em
 
     @media (max-width: 1024px)
       width: 100%
