@@ -1,13 +1,13 @@
 <template lang="pug">
   .boxes
-    a(href="https://github.com/ll931217", target="_blank").github
-      fa-icon(:icon="['fab', 'github']", target="_blank")
+    a(href="https://github.com/ll931217", target="_blank", rel="noopener").github
+      fa-icon(:icon="['fab', 'github']", target="_blank", rel="noopener")
     a(href="https://www.instagram.com/troopocalypse/").instagram
-      fa-icon(:icon="['fab', 'instagram']", target="_blank")
+      fa-icon(:icon="['fab', 'instagram']", target="_blank", rel="noopener")
     a(href="https://codepen.io/ll931217/").codepen
-      fa-icon(:icon="['fab', 'codepen']", target="_blank")
+      fa-icon(:icon="['fab', 'codepen']", target="_blank", rel="noopener")
     a(href="https://www.linkedin.com/in/ll931217/").linkedin
-      fa-icon(:icon="['fab', 'linkedin-in']", target="_blank")
+      fa-icon(:icon="['fab', 'linkedin-in']", target="_blank", rel="noopener")
 </template>
 
 <script>
@@ -37,7 +37,7 @@
     transition: all .3s ease-in-out
 
     @media (max-width: 500px)
-      margin: 1rem 10px
+      margin: 10px
       flex-grow: 1
 
   .github

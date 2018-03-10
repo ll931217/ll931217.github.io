@@ -6,7 +6,7 @@
       p currently based in Taipei, Taiwan
       link-boxes
       .footer
-        a(href="https://github.com/ll931217/ll931217.github.io", target="_blank") Source Code
+        a(href="https://github.com/ll931217/ll931217.github.io", target="_blank", rel="noopener") Source Code
 </template>
 
 <script>
