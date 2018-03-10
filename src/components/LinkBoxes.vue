@@ -37,7 +37,7 @@
     transition: all .3s ease-in-out
 
     @media (max-width: 500px)
-      margin: 10px
+      margin: .5rem
       flex-grow: 1
 
   .github
