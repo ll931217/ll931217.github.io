@@ -28,7 +28,7 @@
     padding: 0
 
   body
-    background-image: url('/src/assets/images/wallhaven-100678.jpg')
+    background-image: url('./assets/images/background.jpg')
     background-size: cover
     background-repeat: no-repeat
     background-position: bottom right
