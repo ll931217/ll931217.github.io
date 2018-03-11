@@ -1,36 +1,23 @@
 var path = require('path')
 
 module.exports = {
-  entry: './src/main.js',
-  output: {
-    path: path.resolve(__dirname, './dist'),
-    publicPath: '/dist/',
-    filename: 'build.js'
-  },
   module: {
     rules: [
-      {
-        test: /\.(sass|css)$/,
-        use: [
-          'vue-style-loader',
-          'css-loader',
-          'sass-loader?indentedSyntax'
-        ]
-      },
-      {
-        test: /\.scss$/,
-        use: [
-          'vue-style-loader',
-          'css-loader',
-          'sass-loader'
-        ]
-      },
       {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: {
           loaders: {
-            'sass': 'vue-style-loader!css-loader!sass-loader?indentedSyntax'
+            'scss': [
+              'vue-style-loader',
+              'css-loader',
+              'sass-loader'
+            ],
+            'sass': [
+              'vue-style-loader',
+              'css-loader',
+              'sass-loader?indentedSyntax'
+            ]
           }
         }
       },
@@ -41,34 +28,20 @@ module.exports = {
       },
       {
         test: /\.(png|jpg|gif|svg)$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: '[name].[ext]?[hash]'
-            }
-          },
-          {
-            loader: 'image-webpack-loader',
-            options: {
-              mozjpeg: {
-                progressive: true,
-                quality: 65
-              }
-            }
-          }
-        ]
+        loader: 'file-loader?name=[name].[ext]?[hash]!extract-loader!html-loader'
       }
     ]
   },
   resolve: {
     alias: {
       'vue$': 'vue/dist/vue.esm.js'
-    }
+    },
+    extensions: ['*', '.js', '.vue', '.json']
   },
   devServer: {
     historyApiFallback: true,
-    noInfo: true
+    noInfo: true,
+    overlay: true
   },
   performance: {
     hints: false

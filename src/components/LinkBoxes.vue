@@ -52,19 +52,19 @@
 
     &:hover
       margin-top: .5rem
-      box-shadow: 0 7px 10px -1px rgb(255, 110, 112)
+      box-shadow: 0 7px 10px -1px rgb(254, 126, 127)
 
   .codepen
     background-color: rgb(16, 204, 131)
 
     &:hover
       margin-top: .5rem
-      box-shadow: 0 7px 10px -1px rgb(21, 228, 148)
+      box-shadow: 0 7px 10px -1px rgb(119, 251, 200)
 
   .linkedin
     background-color: rgb(14, 166, 231)
 
     &:hover
       margin-top: .5rem
-      box-shadow: 0 7px 10px -1px rgb(18, 184, 255)
+      box-shadow: 0 7px 10px -1px rgb(85, 204, 255)
 </style>

@@ -15,10 +15,10 @@
     <div id="app"></div>
     <script type="text/javascript">
       function downloadJSAtOnload() {
-        var build = document.createElement("script");
-        build.src = "dist/build.js";
+        var main = document.createElement("script");
+        main.src = "dist/main.js";
 
-        document.body.appendChild(build);
+        document.body.appendChild(main);
       }
       if (window.addEventListener) window.addEventListener("load", downloadJSAtOnload, false);
       else if (window.attachEvent) window.attachEvent("onload", downloadJSAtOnload);
