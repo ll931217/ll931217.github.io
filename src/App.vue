@@ -21,8 +21,6 @@
 </script>
 
 <style lang="sass">
-  @import url('https://fonts.googleapis.com/css?family=Play')
-
   *
     margin: 0
     padding: 0
