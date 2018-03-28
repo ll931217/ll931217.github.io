@@ -7,11 +7,9 @@
       p Bookmarks and todos are saved to your localStorage.
     .google
       h3.snippet
-        span googler
-      p A command used to search Google.
-      p.code
-        span.command googler&nbsp;
-        | Who am I?
+        span Google
+      p Anything entered that doesn't start with "bookmark" or "todo" will become google search.
+      p.code What is VueJS?
     .todo
       h3.snippet
         span todo
