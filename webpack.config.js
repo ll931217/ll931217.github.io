@@ -1,6 +1,7 @@
-var path = require('path')
-
 module.exports = {
+  output: {
+    publicPath: '/dist/'
+  },
   module: {
     rules: [
       {
@@ -8,11 +9,6 @@ module.exports = {
         loader: 'vue-loader',
         options: {
           loaders: {
-            'scss': [
-              'vue-style-loader',
-              'css-loader',
-              'sass-loader'
-            ],
             'sass': [
               'vue-style-loader',
               'css-loader',
@@ -27,12 +23,31 @@ module.exports = {
         exclude: /node_modules/
       },
       {
-        test: /\.jpg$/,
-        loader: 'file-loader',
-        options: {
-          name: '[name].[ext]?[hash]',
-          publicPath: '/dist/'
-        }
+        test: /\.(jpg|eot|otf|woff|woff2|ttf)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]?[hash]'
+            }
+          },
+          {
+            loader: 'image-webpack-loader',
+            options: {
+              mozjpeg: {
+                progressive: true,
+                quality: 65
+              }
+            }
+          }
+        ]
+      },
+      {
+        test: /\.css$/,
+        use: [
+          'vue-style-loader',
+          'css-loader'
+        ]
       }
     ]
   },
@@ -45,6 +60,7 @@ module.exports = {
   devServer: {
     historyApiFallback: true,
     noInfo: true,
+    hot: true,
     overlay: true
   },
   performance: {
