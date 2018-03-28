@@ -59,12 +59,12 @@
 
     &:hover
       margin-top: .5rem
-      box-shadow: 0 7px 10px -1px rgb(119, 251, 200)
+      box-shadow: 0 7px 10px -1px rgb(186, 255, 228)
 
   .linkedin
     background-color: rgb(14, 166, 231)
 
     &:hover
       margin-top: .5rem
-      box-shadow: 0 7px 10px -1px rgb(85, 204, 255)
+      box-shadow: 0 7px 10px -1px rgb(180, 233, 255)
 </style>
