@@ -19,18 +19,19 @@
       function downloadJSAtOnload() {
         const main = document.createElement("script")
         main.src = "/dist/main.js"
-
-        const font = document.createElement("script")
-        font.src = "/dist/webfont.js"
-
         document.body.appendChild(main)
-        document.body.appendChild(font)
-
-        document.write('<script>WebFont.load({google: {families: ["Play"]}})<\/script>')
       }
       if (window.addEventListener) window.addEventListener("load", downloadJSAtOnload, false)
       else if (window.attachEvent) window.attachEvent("onload", downloadJSAtOnload)
       else window.onload = downloadJSAtOnload
+    </script>
+    <script src="/dist/webfont.js"></script>
+    <script>
+      WebFont.load({
+        google: {
+          families: ['Play']
+        }
+      })
     </script>
   </body>
 </html>
