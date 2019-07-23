@@ -4,36 +4,36 @@
 </template>
 
 <script>
-  export default {
-    name: "bookmark",
-    props: ['bookmark', 'index']
-  }
+export default {
+  name: 'bookmark',
+  props: ['bookmark', 'index'],
+};
 </script>
 
 <style lang="sass" scoped>
-  #bookmark
-    border-left: 3px solid white
-    color: white
-    position: relative
-    padding: 5px 10px
+#bookmark
+  border-left: 3px solid white
+  color: white
+  position: relative
+  padding: 5px 10px
 
-  a:link, a:visited
-    color: white
-    margin-right: 5px
-    position: relative
-    text-decoration: none
+a:link, a:visited
+  color: white
+  margin-right: 5px
+  position: relative
+  text-decoration: none
+  &:after, &:before
+    content: ""
+    position: absolute
+    border-bottom: 3px solid white
+    width: 0
+    bottom: -5px
+    transition: all .5s ease-in-out
+  &:after
+    left: calc(50%)
+  &:before
+    right: calc(50%)
+  &:hover
     &:after, &:before
-      content: ""
-      position: absolute
-      border-bottom: 3px solid white
-      width: 0
-      bottom: -5px
-      transition: all .5s ease-in-out
-    &:after
-      left: calc(50%)
-    &:before
-      right: calc(50%)
-    &:hover
-      &:after, &:before
-        width: 50%
+      width: 50%
 </style>

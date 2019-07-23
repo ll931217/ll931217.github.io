@@ -1,7 +1,29 @@
-# ll931217.github.io
+# test
 
-> My Portfolio
+## Project setup
+```
+yarn install
+```
 
-## Future Implementations
+### Compiles and hot-reloads for development
+```
+yarn run serve
+```
 
- * [ ] Need to add personal picture as background.
+### Compiles and minifies for production
+```
+yarn run build
+```
+
+### Run your tests
+```
+yarn run test
+```
+
+### Lints and fixes files
+```
+yarn run lint
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).

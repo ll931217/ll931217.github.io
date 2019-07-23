@@ -11,9 +11,9 @@
 </template>
 
 <script>
-  export default {
-    name: "LinkBoxes"
-  }
+export default {
+  name: 'LinkBoxes',
+};
 </script>
 
 <style lang="sass" scoped>

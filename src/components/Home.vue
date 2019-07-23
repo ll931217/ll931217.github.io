@@ -6,7 +6,7 @@
     link-boxes
     .footer
       .links
-        p Check out my 
+        p Check out my
           router-link(tag="a", :to="{name: 'startpage'}").startpage startpage
         p
           a(href="https://github.com/ll931217/ll931217.github.io", target="_blank", rel="noopener").source Source Code
@@ -14,14 +14,14 @@
 </template>
 
 <script>
-  import LinkBoxes from './LinkBoxes.vue'
+import LinkBoxes from './LinkBoxes.vue';
 
-  export default {
-    name: "Portfolio",
-    components: {
-      LinkBoxes
-    }
-  }
+export default {
+  name: 'Portfolio',
+  components: {
+    LinkBoxes,
+  },
+};
 </script>
 
 <style lang="sass" scoped>
