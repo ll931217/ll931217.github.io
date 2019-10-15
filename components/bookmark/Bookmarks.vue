@@ -14,23 +14,23 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from 'vuex'
 
-import Bookmark from './Bookmark.vue';
+import Bookmark from './Bookmark.vue'
 
-import * as types from '../../store/types';
+import * as types from '~/store/types'
 
 export default {
   name: 'Bookmarks',
+  components: {
+    Bookmark
+  },
   computed: {
     ...mapGetters({
-      bookmarks: types.GET_BOOKMARKS,
-    }),
-  },
-  components: {
-    Bookmark,
-  },
-};
+      bookmarks: types.GET_BOOKMARKS
+    })
+  }
+}
 </script>
 
 <style lang="sass" scoped>

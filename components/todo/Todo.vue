@@ -5,9 +5,14 @@
 
 <script>
 export default {
-  name: 'todo',
-  props: ['todo'],
-};
+  name: 'Todo',
+  props: {
+    todo: {
+      type: String,
+      default: ''
+    }
+  }
+}
 </script>
 
 <style lang="sass" scoped>

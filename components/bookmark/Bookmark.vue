@@ -5,9 +5,18 @@
 
 <script>
 export default {
-  name: 'bookmark',
-  props: ['bookmark', 'index'],
-};
+  name: 'Bookmark',
+  props: {
+    bookmark: {
+      type: Object,
+      default: () => ({})
+    },
+    index: {
+      type: Number,
+      default: 0
+    }
+  }
+}
 </script>
 
 <style lang="sass" scoped>

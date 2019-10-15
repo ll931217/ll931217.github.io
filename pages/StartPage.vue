@@ -11,11 +11,11 @@
 </template>
 
 <script>
-import Clock from './Clock.vue';
-import SearchBar from './SearchBar.vue';
-import Todo from './todo/Todos.vue';
-import Bookmark from './bookmark/Bookmarks.vue';
-import Help from './Help.vue';
+import Clock from '~/components/Clock'
+import SearchBar from '~/components/SearchBar'
+import Todo from '~/components/todo/Todos'
+import Bookmark from '~/components/bookmark/Bookmarks'
+import Help from '~/components/Help'
 
 export default {
   name: 'StartPage',
@@ -24,33 +24,35 @@ export default {
     SearchBar,
     Todo,
     Bookmark,
-    Help,
+    Help
   },
-  methods: {
-    showHelp() {
-      document.querySelector('.help').classList.add('show');
-    },
-  },
-  mounted() {
-    const help = document.querySelector('.help');
+  mounted () {
+    const help = document.querySelector('.help')
 
     document.addEventListener('keydown', (e) => {
-      e.stopPropagation();
-      e.preventDefault();
+      e.stopPropagation()
+      e.preventDefault()
       if (e.which === 112) {
-        help.classList.toggle('show');
+        help.classList.toggle('show')
       }
 
       if (e.which === 27) {
-        help.classList.remove('show');
+        help.classList.remove('show')
       }
-    });
+    })
 
     help.addEventListener('click', () => {
-      if (help.classList.contains('show')) help.classList.remove('show');
-    });
+      if (help.classList.contains('show')) {
+        help.classList.remove('show')
+      }
+    })
   },
-};
+  methods: {
+    showHelp () {
+      document.querySelector('.help').classList.add('show')
+    }
+  }
+}
 </script>
 
 <style lang="sass" scoped>

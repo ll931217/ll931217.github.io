@@ -9,23 +9,23 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
 
 import Todo from './Todo.vue'
 
-import * as types from '../../store/types'
+import * as types from '~/store/types'
 
 export default {
-  name: 'todos',
+  name: 'Todos',
+  components: {
+    Todo
+  },
   computed: {
     ...mapGetters({
-      todos: types.GET_TODOS,
-    }),
-  },
-  components: {
-    'todo': Todo,
-  },
-};
+      todos: types.GET_TODOS
+    })
+  }
+}
 </script>
 
 <style lang="sass" scoped>

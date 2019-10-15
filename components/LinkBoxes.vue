@@ -12,8 +12,8 @@
 
 <script>
 export default {
-  name: 'LinkBoxes',
-};
+  name: 'LinkBoxes'
+}
 </script>
 
 <style lang="sass" scoped>
@@ -31,6 +31,7 @@ export default {
     text-align: center
     margin-top: 1rem
     margin-right: 1rem
+    outline: none
     padding: 1.5rem 2rem
     border-radius: 10px
     box-shadow: 0 3px 5px 0 black
