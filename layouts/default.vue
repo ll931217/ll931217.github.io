@@ -1,11 +1,45 @@
 <template lang="pug">
-  .container
-    nuxt
+  v-app
+    v-app-bar(
+      app,
+      absolute,
+      elevate-on-scroll,
+      scroll-target="#scrolling-techniques"
+    )
+      v-app-bar-nav-icon
+      v-toolbar-title L
+
+      v-spacer
+
+      NuxtLink(v-for="(link, index) in links", :to="link.url", :key="index").mr-3.teal--text.text--accent-4 {{ link.text }}
+    v-main
+      v-container(fluid)#main-container
+        nuxt
 </template>
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  data: () => ({
+    links: [
+      {
+        text: 'Me!',
+        url: ''
+      },
+      {
+        text: 'Who Am I',
+        url: ''
+      },
+      {
+        text: 'My Work',
+        url: ''
+      },
+      {
+        text: 'Say Hi',
+        url: ''
+      }
+    ]
+  })
 }
 </script>
 
@@ -13,18 +47,6 @@ export default {
   *
     margin: 0
     padding: 0
-
-  body
-    background-image: url('../assets/images/background.jpg')
-    background-size: cover
-    background-repeat: no-repeat
-    background-position: bottom right
-
-  .container
-    display: flex
-    align-items: center
-    width: 100%
-    min-height: 100vh
 
   @font-face
     font-family: 'Fira Code'

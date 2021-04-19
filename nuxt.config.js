@@ -1,3 +1,4 @@
+import colors from 'vuetify/es5/util/colors'
 
 export default {
   mode: 'spa',
@@ -35,7 +36,22 @@ export default {
   */
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
-    '@nuxtjs/eslint-module'
+    '@nuxtjs/eslint-module',
+    ['@nuxtjs/vuetify', {
+      theme: {
+        themes: {
+          light: {
+            primary: '#00bcd4',
+            secondary: '#607d8b',
+            accent: '#03a9f4',
+            error: '#f44336',
+            warning: '#ffc107',
+            info: '#3f51b5',
+            success: '#8bc34a'
+          }
+        }
+      }
+    }]
   ],
   /*
   ** Nuxt.js modules
