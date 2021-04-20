@@ -127,7 +127,7 @@ export default {
     },
     submit () {
       /** eslint-disable next-line */
-      const checkCmd = new RegExp(/(bookmark|todo)\s(add|remove)(\s?--name=||\s?-n\s["']{1}[\w\s\d]+["']{1})?(\s?--url=|\s?-u\s["']{1}[a-z\d\.:\/?&-]+["']{1})?(\s?["']{1}[\w\s\\\|\(\)\{\}\[\]\.\$\^\+\d=*&#@!%?]+["']{1})?/)
+      const checkCmd = new RegExp(/(bookmark|todo)\s(add|remove)(\s?--name=||\s?-n\s["']{1}[\w\s\d]+["']{1})?(\s?--url=|\s?-u\s["']{1}[a-z\d.:/?&-]+["']{1})?(\s?["']{1}[\w\s\\|(){}[].$^+\d=*&#@!%?]+["']{1})?/)
       const arr = this.text.match(/("[^"]*")|[^\s]+/g)
       if (arr[0] === 'bookmark') {
         const checkUrl = new RegExp(/^(https?:\/\/)?(www\.|[a-z\d]+\.)?[a-z]+(\.[a-z]{2,3}|:\d{2,5})(\.[a-z]{2,3})?(\/([\w\d]+)?)*((\?|&)[\w\d]+=[\w\d]+)*/)

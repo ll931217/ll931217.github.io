@@ -1,7 +1,7 @@
 <template lang="pug">
   #mywork
     v-container
-      h1 MyWork
+      h1 My Work
 </template>
 
 <script>
