@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1362" height="244" viewBox="0 0 1362 244">
+  <g id="skills" transform="translate(-278 -2264)">
+    <text id="Python" transform="translate(278 2326)" fill="#707070" font-size="33" font-family="Rubik-Regular, Rubik"><tspan x="0" y="0">Python</tspan></text>
+    <text id="Flask" transform="translate(529 2381)" fill="#707070" font-size="33" font-family="Rubik-Regular, Rubik"><tspan x="0" y="0">Flask</tspan></text>
+    <text id="Node.js" transform="translate(334 2426)" fill="#707070" font-size="33" font-family="Rubik-Regular, Rubik"><tspan x="0" y="0">Node.js</tspan></text>
+    <text id="MSSQL" transform="translate(718 2315)" fill="#707070" font-size="33" font-family="Rubik-Regular, Rubik"><tspan x="0" y="0">MSSQL</tspan></text>
+    <text id="MySQL" transform="translate(726 2406)" fill="#707070" font-size="33" font-family="Rubik-Regular, Rubik"><tspan x="0" y="0">MySQL</tspan></text>
+    <text id="MongoDB" transform="translate(1282 2323)" fill="#707070" font-size="33" font-family="Rubik-Regular, Rubik"><tspan x="0" y="0">MongoDB</tspan></text>
+    <text id="GNU_Linux" data-name="GNU/Linux" transform="translate(1080 2396)" fill="#707070" font-size="33" font-family="Rubik-Regular, Rubik"><tspan x="0" y="0">GNU/Linux</tspan></text>
+    <text id="Java" transform="translate(980 2312)" fill="#707070" font-size="33" font-family="Rubik-Regular, Rubik"><tspan x="0" y="0">Java</tspan></text>
+    <text id="PHP" transform="translate(875 2365)" fill="#707070" font-size="33" font-family="Rubik-Regular, Rubik"><tspan x="0" y="0">PHP</tspan></text>
+    <text id="SASS" transform="translate(626 2470)" fill="#707070" font-size="33" font-family="Rubik-Regular, Rubik"><tspan x="0" y="0">SASS</tspan></text>
+    <text id="VueJS" transform="translate(968 2446)" fill="#707070" font-size="33" font-family="Rubik-Regular, Rubik"><tspan x="0" y="0">VueJS</tspan></text>
+    <text id="NuxtJS" transform="translate(1249 2434)" fill="#707070" font-size="33" font-family="Rubik-Regular, Rubik"><tspan x="0" y="0">NuxtJS</tspan></text>
+    <text id="GraphQL" transform="translate(1474 2370)" fill="#707070" font-size="33" font-family="Rubik-Regular, Rubik"><tspan x="0" y="0">GraphQL</tspan></text>
+    <text id="RESTful_API" data-name="RESTful API" transform="translate(1364 2484)" fill="#707070" font-size="33" font-family="Rubik-Regular, Rubik"><tspan x="0" y="0">RESTful API</tspan></text>
+    <text id="AWS" transform="translate(1088 2500)" fill="#707070" font-size="33" font-family="Rubik-Regular, Rubik"><tspan x="0" y="0">AWS</tspan></text>
+    <text id="Docker" transform="translate(796 2478)" fill="#707070" font-size="33" font-family="Rubik-Regular, Rubik"><tspan x="0" y="0">Docker</tspan></text>
+    <text id="Git" transform="translate(512 2295)" fill="#707070" font-size="33" font-family="Rubik-Regular, Rubik"><tspan x="0" y="0">Git</tspan></text>
+    <text id="D3.js" transform="translate(1564 2427)" fill="#707070" font-size="33" font-family="Rubik-Regular, Rubik"><tspan x="0" y="0">D3.js</tspan></text>
+    <text id="Vuetify" transform="translate(436 2486)" fill="#707070" font-size="33" font-family="Rubik-Regular, Rubik"><tspan x="0" y="0">Vuetify</tspan></text>
+  </g>
+</svg>

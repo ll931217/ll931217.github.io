@@ -3,7 +3,9 @@
     v-app-bar(
       app,
       absolute,
-      elevate-on-scroll,
+      hide-on-scroll,
+      color="#FFF",
+      elevation="0",
       scroll-target="#scrolling-techniques"
     )
       v-spacer
@@ -12,9 +14,9 @@
         v-for="(link, index) in links",
         :to="link.url",
         :key="index"
-      ).mr-3.teal--text.text--accent-4 {{ link.text }}
+      ).mr-10#site-links {{ link.text }}
     v-main
-      v-container(fluid)#main-container
+      v-container(fluid)#main-container.p-0
         router-view
 </template>
 
@@ -25,19 +27,19 @@ export default {
     links: [
       {
         text: 'Me!',
-        url: ''
+        url: '#me'
       },
       {
         text: 'Who Am I',
-        url: ''
+        url: '#whoami'
       },
       {
         text: 'My Work',
-        url: ''
+        url: '#mywork'
       },
       {
         text: 'Say Hi',
-        url: ''
+        url: '#sayhi'
       }
     ]
   })
@@ -47,6 +49,38 @@ export default {
 <style lang="sass">
   *
     margin: 0
+    padding: 0
+  
+  #site-links
+    font-size: 1.5rem
+    text-decoration: none
+    transition: all .5s ease-in-out
+    text-transform: uppercase
+
+    &::before, &::after
+      display: inline-block
+      opacity: 0
+      transition: transform .3s, opacity .2s
+    
+    &::before
+      margin-right: 5px
+      content: '['
+      transform: translateX(20px)
+    
+    &::after
+      margin-left: 5px
+      content: ']'
+      transform: translateX(-20px)
+    
+    &:hover, &:focus
+      &::before, &::after
+        opacity: 1
+        transform: translateX(0)
+
+    &:link, &:visited
+      color: #636e72
+  
+  #main-container
     padding: 0
 
   @font-face

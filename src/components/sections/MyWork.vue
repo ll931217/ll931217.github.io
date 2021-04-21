@@ -1,5 +1,5 @@
 <template lang="pug">
-  #mywork
+  #mywork.mt-10
     v-container
       h1 My Work
 </template>
