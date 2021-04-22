@@ -12,24 +12,51 @@
         v-col(sm="12", md="4")
           v-card(rounded)
             v-img(
-              src="../../assets/images/passionate.svg"
+              src="@/assets/images/passionate.svg"
             )
+              template(v-slot:placeholder)
+                v-row(
+                  align="center",
+                  justify="center"
+                ).fill-height.ma-0
+                  v-progress-circular(
+                    indeterminate,
+                    color="grey lighten-5"
+                  )
             v-card-title Passionate
             v-card-text
               div I am passionate about software development as it fulfills my curiosity of always seeking something new.
         v-col(sm="12", md="4")
           v-card(rounded)
             v-img(
-              src="../../assets/images/motivation.svg"
+              src="@/assets/images/motivation.svg"
             )
+              template(v-slot:placeholder)
+                v-row(
+                  align="center",
+                  justify="center"
+                ).fill-height.ma-0
+                  v-progress-circular(
+                    indeterminate,
+                    color="grey lighten-5"
+                  )
             v-card-title Motivation
             v-card-text
               div I am a highly self motivated individual. I see to it that the work given to me is finished on time.
         v-col(sm="12", md="4")
           v-card(rounded)
             v-img(
-              src="../../assets/images/reliable.svg"
+              src="@/assets/images/reliable.svg"
             )
+              template(v-slot:placeholder)
+                v-row(
+                  align="center",
+                  justify="center"
+                ).fill-height.ma-0
+                  v-progress-circular(
+                    indeterminate,
+                    color="grey lighten-5"
+                  )
             v-card-title Reliable
             v-card-text
               div I always finish my work on time. If I know that I am not able to, I would work overtime to get it done.

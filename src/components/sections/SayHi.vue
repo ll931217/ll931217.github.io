@@ -45,11 +45,16 @@
               #social-media-links.mt-10
                 p Find me on social media
                 .social-links
-                  fa-icon(:icon="['fab', 'facebook']").mr-2
-                  fa-icon(:icon="['fab', 'twitter']").mr-2
-                  fa-icon(:icon="['fab', 'github']").mr-2
-                  fa-icon(:icon="['fab', 'codepen']").mr-2
-                  fa-icon(icon="envelope-open-text")
+                  a(href="https://www.facebook.com/ll931217", target="_blank").mr-2
+                    fa-icon(:icon="['fab', 'facebook']")
+                  a(href="https://twitter.com/troopocalypse", target="_blank").mr-2
+                    fa-icon(:icon="['fab', 'twitter']")
+                  a(href="https://github.com/ll931217", target="_blank").mr-2
+                    fa-icon(:icon="['fab', 'github']")
+                  a(href="https://codepen.io/ll931217", target="_blank").mr-2
+                    fa-icon(:icon="['fab', 'codepen']")
+                  a(href="mailto:liangshihlin@gmail.com", target="_blank").mr-2
+                    fa-icon(icon="envelope-open-text")
 </template>
 
 <script>
@@ -64,7 +69,7 @@ export default {
     email: '',
     emailRules: [
       v => !!v || 'Email is required',
-      v => /.+@.+\..+/.text(v) || 'Must be a valid email'
+      v => /.+@.+\..+/.test(v) || 'Must be a valid email'
     ],
     message: ''
   }),
@@ -86,4 +91,10 @@ export default {
   color: #dfe6e9
   font-size: 1.5rem
   padding: 3rem
+
+  a
+    color: #00cec9
+  
+  .social-links
+    font-size: 1.5rem
 </style>
