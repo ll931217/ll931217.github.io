@@ -2,12 +2,15 @@ const path = require('path')
 
 module.exports = {
   chainWebpack: config => {
-    config
-      .plugin('html')
-      .tap(args => {
-        args[0].title = 'Liang-Shih Lin\'s Portfolio Site'
-        return args
-      })
+    config.module
+      .rule('markdown')
+      .test(/\.md$/)
+      .use('html-loader')
+        .loader('html-loader')
+        .end()
+      .use('markdown-loader')
+        .loader('markdown-loader')
+        .end()
   },
   configureWebpack: {
     resolve: {

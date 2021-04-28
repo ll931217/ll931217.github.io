@@ -4,20 +4,36 @@
       app,
       absolute,
       hide-on-scroll,
-      color="#FFF",
+      color="rgba(0, 0, 0, 0)",
       elevation="0",
-      scroll-target="#scrolling-techniques"
+      scroll-target="#main-container",
+      fixed
     )
       v-spacer
 
-      router-link(
+      a(
         v-for="(link, index) in links",
-        :to="link.url",
-        :key="index"
+        :href="link.url",
+        :key="index",
+        v-scroll-to="link.url"
       ).mr-10#site-links {{ link.text }}
     v-main
       v-container(fluid)#main-container.p-0
         router-view
+        v-footer
+          v-container.text-center
+            v-row
+              v-col
+                | Created and designed by me &copy; Liang-Shih Lin
+            v-row
+              v-col.d-inline-flex.justify-center
+                | Made with 
+                v-img(
+                  src="./assets/images/vuetify-logo-light-text.svg",
+                  height="26",
+                  max-width="90",
+                  contain
+                )
 </template>
 
 <script>

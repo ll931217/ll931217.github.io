@@ -2,8 +2,8 @@
   #sayhi.mt-10
     v-container
       v-row
-        v-col(sm="12", md="6")
-          .d-flex.justify-center
+        v-col(sm="12", md="6").mb-10
+          .d-md-flex.justify-center
             #sayhi-form
               h1 Say Hi
               v-form(
@@ -36,7 +36,7 @@
                   @click="validate"
                 ) Send
         v-col(sm="12", md="6")
-          .d-flex.justify-center
+          .d-md-flex.justify-center
             #other-contact.d-flex.flex-column.justify-space-around.text-center
               p +886965423311
               a(href="mailto:liangshihlin@gmail.com") liangshihlin@gmail.com
@@ -71,7 +71,8 @@ export default {
       v => !!v || 'Email is required',
       v => /.+@.+\..+/.test(v) || 'Must be a valid email'
     ],
-    message: ''
+    message: '',
+    formspree: 'https://formspree.io/f/xzbydbvk'
   }),
   methods: {
     validate() {
@@ -84,6 +85,9 @@ export default {
 <style lang="sass" scoped>
 #sayhi-form, #other-contact
   width: 70%
+
+  @media screen and (max-width: 600px)
+    width: 100%
 
 #other-contact
   background-color: #2d3436

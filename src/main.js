@@ -3,6 +3,8 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faFacebook, faTwitter, faGithub, faCodepen } from '@fortawesome/free-brands-svg-icons'
 import { faEnvelopeOpenText } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import VueMarkdown from '@adapttive/vue-markdown'
+import VueScrollTo from 'vue-scrollto'
 
 import App from './App.vue'
 import vuetify from './plugins/vuetify';
@@ -18,6 +20,9 @@ library.add(
 )
 
 Vue.component('fa-icon', FontAwesomeIcon)
+Vue.component('md', VueMarkdown)
+
+Vue.use(VueScrollTo)
 
 Vue.config.productionTip = false
 

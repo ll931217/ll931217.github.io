@@ -2,12 +2,12 @@
   #me
     v-container
       v-row
-        v-col(cols="6").banner
+        v-col(sm="12", md="6")
           v-img(
             src="@/assets/images/me.png",
-            height="600"
+            height="700"
           ).me-pic
-        v-col(cols="6")
+        v-col(sm="12", md="6")
           h1.mt-10 Me!
           p.bio Hi! I am Liang-Shih Lin (林良士), a full stack developer and linux enthusiast based in Taiwan
 </template>
