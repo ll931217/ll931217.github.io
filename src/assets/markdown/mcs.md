@@ -1,6 +1,6 @@
 # Material Control System (MCS)
 
-During the time I worked at Gyro Systems Incorporated (捷螺系統股份有限公司), the biggest projects I worked on was the MCS. I was on 2 different versions of the system, one of them was created with my manager for our company and the other one was created with ITRI for SPIL.
+During the time I worked at [Gyro Systems Incorporated (捷螺系統股份有限公司)](https://www.gyro.com.tw), the biggest projects I worked on was the MCS. I was on 2 different versions of the system, one of them was created with my manager for our company and the other one was created with ITRI for SPIL.
 
 My role in both projects is creating an interface for client's and colleagues to run and test equipments produced by us in our client's factories.
 
@@ -21,7 +21,7 @@ This MCS was created with my manager, I focused on creating the backend server i
 
 ## ITRI's MCS
 
-The MCS created with ITRI, I was the lead with another new colleague. One of my tasks was distribute work with him, when he couldn't finish something on time, I would pick up what he couldn't finish.
+The MCS created with ITRI, I was the lead with another new colleague. One of my tasks was distribute work with him, when he couldn't finish something on time, I would pick up what he couldn't finish. When there is some free time, I would mentor him on best programming practices and techniques.
 
 ### Technologies Used:
 

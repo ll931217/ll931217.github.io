@@ -5,8 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "vite": "node ./bin/vite"
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "@adapttive/vue-markdown": "^4.0.1",
@@ -37,7 +36,6 @@
     "sass": "^1.32.11",
     "sass-loader": "10.1.1",
     "vue-cli-plugin-pug": "~2.0.0",
-    "vue-cli-plugin-vite": "~1.0.0-rc.5",
     "vue-cli-plugin-vuetify": "~2.3.1",
     "vue-template-compiler": "^2.6.11",
     "vuetify-loader": "^1.7.0"
