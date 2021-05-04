@@ -6,8 +6,7 @@
       hide-on-scroll,
       color="rgba(0, 0, 0, 0)",
       elevation="0",
-      scroll-target="#main-container",
-      fixed
+      scroll-target="html"
     )
       v-spacer
 
@@ -17,8 +16,8 @@
         :key="index",
         v-scroll-to="link.url"
       ).mr-10#site-links {{ link.text }}
-    v-main
-      v-container(fluid)#main-container.p-0
+    v-sheet
+      v-container(fluid).p-0
         router-view
         v-footer
           v-container.text-center

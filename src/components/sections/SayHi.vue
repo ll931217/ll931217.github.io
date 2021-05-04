@@ -35,6 +35,12 @@
                   color="success",
                   @click="validate"
                 ) Send
+            v-snackbar(
+              v-model="snackbar.show",
+              :timeout="snackbar.timeout",
+              :color="snackbar.color"
+            )
+              | {{ snackbar.text }}
         v-col(sm="12", md="6")
           .d-md-flex.justify-center
             #other-contact.d-flex.flex-column.justify-space-around.text-center
@@ -72,11 +78,43 @@ export default {
       v => /.+@.+\..+/.test(v) || 'Must be a valid email'
     ],
     message: '',
-    formspree: 'https://formspree.io/f/xzbydbvk'
+    formspree: 'https://formspree.io/f/xzbydbvk',
+    snackbar: {
+      color: 'green',
+      text: '',
+      timeout: 2000,
+      show: false
+    }
   }),
   methods: {
     validate() {
-      this.$refs.form.validate()
+      const valid = this.$refs.form.validate()
+      if (valid) {
+        const formData = new FormData()
+        formData.append('name', this.name)
+        formData.append('email', this.email)
+        formData.append('message', this.message)
+
+        fetch(this.formspree, {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'Accept': 'application/json'
+          }
+        }).then(() => {
+          this.snackbar.text = 'Hey! Thanks for saying hi, I will get back to you as soon as possible'
+          this.snackbar.timeout = 4000
+          this.snackbar.show = true
+          this.name = ''
+          this.email = ''
+          this.message = ''
+        }).catch(err => {
+          console.error(err)
+          this.snackbar.text = 'Something went wrong, please contact me'
+          this.snackbar.color = 'red'
+          this.snackbar.show = true
+        })
+      }
     }
   }
 }
