@@ -25,6 +25,8 @@ jobs:
         run: bun install
 
       - name: Build
+        env:
+          VITE_GITHUB_PAT: ${{ secrets.PAT }}
         run: bun run build
 
       - name: Deploy to GitHub Pages
