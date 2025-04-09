@@ -1,4 +1,3 @@
-
 export interface Repository {
   id: number;
   name: string;
@@ -33,4 +32,9 @@ export interface Commit {
   };
 }
 
-export type RepoFilter = 'all' | 'featured' | 'recent' | 'popular' | 'featuredOnly';
+export type RepoFilter =
+  | "all"
+  | "featured"
+  | "recent"
+  | "popular"
+  | "featuredOnly";
