@@ -1,4 +1,3 @@
-
 import { Repository, RepoFilter, Commit } from "@/types/repository";
 import { featuredRepos } from "@/data/featuredRepos";
 
@@ -6,16 +5,11 @@ const GITHUB_USERNAME = "ll931217";
 
 export async function fetchRepositories(
   filter: RepoFilter = "all",
-  language?: string
+  language?: string,
 ): Promise<Repository[]> {
   try {
     const response = await fetch(
       `https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=100`,
-      {
-        headers: {
-          Authorization: `Bearer ${import.meta.env.VITE_GITHUB_PAT}`,
-        },
-      },
     );
 
     if (!response.ok) {
@@ -27,7 +21,7 @@ export async function fetchRepositories(
     // First filter by language if specified
     if (language && language !== "all") {
       repositories = repositories.filter(
-        (repo) => repo.language?.toLowerCase() === language.toLowerCase()
+        (repo) => repo.language?.toLowerCase() === language.toLowerCase(),
       );
     }
 
@@ -104,9 +98,9 @@ export async function fetchLanguages(): Promise<string[]> {
   try {
     const repos = await fetchRepositories();
     const languages = repos
-      .filter(repo => repo.language)
-      .map(repo => repo.language as string);
-    
+      .filter((repo) => repo.language)
+      .map((repo) => repo.language as string);
+
     // Create a unique list of languages
     return Array.from(new Set(languages)).sort();
   } catch (error) {
