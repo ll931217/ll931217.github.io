@@ -27,6 +27,7 @@ jobs:
       - name: Build
         env:
           VITE_GITHUB_PAT: ${{ secrets.PAT }}
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
         run: bun run build
 
       - name: Deploy to GitHub Pages
