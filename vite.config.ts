@@ -10,6 +10,9 @@ export default defineConfig(() => ({
   server: {
     host: "::",
   },
+  build: {
+    sourcemap: true,
+  },
   plugins: [
     react(),
     mdPlugin({
