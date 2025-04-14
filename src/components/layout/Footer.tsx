@@ -36,15 +36,6 @@ const Footer = () => {
             >
               <Mail size={20} />
             </a>
-
-            <button
-              className="rounded border p-2"
-              onClick={() => {
-                throw new Error("This is your first error!");
-              }}
-            >
-              Break the world
-            </button>
           </div>
         </div>
       </div>
