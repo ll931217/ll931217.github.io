@@ -6,6 +6,7 @@ const GITHUB_USERNAME = "ll931217";
 export async function fetchRepositories(
   filter: RepoFilter = "all",
   language?: string,
+  search?: string,
 ): Promise<Repository[]> {
   try {
     const response = await fetch(
@@ -60,10 +61,16 @@ export async function fetchRepositories(
     }
 
     // Mark featured repositories
-    repositories = repositories.map((repo) => ({
-      ...repo,
-      featured: featuredRepos.some((featured) => featured.name === repo.name),
-    }));
+    repositories = repositories
+      .map((repo) => ({
+        ...repo,
+        featured: featuredRepos.some((featured) => featured.name === repo.name),
+      }))
+      .filter((repo) => {
+        const escapedInput = search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        const dynamicRegex = new RegExp(escapedInput, "i");
+        return dynamicRegex.test(repo.name);
+      });
 
     return repositories;
   } catch (error) {

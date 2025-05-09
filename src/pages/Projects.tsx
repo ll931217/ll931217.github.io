@@ -19,11 +19,13 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
+import { Input } from "@/components/ui/input";
 
 const Projects = () => {
   const [filter, setFilter] = useState<RepoFilter>("all");
   const [selectedLanguage, setSelectedLanguage] = useState<string>("all");
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+  const [search, setSearch] = useState<string>("");
 
   // Fetch all languages for the filter
   const { data: languages = [] } = useQuery({
@@ -37,8 +39,8 @@ const Projects = () => {
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["repositories", filter, selectedLanguage],
-    queryFn: () => fetchRepositories(filter, selectedLanguage),
+    queryKey: ["repositories", filter, selectedLanguage, search],
+    queryFn: () => fetchRepositories(filter, selectedLanguage, search),
   });
 
   const filters: { value: RepoFilter; label: string }[] = [
@@ -53,6 +55,10 @@ const Projects = () => {
     setSelectedLanguage("all");
   }, [filter]);
 
+  const handleSearchInput = (event) => {
+    setSearch(event.target.value);
+  };
+
   return (
     <Layout>
       <div className="max-w-4xl mx-auto">
@@ -62,6 +68,14 @@ const Projects = () => {
           represents my journey as a developer and my passion for creating
           innovative solutions.
         </p>
+
+        <Input
+          className="mb-8"
+          type="search"
+          value={search}
+          onChange={handleSearchInput}
+          placeholder="Search repositories..."
+        />
 
         {/* Main Filters */}
         <div className="flex flex-wrap gap-3 mb-4">
