@@ -40,7 +40,10 @@ const Blog = () => {
         <h1 className="text-4xl font-bold mb-6 text-tokyo-blue">Blog</h1>
         <p className="mb-8 text-tokyo-fg/90">
           Thoughts, tutorials, and insights about programming, web development,
-          and technology.
+          and technology. <br />
+          <br />I try to keep my blog posts as short as possible since I am
+          someone that doesn't like reading, so why should I subject my viewers
+          to more reading ;)
         </p>
 
         {/* Search and Filter */}
