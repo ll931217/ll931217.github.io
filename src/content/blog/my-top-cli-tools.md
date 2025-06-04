@@ -1,6 +1,6 @@
 ---
 title: My Top CLI tools
-date: '2025-06-03:00:00.000Z'
+date: 2025-06-03T00:00:00.000Z
 author: Liang-Shih Lin
 excerpt: CLI tools that I love and use most of the time in my development workflow.
 tags:

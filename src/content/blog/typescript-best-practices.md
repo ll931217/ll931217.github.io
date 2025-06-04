@@ -59,7 +59,7 @@ interface Product {
 }
 ```
 
-Interfaces can be extended and are generally preferred for public APIs, while type aliases are great for union types and more complex type definitions.
+Interfaces can be extended and are generally preferred for public APIs, while type aliases are great for union types and more complex type definitions. There have been arguments that went into types vs interfaces, I would say choose whichever one you like.
 
 ## Use Union Types for Flexibility
 

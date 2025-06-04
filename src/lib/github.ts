@@ -67,7 +67,10 @@ export async function fetchRepositories(
         featured: featuredRepos.some((featured) => featured.name === repo.name),
       }))
       .filter((repo) => {
-        const escapedInput = search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        const escapedInput = (search || "").replace(
+          /[.*+?^${}()|[\]\\]/g,
+          "\\$&",
+        );
         const dynamicRegex = new RegExp(escapedInput, "i");
         return dynamicRegex.test(repo.name);
       });
