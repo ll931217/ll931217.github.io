@@ -29,9 +29,10 @@ const MinimalNav = () => {
             className={`
               w-10 h-10 flex items-center justify-center
               border transition-all duration-200
+              bg-[#0a0a0a] backdrop-blur-sm
               ${isActive
-                ? "border-[#ff3333] text-[#ff3333] bg-[#ff3333]/10"
-                : "border-[#666666] text-[#666666] hover:border-[#ff3333] hover:text-[#ff3333]"
+                ? "border-[#ff3333] text-[#ff3333] bg-[#ff3333]/20"
+                : "border-[#666666] text-[#666666] hover:border-[#ff3333] hover:text-[#ff3333] hover:bg-[#666666]/20"
               }
             `}
             title={link.label}
