@@ -193,12 +193,12 @@ const Index = () => {
         [SCROLL: {scroll}%]
       </div>
       
-      <main className="relative z-10">
+      <main className="relative z-10 pointer-events-none">
         <section className="min-h-screen flex flex-col items-center justify-center overflow-hidden p-4 md:p-8">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 
+            <h1
               ref={nameRef}
-              className="font-bold uppercase text-center mb-8 glitch-text"
+              className="font-bold uppercase text-center mb-8 glitch-text pointer-events-auto"
               data-text="LIANG-SHIH LIN"
               style={{
                   fontSize: 'clamp(2rem, 8vw, 5rem)',
@@ -224,16 +224,16 @@ const Index = () => {
               </p>
               
               <div className="flex flex-wrap justify-center gap-4 mt-8 text-sm md:text-base">
-                <span className="border border-[#666666] px-4 py-2 text-[#666666] hover:border-[#ff3333] hover:text-[#ff3333] transition-colors">
+                <span className="border border-[#666666] px-4 py-2 text-[#666666] hover:border-[#ff3333] hover:text-[#ff3333] transition-colors pointer-events-auto">
                   TAIWAN
                 </span>
-                <span className="border border-[#666666] px-4 py-2 text-[#666666] hover:border-[#ff3333] hover:text-[#ff3333] transition-colors">
+                <span className="border border-[#666666] px-4 py-2 text-[#666666] hover:border-[#ff3333] hover:text-[#ff3333] transition-colors pointer-events-auto">
                   REACT / VUE / TYPESCRIPT
                 </span>
-                <span className="border border-[#666666] px-4 py-2 text-[#666666] hover:border-[#ff3333] hover:text-[#ff3333] transition-colors">
+                <span className="border border-[#666666] px-4 py-2 text-[#666666] hover:border-[#ff3333] hover:text-[#ff3333] transition-colors pointer-events-auto">
                   NODE.JS / PYTHON
                 </span>
-                <span className="border border-[#666666] px-4 py-2 text-[#666666] hover:border-[#ff3333] hover:text-[#ff3333] transition-colors">
+                <span className="border border-[#666666] px-4 py-2 text-[#666666] hover:border-[#ff3333] hover:text-[#ff3333] transition-colors pointer-events-auto">
                   AWS / DOCKER
                 </span>
               </div>
@@ -269,7 +269,7 @@ const Index = () => {
 
         <footer className="py-12 px-4 md:px-8 border-t-4 border-white mt-20 text-center">
             <h2 className="text-[#ff3333] text-xl mb-4 cursor-blink">[CONTACT]</h2>
-            <a href="https://github.com/ll931217" target="_blank" rel="noopener noreferrer" className="hover:text-[#ff3333] transition-colors duration-75 text-lg">
+            <a href="https://github.com/ll931217" target="_blank" rel="noopener noreferrer" className="hover:text-[#ff3333] transition-colors duration-75 text-lg pointer-events-auto">
                 github.com/ll931217
             </a>
             <pre className="mt-12 text-[#666666]">END OF TRANSMISSION</pre>

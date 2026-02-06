@@ -111,7 +111,7 @@ const Projects = () => {
         [{scroll}%]
       </div>
 
-      <main className="relative z-10">
+      <main className="relative z-10 pointer-events-none">
         {/* Compact Header */}
         <section className="pt-20 pb-8 md:pt-24 md:pb-12 px-4 md:px-8 border-t-4 border-white">
           <div className="max-w-6xl mx-auto">
@@ -139,7 +139,7 @@ const Projects = () => {
                   size={16}
                 />
                 <Input
-                  className="pl-9 h-10 bg-[#0a0a0a]/50 border border-[#666666] text-white placeholder:text-[#666666] focus:border-[#ff3333] focus:outline-none transition-colors text-sm"
+                  className="pl-9 h-10 bg-[#0a0a0a]/50 border border-[#666666] text-white placeholder:text-[#666666] focus:border-[#ff3333] focus:outline-none transition-colors text-sm pointer-events-auto"
                   type="search"
                   value={search}
                   onChange={handleSearchInput}
@@ -154,7 +154,7 @@ const Projects = () => {
         <section className="pb-20 px-4 md:px-8">
           <div className="max-w-6xl mx-auto">
             {/* Main Filters - Compact */}
-            <div className="flex flex-wrap gap-2 mb-6">
+            <div className="flex flex-wrap gap-2 mb-6 pointer-events-auto">
               {filters.map((filterOption) => (
                 <button
                   key={filterOption.value}
@@ -174,7 +174,7 @@ const Projects = () => {
                 open={isFiltersOpen}
                 onOpenChange={setIsFiltersOpen}
               >
-                <CollapsibleTrigger className="flex items-center gap-2 px-3 py-1.5 text-sm text-[#666666] hover:text-white border border-[#666666] hover:border-[#ff3333] transition-colors">
+                <CollapsibleTrigger className="flex items-center gap-2 px-3 py-1.5 text-sm text-[#666666] hover:text-white border border-[#666666] hover:border-[#ff3333] transition-colors pointer-events-auto">
                   <Filter size={14} />
                   {isFiltersOpen ? "Less" : "More"}
                   {selectedLanguage !== "all" && (
@@ -187,7 +187,7 @@ const Projects = () => {
                 {selectedLanguage !== "all" && (
                   <button
                     onClick={() => setSelectedLanguage("all")}
-                    className="ml-2 text-sm text-[#666666] hover:text-[#ff3333] underline"
+                    className="ml-2 text-sm text-[#666666] hover:text-[#ff3333] underline pointer-events-auto"
                   >
                     Clear
                   </button>
@@ -199,14 +199,14 @@ const Projects = () => {
             <Collapsible
               open={isFiltersOpen}
               onOpenChange={setIsFiltersOpen}
-              className="mb-6"
+              className="mb-6 pointer-events-auto"
             >
               <CollapsibleContent className="pt-2 pb-4">
                 <Select
                   value={selectedLanguage}
                   onValueChange={setSelectedLanguage}
                 >
-                  <SelectTrigger className="w-full md:w-[180px] bg-[#0a0a0a]/50 border border-[#666666] text-white focus:border-[#ff3333] h-10">
+                  <SelectTrigger className="w-full md:w-[180px] bg-[#0a0a0a]/50 border border-[#666666] text-white focus:border-[#ff3333] h-10 pointer-events-auto">
                     <SelectValue placeholder="Language" />
                   </SelectTrigger>
                   <SelectContent className="bg-[#0a0a0a] border border-[#666666]">
@@ -223,7 +223,7 @@ const Projects = () => {
 
             {/* Language Tags - Show top 5 */}
             {languages.length > 0 && (
-              <div className="flex flex-wrap gap-2 mb-6">
+              <div className="flex flex-wrap gap-2 mb-6 pointer-events-auto">
                 <Toggle
                   pressed={selectedLanguage === "all"}
                   onClick={() => setSelectedLanguage("all")}
@@ -267,7 +267,7 @@ const Projects = () => {
                 ))}
               </div>
             ) : error ? (
-              <div className="bg-[#666666]/10 border border-[#ff3333] text-center py-12">
+              <div className="bg-[#666666]/10 border border-[#ff3333] text-center py-12 pointer-events-auto">
                 <AlertTriangle className="w-12 h-12 mx-auto mb-4 text-[#ff3333]" />
                 <p className="text-[#ff3333] mb-4">
                   Failed to load projects
@@ -280,7 +280,7 @@ const Projects = () => {
                 </button>
               </div>
             ) : repos?.length === 0 ? (
-              <div className="bg-[#666666]/10 border border-[#666666] text-center py-12">
+              <div className="bg-[#666666]/10 border border-[#666666] text-center py-12 pointer-events-auto">
                 <p className="text-[#666666] mb-4">
                   No repositories found
                 </p>

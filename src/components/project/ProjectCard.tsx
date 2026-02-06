@@ -1,5 +1,4 @@
 import { ExternalLink } from "lucide-react";
-import { SiGithub } from "@icons-pack/react-simple-icons";
 import GlowCard from "../ui/GlowCard";
 import LanguageBadge from "../ui/LanguageBadge";
 import { Repository } from "@/types/repository";
@@ -14,7 +13,7 @@ const ProjectCard = ({ repo }: ProjectCardProps) => {
       href={repo.html_url}
       target="_blank"
       rel="noopener noreferrer"
-      className="block h-full"
+      className="block h-full pointer-events-auto group"
     >
       <GlowCard className="h-full hover:border-[#ff3333] transition-colors">
         <div className="flex flex-col h-full">
@@ -22,19 +21,10 @@ const ProjectCard = ({ repo }: ProjectCardProps) => {
             <h3 className="text-lg font-bold text-white hover:text-[#ff3333] transition-colors">
               {repo.name}
             </h3>
-            <div className="flex space-x-3">
-              <SiGithub size={18} className="text-[#666666]" />
-              {repo.homepage && (
-                <ExternalLink
-                  size={18}
-                  className="text-[#666666]"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    window.open(repo.homepage, '_blank', 'noopener,noreferrer');
-                  }}
-                />
-              )}
-            </div>
+            <ExternalLink
+              size={18}
+              className="text-[#666666] group-hover:text-[#ff3333] transition-colors"
+            />
           </div>
 
         <p className="text-[#999999] mb-4 flex-grow text-sm">

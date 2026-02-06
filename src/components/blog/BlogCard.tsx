@@ -10,7 +10,7 @@ interface BlogCardProps {
 
 const BlogCard = ({ blog }: BlogCardProps) => {
   return (
-    <Link to={`/blog/${blog.slug}`}>
+    <Link to={`/blog/${blog.slug}`} className="pointer-events-auto">
       <GlowCard className="h-full">
         <article className="flex flex-col h-full">
           <div className="mb-4">

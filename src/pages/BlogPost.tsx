@@ -15,6 +15,9 @@ const BlogPost = () => {
   const navigate = useNavigate();
   const [scroll, setScroll] = useState(0);
 
+  // Get the blog post from markdown files
+  const post = slug ? getBlogPostBySlug(slug) : undefined;
+
   useEffect(() => {
     const handleScroll = () => {
       const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -55,9 +58,6 @@ const BlogPost = () => {
       });
     });
   }, [post, slug, navigate]);
-
-  // Get the blog post from markdown files
-  const post = slug ? getBlogPostBySlug(slug) : undefined;
 
   if (!post) {
     return null; // Will redirect in useEffect

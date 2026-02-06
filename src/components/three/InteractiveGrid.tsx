@@ -8,17 +8,59 @@ const gridDivisions = 50;
 const gravitationalStrength = 4;
 const maxDistance = 10;
 const returnSpeed = 0.08;
+const explosionRadius = 25;
+
+// Shockwave effect constants
+const shockwaveSpeed = 0.3;
+const shockwaveWidth = 3;
+const shockwaveForce = 8;
+const shockwaveDuration = 1000;
+const explosionDelay = shockwaveDuration;
+const forceVariation = 0.2;
+const angleVariation = 0.15;
+
+// Simple position-based noise for organic variation
+function simpleNoise(x: number, y: number): number {
+  const n = Math.sin(x * 12.9898 + y * 78.233) * 43758.5453;
+  return (n - Math.floor(n)) * 2 - 1;
+}
+
+// Global mouse position shared across components
+const mousePosition = { x: 0, y: 0 };
+const clickState = { isClicked: false, clickX: 0, clickY: 0, clickTime: 0 };
+
+// Track mouse at document level
+if (typeof window !== 'undefined') {
+  window.addEventListener('mousemove', (e) => {
+    // Convert screen coordinates to normalized device coordinates (-1 to +1)
+    mousePosition.x = (e.clientX / window.innerWidth) * 2 - 1;
+    mousePosition.y = -(e.clientY / window.innerHeight) * 2 + 1;
+  });
+
+  window.addEventListener('click', (e) => {
+    clickState.isClicked = true;
+    clickState.clickX = (e.clientX / window.innerWidth) * 2 - 1;
+    clickState.clickY = -(e.clientY / window.innerHeight) * 2 + 1;
+    clickState.clickTime = Date.now();
+
+    setTimeout(() => {
+      clickState.isClicked = false;
+    }, shockwaveDuration);
+  });
+}
 
 function GridMesh() {
   const meshRef = useRef<THREE.Points>(null);
-  const mouseRef = useRef({ x: 0, y: 0 });
   const { viewport } = useThree();
 
-  const [positions, originalPositions] = useMemo(() => {
+  const [positions, originalPositions, randomForce, randomAngleOffset] = useMemo(() => {
     const pos: number[] = [];
     const origPos: number[] = [];
+    const force: number[] = [];
+    const angleOff: number[] = [];
     const halfSize = gridSize / 2;
     const step = gridSize / gridDivisions;
+    const particleCount = (gridDivisions + 1) * (gridDivisions + 1);
 
     for (let i = 0; i <= gridDivisions; i++) {
       for (let j = 0; j <= gridDivisions; j++) {
@@ -27,17 +69,35 @@ function GridMesh() {
         const z = 0;
         pos.push(x, y, z);
         origPos.push(x, y, z);
+
+        // Per-particle random attributes for organic variation
+        const particleIndex = i * (gridDivisions + 1) + j;
+        const seed = particleIndex * 123.456;
+        const rand1 = ((seed * 12.9898) % 1 + 1) % 1;
+        const rand2 = ((seed * 78.233) % 1 + 1) % 1;
+
+        // Force variation: 0.7 to 1.3
+        force.push(1 - forceVariation + rand1 * forceVariation * 2);
+        // Angle variation: -0.26 to +0.26 radians (±15 degrees)
+        angleOff.push(-angleVariation + rand2 * angleVariation * 2);
       }
     }
 
-    return [new Float32Array(pos), new Float32Array(origPos)];
+    return [
+      new Float32Array(pos),
+      new Float32Array(origPos),
+      new Float32Array(force),
+      new Float32Array(angleOff)
+    ];
   }, []);
 
-  useFrame(({ mouse }) => {
+  useFrame(() => {
     if (!meshRef.current) return;
 
-    mouseRef.current.x = (mouse.x * viewport.width) / 2;
-    mouseRef.current.y = (mouse.y * viewport.height) / 2;
+    const mouseX = (mousePosition.x * viewport.width) / 2;
+    const mouseY = (mousePosition.y * viewport.height) / 2;
+    const timeSinceClick = Date.now() - clickState.clickTime;
+    const isExploding = clickState.isClicked && timeSinceClick < explosionDelay;
 
     const positionAttribute = meshRef.current.geometry.attributes.position;
     const arr = positionAttribute.array as Float32Array;
@@ -46,19 +106,56 @@ function GridMesh() {
       const ox = originalPositions[i];
       const oy = originalPositions[i + 1];
 
-      const dx = mouseRef.current.x - ox;
-      const dy = mouseRef.current.y - oy;
+      // Normal mouse interaction
+      const dx = mouseX - ox;
+      const dy = mouseY - oy;
       const dist = Math.sqrt(dx * dx + dy * dy);
 
-      if (dist < maxDistance && dist > 0.1) {
+      // Check if particle is within explosion radius
+      let inExplosionRadius = false;
+      if (isExploding) {
+        const clickWorldX = (clickState.clickX * viewport.width) / 2;
+        const clickWorldY = (clickState.clickY * viewport.height) / 2;
+        const clickDist = Math.sqrt((ox - clickWorldX) ** 2 + (oy - clickWorldY) ** 2);
+        inExplosionRadius = clickDist < explosionRadius;
+      }
+
+      if (inExplosionRadius) {
+        const clickWorldX = (clickState.clickX * viewport.width) / 2;
+        const clickWorldY = (clickState.clickY * viewport.height) / 2;
+        const clickDist = Math.sqrt((ox - clickWorldX) ** 2 + (oy - clickWorldY) ** 2);
+
+        // Calculate expanding shockwave radius
+        const waveRadius = (timeSinceClick / 1000) * shockwaveSpeed * 60;
+        const distFromWave = Math.abs(clickDist - waveRadius);
+
+        // Only affect particles near the shockwave ring
+        if (distFromWave < shockwaveWidth) {
+          const particleIndex = i / 3;
+          const forceMult = randomForce[particleIndex];
+          const angleNoise = randomAngleOffset[particleIndex] * 0.5;
+          const waveIntensity = 1 - (distFromWave / shockwaveWidth);
+
+          const angle = Math.atan2(oy - clickWorldY, ox - clickWorldX) + angleNoise;
+          const pushStrength = shockwaveForce * waveIntensity * forceMult;
+
+          // Push particles outward from the wave
+          const targetX = ox + Math.cos(angle) * pushStrength;
+          const targetY = oy + Math.sin(angle) * pushStrength;
+
+          arr[i] += (targetX - arr[i]) * 0.3;
+          arr[i + 1] += (targetY - arr[i + 1]) * 0.3;
+          arr[i + 2] += (pushStrength * 0.4 - arr[i + 2]) * 0.15;
+        }
+      } else if (dist < maxDistance && dist > 0.1) {
         // Gravitational pull - attract towards cursor
         const force = (1 - dist / maxDistance) * gravitationalStrength;
         const angle = Math.atan2(dy, dx);
-        
+
         // Target position pulled towards cursor
         const targetX = ox + Math.cos(angle) * force;
         const targetY = oy + Math.sin(angle) * force;
-        
+
         // Smooth interpolation towards target
         arr[i] += (targetX - arr[i]) * 0.15;
         arr[i + 1] += (targetY - arr[i + 1]) * 0.15;
@@ -98,18 +195,20 @@ function GridMesh() {
 
 function GridLines() {
   const linesRef = useRef<THREE.LineSegments>(null);
-  const mouseRef = useRef({ x: 0, y: 0 });
   const { viewport } = useThree();
 
-  const [positions, originalPositions, indices] = useMemo(() => {
+  const [positions, originalPositions, indices, randomForce, randomAngleOffset] = useMemo(() => {
     const pos: number[] = [];
     const origPos: number[] = [];
     const idx: number[] = [];
+    const force: number[] = [];
+    const angleOff: number[] = [];
     const halfSize = gridSize / 2;
     const step = gridSize / gridDivisions;
 
     let vertexIndex = 0;
-    
+    let pointIndex = 0;
+
     // Vertical lines
     for (let i = 0; i <= gridDivisions; i++) {
       const x = -halfSize + i * step;
@@ -122,6 +221,19 @@ function GridLines() {
         origPos.push(x, y2, 0);
         idx.push(vertexIndex, vertexIndex + 1);
         vertexIndex += 2;
+
+        // Per-particle random attributes for organic variation
+        const seed1 = pointIndex++ * 123.456;
+        const rand1a = ((seed1 * 12.9898) % 1 + 1) % 1;
+        const rand1b = ((seed1 * 78.233) % 1 + 1) % 1;
+        force.push(1 - forceVariation + rand1a * forceVariation * 2);
+        angleOff.push(-angleVariation + rand1b * angleVariation * 2);
+
+        const seed2 = pointIndex++ * 123.456;
+        const rand2a = ((seed2 * 12.9898) % 1 + 1) % 1;
+        const rand2b = ((seed2 * 78.233) % 1 + 1) % 1;
+        force.push(1 - forceVariation + rand2a * forceVariation * 2);
+        angleOff.push(-angleVariation + rand2b * angleVariation * 2);
       }
     }
 
@@ -137,17 +249,38 @@ function GridLines() {
         origPos.push(x2, y, 0);
         idx.push(vertexIndex, vertexIndex + 1);
         vertexIndex += 2;
+
+        // Per-particle random attributes for organic variation
+        const seed1 = pointIndex++ * 123.456;
+        const rand1a = ((seed1 * 12.9898) % 1 + 1) % 1;
+        const rand1b = ((seed1 * 78.233) % 1 + 1) % 1;
+        force.push(1 - forceVariation + rand1a * forceVariation * 2);
+        angleOff.push(-angleVariation + rand1b * angleVariation * 2);
+
+        const seed2 = pointIndex++ * 123.456;
+        const rand2a = ((seed2 * 12.9898) % 1 + 1) % 1;
+        const rand2b = ((seed2 * 78.233) % 1 + 1) % 1;
+        force.push(1 - forceVariation + rand2a * forceVariation * 2);
+        angleOff.push(-angleVariation + rand2b * angleVariation * 2);
       }
     }
 
-    return [new Float32Array(pos), new Float32Array(origPos), new Uint32Array(idx)];
+    return [
+      new Float32Array(pos),
+      new Float32Array(origPos),
+      new Uint32Array(idx),
+      new Float32Array(force),
+      new Float32Array(angleOff)
+    ];
   }, []);
 
-  useFrame(({ mouse }) => {
+  useFrame(() => {
     if (!linesRef.current) return;
 
-    mouseRef.current.x = (mouse.x * viewport.width) / 2;
-    mouseRef.current.y = (mouse.y * viewport.height) / 2;
+    const mouseX = (mousePosition.x * viewport.width) / 2;
+    const mouseY = (mousePosition.y * viewport.height) / 2;
+    const timeSinceClick = Date.now() - clickState.clickTime;
+    const isExploding = clickState.isClicked && timeSinceClick < explosionDelay;
 
     const positionAttribute = linesRef.current.geometry.attributes.position;
     const arr = positionAttribute.array as Float32Array;
@@ -156,19 +289,56 @@ function GridLines() {
       const ox = originalPositions[i];
       const oy = originalPositions[i + 1];
 
-      const dx = mouseRef.current.x - ox;
-      const dy = mouseRef.current.y - oy;
+      // Normal mouse interaction
+      const dx = mouseX - ox;
+      const dy = mouseY - oy;
       const dist = Math.sqrt(dx * dx + dy * dy);
 
-      if (dist < maxDistance && dist > 0.1) {
+      // Check if particle is within explosion radius
+      let inExplosionRadius = false;
+      if (isExploding) {
+        const clickWorldX = (clickState.clickX * viewport.width) / 2;
+        const clickWorldY = (clickState.clickY * viewport.height) / 2;
+        const clickDist = Math.sqrt((ox - clickWorldX) ** 2 + (oy - clickWorldY) ** 2);
+        inExplosionRadius = clickDist < explosionRadius;
+      }
+
+      if (inExplosionRadius) {
+        const clickWorldX = (clickState.clickX * viewport.width) / 2;
+        const clickWorldY = (clickState.clickY * viewport.height) / 2;
+        const clickDist = Math.sqrt((ox - clickWorldX) ** 2 + (oy - clickWorldY) ** 2);
+
+        // Calculate expanding shockwave radius
+        const waveRadius = (timeSinceClick / 1000) * shockwaveSpeed * 60;
+        const distFromWave = Math.abs(clickDist - waveRadius);
+
+        // Only affect particles near the shockwave ring
+        if (distFromWave < shockwaveWidth) {
+          const particleIndex = i / 3;
+          const forceMult = randomForce[particleIndex];
+          const angleNoise = randomAngleOffset[particleIndex] * 0.5;
+          const waveIntensity = 1 - (distFromWave / shockwaveWidth);
+
+          const angle = Math.atan2(oy - clickWorldY, ox - clickWorldX) + angleNoise;
+          const pushStrength = shockwaveForce * 0.7 * waveIntensity * forceMult;
+
+          // Push particles outward from the wave
+          const targetX = ox + Math.cos(angle) * pushStrength;
+          const targetY = oy + Math.sin(angle) * pushStrength;
+
+          arr[i] += (targetX - arr[i]) * 0.25;
+          arr[i + 1] += (targetY - arr[i + 1]) * 0.25;
+          arr[i + 2] += (pushStrength * 0.35 - arr[i + 2]) * 0.12;
+        }
+      } else if (dist < maxDistance && dist > 0.1) {
         // Gravitational pull - attract towards cursor
         const force = (1 - dist / maxDistance) * (gravitationalStrength * 0.7);
         const angle = Math.atan2(dy, dx);
-        
+
         // Target position pulled towards cursor
         const targetX = ox + Math.cos(angle) * force;
         const targetY = oy + Math.sin(angle) * force;
-        
+
         // Smooth interpolation towards target
         arr[i] += (targetX - arr[i]) * 0.12;
         arr[i + 1] += (targetY - arr[i + 1]) * 0.12;
@@ -246,10 +416,10 @@ function CSSGridFallback() {
  */
 function WebGLGrid() {
   return (
-    <div className="fixed inset-0 z-0 pointer-events-none">
+    <div className="fixed inset-0 z-0">
       <Canvas
         camera={{ position: [0, 0, 30], fov: 50 }}
-        style={{ background: 'transparent' }}
+        style={{ background: 'transparent', pointerEvents: 'auto' }}
         gl={{ 
           alpha: true, 
           antialias: true,

@@ -17,7 +17,7 @@ const RecentPosts = () => {
 
           <Link
             to="/blog"
-            className="text-[#666666] hover:text-[#ff3333] flex items-center transition-colors text-sm"
+            className="text-[#666666] hover:text-[#ff3333] flex items-center transition-colors text-sm pointer-events-auto"
           >
             VIEW ALL
             <ArrowRight className="ml-1 h-4 w-4" />

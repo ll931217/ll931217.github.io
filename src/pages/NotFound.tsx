@@ -13,7 +13,7 @@ const NotFound = () => {
 
       <MinimalNav />
 
-      <main className="relative z-10 min-h-screen flex flex-col items-center justify-center p-4 md:p-8 border-t-4 border-white">
+      <main className="relative z-10 min-h-screen flex flex-col items-center justify-center p-4 md:p-8 border-t-4 border-white pointer-events-none">
         <div className="max-w-md mx-auto text-center">
           <h1 className="text-6xl md:text-8xl font-bold mb-6 text-[#ff3333]">
             404
@@ -30,7 +30,7 @@ const NotFound = () => {
 
           <Link
             to="/"
-            className="inline-flex items-center px-6 py-3 border border-[#ff3333] text-[#ff3333] hover:bg-[#ff3333]/10 transition-colors"
+            className="inline-flex items-center px-6 py-3 border border-[#ff3333] text-[#ff3333] hover:bg-[#ff3333]/10 transition-colors pointer-events-auto"
           >
             <Home className="mr-2 h-4 w-4" />
             Back to Home

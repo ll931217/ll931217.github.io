@@ -86,7 +86,7 @@ const Blog = () => {
         [{scroll}%]
       </div>
 
-      <main className="relative z-10">
+      <main className="relative z-10 pointer-events-none">
         {/* Compact Header */}
         <section className="pt-20 pb-8 md:pt-24 md:pb-12 px-4 md:px-8 border-t-4 border-white">
           <div className="max-w-6xl mx-auto">
@@ -118,7 +118,7 @@ const Blog = () => {
                   placeholder="Search..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-9 pr-4 h-10 bg-[#0a0a0a]/50 border border-[#666666] text-white placeholder:text-[#666666] focus:outline-none focus:border-[#ff3333] transition-colors text-sm"
+                  className="w-full pl-9 pr-4 h-10 bg-[#0a0a0a]/50 border border-[#666666] text-white placeholder:text-[#666666] focus:outline-none focus:border-[#ff3333] transition-colors text-sm pointer-events-auto"
                 />
               </div>
             </div>
@@ -129,7 +129,7 @@ const Blog = () => {
         <section className="pb-20 px-4 md:px-8">
           <div className="max-w-6xl mx-auto">
             {/* Tags */}
-            <div className="flex flex-wrap gap-2 mb-6">
+            <div className="flex flex-wrap gap-2 mb-6 pointer-events-auto">
               <button
                 onClick={() => setSelectedTag(null)}
                 className={`px-3 py-1.5 text-sm border transition-colors ${
@@ -158,7 +158,7 @@ const Blog = () => {
 
             {/* Blog Posts Grid */}
             {sortedPosts.length === 0 ? (
-              <div className="bg-[#666666]/10 border border-[#666666] text-center py-12">
+              <div className="bg-[#666666]/10 border border-[#666666] text-center py-12 pointer-events-auto">
                 <p className="text-[#666666] mb-4">
                   No blog posts found
                 </p>
