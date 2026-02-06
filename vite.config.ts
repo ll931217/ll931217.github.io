@@ -16,7 +16,7 @@ export default defineConfig(() => ({
   plugins: [
     react(),
     mdPlugin({
-      mode: [Mode.MARKDOWN],
+      mode: [Mode.MARKDOWN, Mode.HTML],
       markdown: (body) => {
         const rendered = md.render(body);
         // console.log(rendered);
