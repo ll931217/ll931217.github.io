@@ -28,6 +28,7 @@ const Index = () => {
   }, []);
 
   useEffect(() => {
+    // Name character reveal
     const chars = gsap.utils.toArray('.name-char');
     gsap.from(chars, {
       opacity: 0,
@@ -37,6 +38,16 @@ const Index = () => {
       ease: 'power4.out'
     });
 
+    // Hero description fade in after name
+    gsap.from('.hero-description', {
+      opacity: 0,
+      y: 30,
+      duration: 1,
+      delay: 0.8,
+      ease: 'power3.out'
+    });
+
+    // Scroll indicator pulse
     gsap.to('.scroll-indicator', {
       scale: 1.1,
       duration: 1,
@@ -45,6 +56,7 @@ const Index = () => {
       ease: 'power1.inOut'
     });
 
+    // Grid parallax
     gsap.to('.grid-lines', {
       y: 100,
       scrollTrigger: {
@@ -55,7 +67,8 @@ const Index = () => {
       }
     });
 
-    gsap.utils.toArray('section').forEach((section) => {
+    // Section reveals (skip first hero section)
+    gsap.utils.toArray('section:not(:first-child)').forEach((section) => {
       gsap.from(section as any, {
         opacity: 0,
         y: 50,
@@ -109,20 +122,55 @@ const Index = () => {
       </div>
       
       <main className="relative z-10">
-        <section className="h-screen flex items-center justify-center overflow-hidden p-4">
-          <h1 
-            ref={nameRef}
-            className="font-bold uppercase whitespace-nowrap text-center"
-            style={{
-                fontSize: 'clamp(2rem, 8vw, 6rem)',
-                letterSpacing: 'clamp(0.5rem, 4vw, 2rem)',
-                lineHeight: '0.8',
-                marginLeft: 'clamp(0.5rem, 4vw, 2rem)',
-            }}
-            onMouseEnter={glitchEffect}
-          >
-            {nameChars}
-          </h1>
+        <section className="min-h-screen flex flex-col items-center justify-center overflow-hidden p-4 md:p-8">
+          <div className="max-w-4xl mx-auto text-center">
+            <h1 
+              ref={nameRef}
+              className="font-bold uppercase text-center mb-8"
+              style={{
+                  fontSize: 'clamp(2rem, 8vw, 5rem)',
+                  letterSpacing: 'clamp(0.2rem, 1vw, 0.8rem)',
+                  lineHeight: '1',
+              }}
+              onMouseEnter={glitchEffect}
+            >
+              {nameChars}
+            </h1>
+            
+            <div className="hero-description space-y-6 mt-8">
+              <p className="text-xl md:text-2xl text-[#666666] leading-relaxed">
+                <span className="text-[#ff3333]">&gt;</span> Full-stack developer building{' '}
+                <span className="text-white">systems that work</span>
+              </p>
+              
+              <p className="text-lg md:text-xl text-[#666666] leading-relaxed max-w-2xl mx-auto">
+                8+ years turning complex problems into clean, efficient solutions. 
+                From frontend interfaces to backend architectures, I build software 
+                that is <span className="text-[#ff3333]">reliable</span>, <span className="text-[#ff3333]">scalable</span>, 
+                and <span className="text-[#ff3333]">maintainable</span>.
+              </p>
+              
+              <div className="flex flex-wrap justify-center gap-4 mt-8 text-sm md:text-base">
+                <span className="border border-[#666666] px-4 py-2 text-[#666666] hover:border-[#ff3333] hover:text-[#ff3333] transition-colors">
+                  TAIWAN
+                </span>
+                <span className="border border-[#666666] px-4 py-2 text-[#666666] hover:border-[#ff3333] hover:text-[#ff3333] transition-colors">
+                  REACT / VUE / TYPESCRIPT
+                </span>
+                <span className="border border-[#666666] px-4 py-2 text-[#666666] hover:border-[#ff3333] hover:text-[#ff3333] transition-colors">
+                  NODE.JS / PYTHON
+                </span>
+                <span className="border border-[#666666] px-4 py-2 text-[#666666] hover:border-[#ff3333] hover:text-[#ff3333] transition-colors">
+                  AWS / DOCKER
+                </span>
+              </div>
+              
+              <div className="mt-12 text-[#666666] animate-bounce">
+                <span className="text-sm tracking-widest">SCROLL TO EXPLORE</span>
+                <div className="mt-2">↓</div>
+              </div>
+            </div>
+          </div>
         </section>
 
         <section className="py-20 px-4 md:px-8 border-t-2 border-[#ff3333]">
