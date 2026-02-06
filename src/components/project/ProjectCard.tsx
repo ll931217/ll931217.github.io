@@ -10,35 +10,32 @@ interface ProjectCardProps {
 
 const ProjectCard = ({ repo }: ProjectCardProps) => {
   return (
-    <GlowCard className="h-full">
-      <div className="flex flex-col h-full">
-        <div className="flex items-start justify-between mb-4">
-          <h3 className="text-lg font-bold text-white hover:text-[#ff3333] transition-colors">
-            {repo.name}
-          </h3>
-          <div className="flex space-x-3">
-            <a
-              href={repo.html_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[#666666] hover:text-[#ff3333] transition-colors"
-              aria-label="GitHub Repository"
-            >
-              <SiGithub size={18} />
-            </a>
-            {repo.homepage && (
-              <a
-                href={repo.homepage}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#666666] hover:text-[#ff3333] transition-colors"
-                aria-label="Live Demo"
-              >
-                <ExternalLink size={18} />
-              </a>
-            )}
+    <a
+      href={repo.html_url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="block h-full"
+    >
+      <GlowCard className="h-full hover:border-[#ff3333] transition-colors">
+        <div className="flex flex-col h-full">
+          <div className="flex items-start justify-between mb-4">
+            <h3 className="text-lg font-bold text-white hover:text-[#ff3333] transition-colors">
+              {repo.name}
+            </h3>
+            <div className="flex space-x-3">
+              <SiGithub size={18} className="text-[#666666]" />
+              {repo.homepage && (
+                <ExternalLink
+                  size={18}
+                  className="text-[#666666]"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    window.open(repo.homepage, '_blank', 'noopener,noreferrer');
+                  }}
+                />
+              )}
+            </div>
           </div>
-        </div>
 
         <p className="text-[#999999] mb-4 flex-grow text-sm">
           {repo.description || "No description provided."}
@@ -92,6 +89,7 @@ const ProjectCard = ({ repo }: ProjectCardProps) => {
         </div>
       </div>
     </GlowCard>
+    </a>
   );
 };
 
