@@ -1,9 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import ProjectCard from "@/components/project/ProjectCard";
+import ProjectCardSkeleton from "@/components/project/ProjectCardSkeleton";
 import { fetchRepositories, fetchLanguages } from "@/lib/github";
 import { RepoFilter, Repository } from "@/types/repository";
 import { AlertTriangle, Filter, Search } from "lucide-react";
+import EmptyState from "@/components/ui/EmptyState";
 import {
   Select,
   SelectContent,
@@ -21,6 +23,8 @@ import {
 import { Input } from "@/components/ui/input";
 import InteractiveGrid from "@/components/three/InteractiveGrid";
 import MinimalNav from "@/components/layout/MinimalNav";
+import { KeyboardCheatSheet, KeyboardHelpButton } from "@/components/ui/KeyboardCheatSheet";
+import { useKeyboardShortcuts } from "@/hooks/useKeyboardShortcut";
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -32,6 +36,26 @@ const Projects = () => {
   const [selectedLanguage, setSelectedLanguage] = useState<string>("all");
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [search, setSearch] = useState<string>("");
+  const [showKeyboardHelp, setShowKeyboardHelp] = useState(false);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+
+  // Keyboard shortcuts
+  useKeyboardShortcuts(
+    {
+      "/": () => searchInputRef.current?.focus(),
+      "?": () => setShowKeyboardHelp(true),
+      Escape: () => {
+        if (showKeyboardHelp) {
+          setShowKeyboardHelp(false);
+        } else if (search) {
+          setSearch("");
+          setFilter("all");
+          setSelectedLanguage("all");
+        }
+      },
+    },
+    true
+  );
 
   useEffect(() => {
     const handleScroll = () => {
@@ -139,11 +163,12 @@ const Projects = () => {
                   size={16}
                 />
                 <Input
+                  ref={searchInputRef}
                   className="pl-9 h-10 bg-[#0a0a0a]/50 border border-[#666666] text-white placeholder:text-[#666666] focus:border-[#ff3333] focus:outline-none transition-colors text-sm pointer-events-auto"
                   type="search"
                   value={search}
                   onChange={handleSearchInput}
-                  placeholder="Search..."
+                  placeholder="Search... (press /)"
                 />
               </div>
             </div>
@@ -258,12 +283,9 @@ const Projects = () => {
 
             {/* Projects Grid */}
             {isLoading ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 animate-pulse">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                 {[1, 2, 3, 4, 5, 6].map((item) => (
-                  <div
-                    key={item}
-                    className="h-48 bg-[#666666]/10 border border-[#666666]"
-                  ></div>
+                  <ProjectCardSkeleton key={item} />
                 ))}
               </div>
             ) : error ? (
@@ -280,21 +302,17 @@ const Projects = () => {
                 </button>
               </div>
             ) : repos?.length === 0 ? (
-              <div className="bg-[#666666]/10 border border-[#666666] text-center py-12 pointer-events-auto">
-                <p className="text-[#666666] mb-4">
-                  No repositories found
-                </p>
-                <button
-                  onClick={() => {
-                    setFilter("all");
-                    setSelectedLanguage("all");
-                    setSearch("");
-                  }}
-                  className="px-4 py-2 border border-[#ff3333] text-[#ff3333] hover:bg-[#ff3333]/10 transition-colors"
-                >
-                  View All
-                </button>
-              </div>
+              <EmptyState
+                type="search"
+                message="No repositories match your filters"
+                actionLabel="View All"
+                onAction={() => {
+                  setFilter("all");
+                  setSelectedLanguage("all");
+                  setSearch("");
+                }}
+                className="pointer-events-auto"
+              />
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                 {repos?.map((repo: Repository) => (
@@ -309,6 +327,13 @@ const Projects = () => {
             <pre className="text-xs md:text-sm text-[#666666]">END OF TRANSMISSION</pre>
         </footer>
       </main>
+
+      {/* Keyboard Shortcuts Help */}
+      <KeyboardHelpButton onClick={() => setShowKeyboardHelp(true)} />
+      <KeyboardCheatSheet
+        isOpen={showKeyboardHelp}
+        onClose={() => setShowKeyboardHelp(false)}
+      />
     </div>
   );
 };

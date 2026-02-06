@@ -1,10 +1,11 @@
 import FeaturedProjects from "@/components/home/FeaturedProjects";
 import RecentPosts from "@/components/blog/RecentPosts";
 import InteractiveGrid from "@/components/three/InteractiveGrid";
-import { useEffect, useState, useRef, useCallback, lazy, Suspense } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { TextPlugin } from 'gsap/TextPlugin';
+import { NameParticles } from "@/components/ui/NameParticles";
 
 gsap.registerPlugin(ScrollTrigger, TextPlugin);
 
@@ -141,40 +142,6 @@ const Index = () => {
     }
   }, [skillsRevealed, scrambleText]);
 
-  const glitchEffect = () => {
-    if (!nameRef.current) return;
-    
-    const tl = gsap.timeline();
-    tl.to(nameRef.current, {
-      x: -5,
-      duration: 0.05,
-      ease: 'power1.inOut'
-    })
-    .to(nameRef.current, {
-      x: 5,
-      textShadow: '3px 0 #ff3333, -3px 0 #00ff00',
-      duration: 0.05,
-      ease: 'power1.inOut'
-    })
-    .to(nameRef.current, {
-      x: -3,
-      textShadow: '-2px 0 #ff3333, 2px 0 #00ff00',
-      duration: 0.05,
-      ease: 'power1.inOut'
-    })
-    .to(nameRef.current, {
-      x: 3,
-      duration: 0.05,
-      ease: 'power1.inOut'
-    })
-    .to(nameRef.current, {
-      x: 0,
-      textShadow: 'none',
-      duration: 0.05,
-      ease: 'power1.inOut'
-    });
-  };
-
   const name = "Liang-Shih Lin";
   const nameChars = name.split('').map((char, index) => (
     <span key={index} className="name-char" style={{ display: 'inline-block' }}>
@@ -196,19 +163,20 @@ const Index = () => {
       <main className="relative z-10 pointer-events-none">
         <section className="min-h-screen flex flex-col items-center justify-center overflow-hidden p-4 md:p-8">
           <div className="max-w-4xl mx-auto text-center">
-            <h1
-              ref={nameRef}
-              className="font-bold uppercase text-center mb-8 glitch-text pointer-events-auto"
-              data-text="LIANG-SHIH LIN"
-              style={{
-                  fontSize: 'clamp(2rem, 8vw, 5rem)',
-                  letterSpacing: 'clamp(0.2rem, 1vw, 0.8rem)',
-                  lineHeight: '1',
-              }}
-              onMouseEnter={glitchEffect}
-            >
-              {nameChars}
-            </h1>
+            <div className="relative">
+              <NameParticles containerRef={nameRef} />
+              <h1
+                ref={nameRef}
+                className="font-bold uppercase text-center mb-8 pointer-events-auto"
+                style={{
+                    fontSize: 'clamp(2rem, 8vw, 5rem)',
+                    letterSpacing: 'clamp(0.2rem, 1vw, 0.8rem)',
+                    lineHeight: '1',
+                }}
+              >
+                {nameChars}
+              </h1>
+            </div>
             
             <div className="hero-description space-y-6 mt-8">
               <p className="text-xl md:text-2xl text-[#666666] leading-relaxed">

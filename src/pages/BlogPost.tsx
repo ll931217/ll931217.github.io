@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { getBlogPostBySlug } from "@/lib/blogLoader";
 import { parseMarkdown, formatDate } from "@/lib/utils";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Clock } from "lucide-react";
 import InteractiveGrid from "@/components/three/InteractiveGrid";
 import MinimalNav from "@/components/layout/MinimalNav";
+import { generateArticleSchema, injectJsonLd } from "@/lib/structuredData";
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -59,6 +60,22 @@ const BlogPost = () => {
     });
   }, [post, slug, navigate]);
 
+  // Inject structured data for SEO
+  useEffect(() => {
+    if (post) {
+      const schema = generateArticleSchema({
+        title: post.title,
+        description: post.excerpt,
+        datePublished: post.date,
+        author: post.author,
+        url: `${window.location.origin}/blog/${post.slug}`,
+      });
+
+      const cleanup = injectJsonLd(schema);
+      return cleanup;
+    }
+  }, [post]);
+
   if (!post) {
     return null; // Will redirect in useEffect
   }
@@ -105,6 +122,15 @@ const BlogPost = () => {
               <time dateTime={post.date}>{formatDate(post.date)}</time>
               <span>•</span>
               <span>{post.author}</span>
+              {post.readingTime && (
+                <>
+                  <span>•</span>
+                  <span className="flex items-center gap-1">
+                    <Clock size={14} />
+                    {post.readingTime}
+                  </span>
+                </>
+              )}
             </div>
 
             <div className="flex flex-wrap gap-2 mt-4">

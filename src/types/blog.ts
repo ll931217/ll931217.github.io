@@ -6,4 +6,5 @@ export interface Blog {
   content: string;
   tags: string[];
   author: string;
+  readingTime?: string; // Formatted string like "5 min read"
 }

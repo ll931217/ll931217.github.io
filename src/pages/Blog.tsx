@@ -1,10 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import BlogCard from "@/components/blog/BlogCard";
 import { getAllBlogPosts } from "@/lib/blogLoader";
 import type { Blog as BlogType } from "@/types/blog";
 import { Search } from "lucide-react";
 import InteractiveGrid from "@/components/three/InteractiveGrid";
 import MinimalNav from "@/components/layout/MinimalNav";
+import { KeyboardCheatSheet, KeyboardHelpButton } from "@/components/ui/KeyboardCheatSheet";
+import { useKeyboardShortcuts } from "@/hooks/useKeyboardShortcut";
+import EmptyState from "@/components/ui/EmptyState";
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -14,6 +17,25 @@ const Blog = () => {
   const [scroll, setScroll] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
+  const [showKeyboardHelp, setShowKeyboardHelp] = useState(false);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+
+  // Keyboard shortcuts
+  useKeyboardShortcuts(
+    {
+      "/": () => searchInputRef.current?.focus(),
+      "?": () => setShowKeyboardHelp(true),
+      Escape: () => {
+        if (showKeyboardHelp) {
+          setShowKeyboardHelp(false);
+        } else if (searchQuery) {
+          setSearchQuery("");
+          setSelectedTag(null);
+        }
+      },
+    },
+    true
+  );
 
   useEffect(() => {
     const handleScroll = () => {
@@ -114,8 +136,9 @@ const Blog = () => {
                   size={16}
                 />
                 <input
+                  ref={searchInputRef}
                   type="text"
-                  placeholder="Search..."
+                  placeholder="Search... (press /)"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full pl-9 pr-4 h-10 bg-[#0a0a0a]/50 border border-[#666666] text-white placeholder:text-[#666666] focus:outline-none focus:border-[#ff3333] transition-colors text-sm pointer-events-auto"
@@ -158,20 +181,15 @@ const Blog = () => {
 
             {/* Blog Posts Grid */}
             {sortedPosts.length === 0 ? (
-              <div className="bg-[#666666]/10 border border-[#666666] text-center py-12 pointer-events-auto">
-                <p className="text-[#666666] mb-4">
-                  No blog posts found
-                </p>
-                <button
-                  onClick={() => {
-                    setSearchQuery("");
-                    setSelectedTag(null);
-                  }}
-                  className="px-4 py-2 border border-[#ff3333] text-[#ff3333] hover:bg-[#ff3333]/10 transition-colors"
-                >
-                  Clear Filters
-                </button>
-              </div>
+              <EmptyState
+                type="search"
+                actionLabel="Clear Filters"
+                onAction={() => {
+                  setSearchQuery("");
+                  setSelectedTag(null);
+                }}
+                className="pointer-events-auto"
+              />
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                 {sortedPosts.map((post: BlogType) => (
@@ -186,6 +204,13 @@ const Blog = () => {
             <pre className="text-xs md:text-sm text-[#666666]">END OF TRANSMISSION</pre>
         </footer>
       </main>
+
+      {/* Keyboard Shortcuts Help */}
+      <KeyboardHelpButton onClick={() => setShowKeyboardHelp(true)} />
+      <KeyboardCheatSheet
+        isOpen={showKeyboardHelp}
+        onClose={() => setShowKeyboardHelp(false)}
+      />
     </div>
   );
 };

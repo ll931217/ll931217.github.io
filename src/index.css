@@ -173,67 +173,6 @@
   50% { opacity: 0; }
 }
 
-/* Enhanced glitch effect */
-.glitch-text {
-  position: relative;
-}
-
-.glitch-text:hover {
-  animation: glitch-skew 0.5s infinite linear alternate-reverse;
-}
-
-.glitch-text::before,
-.glitch-text::after {
-  content: attr(data-text);
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-}
-
-.glitch-text:hover::before {
-  opacity: 0.8;
-  color: #ff3333;
-  animation: glitch-left 0.3s infinite linear alternate-reverse;
-  clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
-}
-
-.glitch-text:hover::after {
-  opacity: 0.8;
-  color: #00ff00;
-  animation: glitch-right 0.3s infinite linear alternate-reverse;
-  clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
-}
-
-@keyframes glitch-skew {
-  0% { transform: skew(0deg); }
-  20% { transform: skew(-2deg); }
-  40% { transform: skew(2deg); }
-  60% { transform: skew(0deg); }
-  80% { transform: skew(1deg); }
-  100% { transform: skew(-1deg); }
-}
-
-@keyframes glitch-left {
-  0% { transform: translateX(0); }
-  20% { transform: translateX(-3px); }
-  40% { transform: translateX(3px); }
-  60% { transform: translateX(-1px); }
-  80% { transform: translateX(2px); }
-  100% { transform: translateX(0); }
-}
-
-@keyframes glitch-right {
-  0% { transform: translateX(0); }
-  20% { transform: translateX(3px); }
-  40% { transform: translateX(-3px); }
-  60% { transform: translateX(1px); }
-  80% { transform: translateX(-2px); }
-  100% { transform: translateX(0); }
-}
-
 /* Text scramble animation helper */
 .scramble-text {
   display: inline-block;
@@ -251,3 +190,159 @@
   opacity: 0.015;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
 }
+
+/* Scroll Progress Glitch Animations */
+@keyframes glitch-progress {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  20% {
+    transform: translateX(-2px);
+    opacity: 0.8;
+  }
+  40% {
+    transform: translateX(2px);
+    opacity: 1;
+  }
+  60% {
+    transform: translateX(-1px);
+    opacity: 0.9;
+  }
+  80% {
+    transform: translateX(1px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes glitch-shift-1 {
+  0%, 100% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+  10% {
+    transform: translateX(-5px);
+    opacity: 0.8;
+  }
+  20% {
+    transform: translateX(5px);
+    opacity: 0;
+  }
+  30% {
+    transform: translateX(-3px);
+    opacity: 0.6;
+  }
+  40% {
+    transform: translateX(3px);
+    opacity: 0;
+  }
+  50% {
+    transform: translateX(-2px);
+    opacity: 0.4;
+  }
+}
+
+@keyframes glitch-shift-2 {
+  0%, 100% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+  15% {
+    transform: translateX(5px);
+    opacity: 0.7;
+  }
+  25% {
+    transform: translateX(-5px);
+    opacity: 0;
+  }
+  35% {
+    transform: translateX(3px);
+    opacity: 0.5;
+  }
+  45% {
+    transform: translateX(-3px);
+    opacity: 0;
+  }
+  55% {
+    transform: translateX(2px);
+    opacity: 0.3;
+  }
+}
+
+.animate-glitch-progress {
+  animation: glitch-progress 0.3s infinite;
+}
+
+.animate-glitch-shift-1 {
+  animation: glitch-shift-1 0.5s infinite;
+}
+
+.animate-glitch-shift-2 {
+  animation: glitch-shift-2 0.5s infinite;
+}
+
+/* Custom Cursor Animations */
+@keyframes glitch-cursor-1 {
+  0%, 100% {
+    transform: translate(0);
+    opacity: 0;
+  }
+  20% {
+    transform: translate(-2px, 1px);
+    opacity: 0.8;
+  }
+  40% {
+    transform: translate(2px, -1px);
+    opacity: 0;
+  }
+}
+
+@keyframes glitch-cursor-2 {
+  0%, 100% {
+    transform: translate(0);
+    opacity: 0;
+  }
+  30% {
+    transform: translate(2px, -1px);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translate(-2px, 1px);
+    opacity: 0;
+  }
+}
+
+@keyframes shockwave-ring {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+.animate-glitch-cursor-1 {
+  animation: glitch-cursor-1 0.2s infinite;
+}
+
+.animate-glitch-cursor-2 {
+  animation: glitch-cursor-2 0.25s infinite;
+}
+
+.animate-shockwave-ring {
+  animation: shockwave-ring 0.5s ease-out;
+}
+
+/* Hide default cursor when custom cursor is active */
+body.custom-cursor,
+body.custom-cursor * {
+  cursor: none !important;
+}
+
+

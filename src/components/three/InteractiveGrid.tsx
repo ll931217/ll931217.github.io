@@ -419,9 +419,9 @@ function WebGLGrid() {
     <div className="fixed inset-0 z-0">
       <Canvas
         camera={{ position: [0, 0, 30], fov: 50 }}
-        style={{ background: 'transparent', pointerEvents: 'auto' }}
-        gl={{ 
-          alpha: true, 
+        style={{ background: 'transparent', pointerEvents: 'none' }}
+        gl={{
+          alpha: true,
           antialias: true,
           powerPreference: 'high-performance',
           failIfMajorPerformanceCaveat: true,
