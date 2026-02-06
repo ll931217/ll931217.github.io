@@ -2,15 +2,20 @@ import { Blog } from "@/types/blog";
 
 const POSTS = import.meta.glob("@/content/blog/*.md", {
   eager: true,
-}) as Record<string, { attributes: Blog; markdown: string }>;
+});
 
-export const blogPosts: Blog[] = Object.entries(POSTS).map(([path, post]) => {
+export const blogPosts: Blog[] = Object.entries(POSTS).map(([path, post]: [string, any]) => {
   // Extract filename without extension as slug
   const [, filename] = path.match(/([^/\\]+)\.md$/) || [];
 
+  // vite-plugin-markdown with Mode.HTML exports: { html, attributes }
+  // or with Mode.MARKDOWN exports: { default: string } for raw markdown
+  const attributes = post.attributes || post.frontmatter || {};
+  const content = post.html || post.markdown || post.default || '';
+
   return {
-    ...post.attributes,
+    ...attributes,
     slug: filename,
-    content: post.markdown,
-  };
+    content: content,
+  } as Blog;
 });
