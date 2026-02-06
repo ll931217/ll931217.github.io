@@ -102,13 +102,13 @@ const Index = () => {
         })
         .join("");
       
-      iteration += 1/3;
+      iteration += 3;
       
       if (iteration >= maxIterations) {
         clearInterval(interval);
         element.innerText = finalText;
       }
-    }, 30);
+    }, 15);
   }, []);
 
   useEffect(() => {
