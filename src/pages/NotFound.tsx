@@ -1,30 +1,44 @@
 import { Link } from "react-router-dom";
-import Layout from "@/components/layout/Layout";
 import { Home } from "lucide-react";
+import InteractiveGrid from "@/components/three/InteractiveGrid";
 
 const NotFound = () => {
   return (
-    <Layout>
-      <div className="max-w-md mx-auto text-center py-16">
-        <h1 className="text-6xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-tokyo-magenta via-tokyo-purple to-tokyo-blue">
-          404
-        </h1>
+    <div className="bg-[#0a0a0a] text-white font-ibm-mono min-h-screen overflow-x-hidden">
+      <div className="scanlines" />
+      <div className="noise-overlay" />
 
-        <div className="mb-8">
-          <h2 className="text-2xl font-semibold mb-4 text-tokyo-cyan">
-            Page Not Found
-          </h2>
-          <p className="text-tokyo-comment">
-            The page you're looking for doesn't exist or has been moved.
-          </p>
+      <InteractiveGrid />
+
+      <main className="relative z-10 min-h-screen flex flex-col items-center justify-center p-4 md:p-8 border-t-4 border-white">
+        <div className="max-w-md mx-auto text-center">
+          <h1 className="text-8xl md:text-9xl font-bold mb-6 text-[#ff3333]">
+            404
+          </h1>
+
+          <div className="mb-8">
+            <h2 className="text-2xl font-semibold mb-4 text-white uppercase tracking-widest">
+              Page Not Found
+            </h2>
+            <p className="text-[#666666]">
+              <span className="text-[#ff3333]">&gt;</span> The page you're looking for doesn't exist or has been moved.
+            </p>
+          </div>
+
+          <Link
+            to="/"
+            className="inline-flex items-center px-6 py-3 border border-[#ff3333] text-[#ff3333] hover:bg-[#ff3333]/10 transition-colors"
+          >
+            <Home className="mr-2 h-4 w-4" />
+            Back to Home
+          </Link>
         </div>
 
-        <Link to="/" className="tokyo-button inline-flex items-center">
-          <Home className="mr-2 h-4 w-4" />
-          Back to Home
-        </Link>
-      </div>
-    </Layout>
+        <footer className="mt-auto py-12 text-center">
+          <pre className="text-[#666666]">END OF TRANSMISSION</pre>
+        </footer>
+      </main>
+    </div>
   );
 };
 
