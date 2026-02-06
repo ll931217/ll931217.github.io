@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/collapsible";
 import { Input } from "@/components/ui/input";
 import InteractiveGrid from "@/components/three/InteractiveGrid";
+import MinimalNav from "@/components/layout/MinimalNav";
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -82,7 +83,7 @@ const Projects = () => {
   });
 
   const filters: { value: RepoFilter; label: string }[] = [
-    { value: "all", label: "All Projects" },
+    { value: "all", label: "All" },
     { value: "featured", label: "Featured" },
     { value: "recent", label: "Recent" },
     { value: "popular", label: "Popular" },
@@ -104,58 +105,61 @@ const Projects = () => {
 
       <InteractiveGrid />
 
-      <div className="fixed top-4 right-4 text-[#ff3333] z-50 mix-blend-difference">
-        [SCROLL: {scroll}%]
+      <MinimalNav />
+
+      <div className="fixed top-4 right-4 text-[#ff3333] z-50 mix-blend-difference text-sm md:text-base">
+        [{scroll}%]
       </div>
 
       <main className="relative z-10">
-        <section className="min-h-[60vh] flex flex-col items-center justify-center overflow-hidden p-4 md:p-8 border-t-4 border-white">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1
-              className="font-bold uppercase text-center mb-8"
-              style={{
-                  fontSize: 'clamp(2rem, 6vw, 4rem)',
-                  letterSpacing: 'clamp(0.2rem, 1vw, 0.8rem)',
-                  lineHeight: '1',
-              }}
-            >
-              PROJECTS
-            </h1>
+        {/* Compact Header */}
+        <section className="pt-20 pb-8 md:pt-24 md:pb-12 px-4 md:px-8 border-t-4 border-white">
+          <div className="max-w-6xl mx-auto">
+            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+              <div>
+                <h1
+                  className="font-bold uppercase"
+                  style={{
+                      fontSize: 'clamp(1.5rem, 4vw, 2.5rem)',
+                      letterSpacing: '0.2rem',
+                      lineHeight: '1',
+                  }}
+                >
+                  PROJECTS
+                </h1>
+                <p className="mt-4 text-sm md:text-base text-[#666666] max-w-xl">
+                  <span className="text-[#ff3333]">&gt;</span> Explore my open-source projects and personal work.
+                </p>
+              </div>
 
-            <div className="space-y-6 mt-8">
-              <p className="text-lg md:text-xl text-[#666666] leading-relaxed max-w-2xl mx-auto">
-                <span className="text-[#ff3333]">&gt;</span> Explore my open-source projects and personal work.
-                Each project represents my journey as a developer and my passion for creating{' '}
-                <span className="text-white">innovative solutions</span>.
-              </p>
+              {/* Compact Search */}
+              <div className="relative w-full md:w-64 shrink-0">
+                <Search
+                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#666666]"
+                  size={16}
+                />
+                <Input
+                  className="pl-9 h-10 bg-[#0a0a0a]/50 border border-[#666666] text-white placeholder:text-[#666666] focus:border-[#ff3333] focus:outline-none transition-colors text-sm"
+                  type="search"
+                  value={search}
+                  onChange={handleSearchInput}
+                  placeholder="Search..."
+                />
+              </div>
             </div>
           </div>
         </section>
 
-        <section className="py-20 px-4 md:px-8">
+        {/* Filters and Content */}
+        <section className="pb-20 px-4 md:px-8">
           <div className="max-w-6xl mx-auto">
-            {/* Search */}
-            <div className="mb-8 relative">
-              <Search
-                className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#666666]"
-                size={18}
-              />
-              <Input
-                className="pl-10 bg-[#0a0a0a]/50 border border-[#666666] text-white placeholder:text-[#666666] focus:border-[#ff3333] focus:outline-none transition-colors"
-                type="search"
-                value={search}
-                onChange={handleSearchInput}
-                placeholder="Search repositories..."
-              />
-            </div>
-
-            {/* Main Filters */}
-            <div className="flex flex-wrap gap-3 mb-4">
+            {/* Main Filters - Compact */}
+            <div className="flex flex-wrap gap-2 mb-6">
               {filters.map((filterOption) => (
                 <button
                   key={filterOption.value}
                   onClick={() => setFilter(filterOption.value)}
-                  className={`px-4 py-2 border transition-colors ${
+                  className={`px-3 py-1.5 text-sm border transition-colors ${
                     filter === filterOption.value
                       ? "border-[#ff3333] text-[#ff3333] bg-[#ff3333]/10"
                       : "border-[#666666] text-[#666666] hover:border-[#ff3333] hover:text-[#ff3333]"
@@ -164,20 +168,17 @@ const Projects = () => {
                   {filterOption.label}
                 </button>
               ))}
-            </div>
 
-            {/* Advanced Filters */}
-            <Collapsible
-              open={isFiltersOpen}
-              onOpenChange={setIsFiltersOpen}
-              className="mb-6 space-y-2"
-            >
-              <div className="flex items-center gap-2">
-                <CollapsibleTrigger className="flex items-center gap-2 px-3 py-1.5 text-sm text-[#666666] hover:text-white rounded-md border border-[#666666] hover:border-[#ff3333] transition-colors">
-                  <Filter size={16} />
-                  {isFiltersOpen ? "Hide Filters" : "Show Filters"}
+              {/* Language Filter Toggle */}
+              <Collapsible
+                open={isFiltersOpen}
+                onOpenChange={setIsFiltersOpen}
+              >
+                <CollapsibleTrigger className="flex items-center gap-2 px-3 py-1.5 text-sm text-[#666666] hover:text-white border border-[#666666] hover:border-[#ff3333] transition-colors">
+                  <Filter size={14} />
+                  {isFiltersOpen ? "Less" : "More"}
                   {selectedLanguage !== "all" && (
-                    <Badge className="ml-2 bg-[#ff3333]/20 text-[#ff3333] border border-[#ff3333]">
+                    <Badge className="ml-1 bg-[#ff3333]/20 text-[#ff3333] border border-[#ff3333] text-xs px-1.5 py-0">
                       {selectedLanguage}
                     </Badge>
                   )}
@@ -186,41 +187,41 @@ const Projects = () => {
                 {selectedLanguage !== "all" && (
                   <button
                     onClick={() => setSelectedLanguage("all")}
-                    className="text-sm text-[#666666] hover:text-[#ff3333]"
+                    className="ml-2 text-sm text-[#666666] hover:text-[#ff3333] underline"
                   >
-                    Clear filters
+                    Clear
                   </button>
                 )}
-              </div>
+              </Collapsible>
+            </div>
 
+            {/* Advanced Filters */}
+            <Collapsible
+              open={isFiltersOpen}
+              onOpenChange={setIsFiltersOpen}
+              className="mb-6"
+            >
               <CollapsibleContent className="pt-2 pb-4">
-                <div className="space-y-4">
-                  <div>
-                    <label className="text-sm text-[#666666] mb-2 block">
-                      Programming Language
-                    </label>
-                    <Select
-                      value={selectedLanguage}
-                      onValueChange={setSelectedLanguage}
-                    >
-                      <SelectTrigger className="w-full md:w-[180px] bg-[#0a0a0a]/50 border border-[#666666] text-white focus:border-[#ff3333]">
-                        <SelectValue placeholder="Select language" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-[#0a0a0a] border border-[#666666]">
-                        <SelectItem value="all">All Languages</SelectItem>
-                        {languages.map((language) => (
-                          <SelectItem key={language} value={language}>
-                            {language}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
+                <Select
+                  value={selectedLanguage}
+                  onValueChange={setSelectedLanguage}
+                >
+                  <SelectTrigger className="w-full md:w-[180px] bg-[#0a0a0a]/50 border border-[#666666] text-white focus:border-[#ff3333] h-10">
+                    <SelectValue placeholder="Language" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-[#0a0a0a] border border-[#666666]">
+                    <SelectItem value="all">All Languages</SelectItem>
+                    {languages.map((language) => (
+                      <SelectItem key={language} value={language}>
+                        {language}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </CollapsibleContent>
             </Collapsible>
 
-            {/* Language Tags */}
+            {/* Language Tags - Show top 5 */}
             {languages.length > 0 && (
               <div className="flex flex-wrap gap-2 mb-6">
                 <Toggle
@@ -228,7 +229,7 @@ const Projects = () => {
                   onClick={() => setSelectedLanguage("all")}
                   variant="outline"
                   size="sm"
-                  className="text-sm bg-[#0a0a0a]/50 border border-[#666666] text-[#666666] hover:border-[#ff3333] hover:text-[#ff3333] data-[state=on]:bg-[#ff3333]/10 data-[state=on]:border-[#ff3333] data-[state=on]:text-[#ff3333]"
+                  className="h-8 px-3 text-xs bg-[#0a0a0a]/50 border border-[#666666] text-[#666666] hover:border-[#ff3333] hover:text-[#ff3333] data-[state=on]:bg-[#ff3333]/10 data-[state=on]:border-[#ff3333] data-[state=on]:text-[#ff3333]"
                 >
                   All
                 </Toggle>
@@ -239,7 +240,7 @@ const Projects = () => {
                     onClick={() => setSelectedLanguage(language)}
                     variant="outline"
                     size="sm"
-                    className="text-sm bg-[#0a0a0a]/50 border border-[#666666] text-[#666666] hover:border-[#ff3333] hover:text-[#ff3333] data-[state=on]:bg-[#ff3333]/10 data-[state=on]:border-[#ff3333] data-[state=on]:text-[#ff3333]"
+                    className="h-8 px-3 text-xs bg-[#0a0a0a]/50 border border-[#666666] text-[#666666] hover:border-[#ff3333] hover:text-[#ff3333] data-[state=on]:bg-[#ff3333]/10 data-[state=on]:border-[#ff3333] data-[state=on]:text-[#ff3333]"
                   >
                     {language}
                   </Toggle>
@@ -247,9 +248,9 @@ const Projects = () => {
                 {languages.length > 5 && (
                   <button
                     onClick={() => setIsFiltersOpen(!isFiltersOpen)}
-                    className="text-sm underline text-[#666666] hover:text-[#ff3333]"
+                    className="h-8 px-3 text-xs underline text-[#666666] hover:text-[#ff3333]"
                   >
-                    {languages.length - 5} more...
+                    +{languages.length - 5}
                   </button>
                 )}
               </div>
@@ -257,7 +258,7 @@ const Projects = () => {
 
             {/* Projects Grid */}
             {isLoading ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-pulse">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 animate-pulse">
                 {[1, 2, 3, 4, 5, 6].map((item) => (
                   <div
                     key={item}
@@ -266,10 +267,10 @@ const Projects = () => {
                 ))}
               </div>
             ) : error ? (
-              <div className="bg-[#666666]/10 border border-[#ff3333] text-center py-8">
+              <div className="bg-[#666666]/10 border border-[#ff3333] text-center py-12">
                 <AlertTriangle className="w-12 h-12 mx-auto mb-4 text-[#ff3333]" />
                 <p className="text-[#ff3333] mb-4">
-                  Failed to load projects. Please try again later.
+                  Failed to load projects
                 </p>
                 <button
                   onClick={() => window.location.reload()}
@@ -279,22 +280,23 @@ const Projects = () => {
                 </button>
               </div>
             ) : repos?.length === 0 ? (
-              <div className="bg-[#666666]/10 border border-[#666666] text-center py-8">
+              <div className="bg-[#666666]/10 border border-[#666666] text-center py-12">
                 <p className="text-[#666666] mb-4">
-                  No repositories found matching your criteria.
+                  No repositories found
                 </p>
                 <button
                   onClick={() => {
                     setFilter("all");
                     setSelectedLanguage("all");
+                    setSearch("");
                   }}
                   className="px-4 py-2 border border-[#ff3333] text-[#ff3333] hover:bg-[#ff3333]/10 transition-colors"
                 >
-                  View All Projects
+                  View All
                 </button>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                 {repos?.map((repo: Repository) => (
                   <ProjectCard key={repo.id} repo={repo} />
                 ))}
@@ -304,7 +306,7 @@ const Projects = () => {
         </section>
 
         <footer className="py-12 px-4 md:px-8 border-t-4 border-white text-center">
-            <pre className="text-[#666666]">END OF TRANSMISSION</pre>
+            <pre className="text-xs md:text-sm text-[#666666]">END OF TRANSMISSION</pre>
         </footer>
       </main>
     </div>

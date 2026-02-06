@@ -4,6 +4,7 @@ import { getAllBlogPosts } from "@/lib/blogLoader";
 import type { Blog as BlogType } from "@/types/blog";
 import { Search } from "lucide-react";
 import InteractiveGrid from "@/components/three/InteractiveGrid";
+import MinimalNav from "@/components/layout/MinimalNav";
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -79,86 +80,87 @@ const Blog = () => {
 
       <InteractiveGrid />
 
-      <div className="fixed top-4 right-4 text-[#ff3333] z-50 mix-blend-difference">
-        [SCROLL: {scroll}%]
+      <MinimalNav />
+
+      <div className="fixed top-4 right-4 text-[#ff3333] z-50 mix-blend-difference text-sm md:text-base">
+        [{scroll}%]
       </div>
 
       <main className="relative z-10">
-        <section className="min-h-[60vh] flex flex-col items-center justify-center overflow-hidden p-4 md:p-8 border-t-4 border-white">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1
-              className="font-bold uppercase text-center mb-8"
-              style={{
-                  fontSize: 'clamp(2rem, 6vw, 4rem)',
-                  letterSpacing: 'clamp(0.2rem, 1vw, 0.8rem)',
-                  lineHeight: '1',
-              }}
-            >
-              BLOG
-            </h1>
+        {/* Compact Header */}
+        <section className="pt-20 pb-8 md:pt-24 md:pb-12 px-4 md:px-8 border-t-4 border-white">
+          <div className="max-w-6xl mx-auto">
+            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+              <div>
+                <h1
+                  className="font-bold uppercase"
+                  style={{
+                      fontSize: 'clamp(1.5rem, 4vw, 2.5rem)',
+                      letterSpacing: '0.2rem',
+                      lineHeight: '1',
+                  }}
+                >
+                  BLOG
+                </h1>
+                <p className="mt-4 text-sm md:text-base text-[#666666] max-w-xl">
+                  <span className="text-[#ff3333]">&gt;</span> Thoughts, tutorials, and insights about programming and tech.
+                </p>
+              </div>
 
-            <div className="space-y-6 mt-8">
-              <p className="text-lg md:text-xl text-[#666666] leading-relaxed max-w-2xl mx-auto">
-                <span className="text-[#ff3333]">&gt;</span> Thoughts, tutorials, and insights about programming, web development, and technology.
-              </p>
-              <p className="text-sm md:text-base text-[#666666] leading-relaxed max-w-2xl mx-auto">
-                I try to keep my blog posts as short as possible since I am someone that doesn't like reading, so why should I subject my viewers to more reading ;)
-              </p>
+              {/* Compact Search */}
+              <div className="relative w-full md:w-64 shrink-0">
+                <Search
+                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#666666]"
+                  size={16}
+                />
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-9 pr-4 h-10 bg-[#0a0a0a]/50 border border-[#666666] text-white placeholder:text-[#666666] focus:outline-none focus:border-[#ff3333] transition-colors text-sm"
+                />
+              </div>
             </div>
           </div>
         </section>
 
-        <section className="py-20 px-4 md:px-8">
+        {/* Content */}
+        <section className="pb-20 px-4 md:px-8">
           <div className="max-w-6xl mx-auto">
-            {/* Search and Filter */}
-            <div className="mb-8 space-y-4">
-              <div className="relative">
-                <Search
-                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#666666]"
-                  size={18}
-                />
-                <input
-                  type="text"
-                  placeholder="Search posts..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 bg-[#0a0a0a]/50 border border-[#666666] text-white placeholder:text-[#666666] rounded-none focus:outline-none focus:border-[#ff3333] transition-colors"
-                />
-              </div>
+            {/* Tags */}
+            <div className="flex flex-wrap gap-2 mb-6">
+              <button
+                onClick={() => setSelectedTag(null)}
+                className={`px-3 py-1.5 text-sm border transition-colors ${
+                  selectedTag === null
+                    ? "border-[#ff3333] text-[#ff3333] bg-[#ff3333]/10"
+                    : "border-[#666666] text-[#666666] hover:border-[#ff3333] hover:text-[#ff3333]"
+                }`}
+              >
+                All
+              </button>
 
-              <div className="flex flex-wrap gap-2">
+              {allTags.map((tag) => (
                 <button
-                  onClick={() => setSelectedTag(null)}
-                  className={`px-3 py-1 border text-sm transition-colors ${
-                    selectedTag === null
+                  key={tag}
+                  onClick={() => setSelectedTag(tag === selectedTag ? null : tag)}
+                  className={`px-3 py-1.5 text-sm border transition-colors ${
+                    tag === selectedTag
                       ? "border-[#ff3333] text-[#ff3333] bg-[#ff3333]/10"
                       : "border-[#666666] text-[#666666] hover:border-[#ff3333] hover:text-[#ff3333]"
                   }`}
                 >
-                  All
+                  {tag}
                 </button>
-
-                {allTags.map((tag) => (
-                  <button
-                    key={tag}
-                    onClick={() => setSelectedTag(tag === selectedTag ? null : tag)}
-                    className={`px-3 py-1 border text-sm transition-colors ${
-                      tag === selectedTag
-                        ? "border-[#ff3333] text-[#ff3333] bg-[#ff3333]/10"
-                        : "border-[#666666] text-[#666666] hover:border-[#ff3333] hover:text-[#ff3333]"
-                    }`}
-                  >
-                    {tag}
-                  </button>
-                ))}
-              </div>
+              ))}
             </div>
 
             {/* Blog Posts Grid */}
             {sortedPosts.length === 0 ? (
-              <div className="bg-[#666666]/10 border border-[#666666] text-center py-8">
+              <div className="bg-[#666666]/10 border border-[#666666] text-center py-12">
                 <p className="text-[#666666] mb-4">
-                  No blog posts found matching your criteria.
+                  No blog posts found
                 </p>
                 <button
                   onClick={() => {
@@ -171,7 +173,7 @@ const Blog = () => {
                 </button>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                 {sortedPosts.map((post: BlogType) => (
                   <BlogCard key={post.slug} blog={post} />
                 ))}
@@ -181,7 +183,7 @@ const Blog = () => {
         </section>
 
         <footer className="py-12 px-4 md:px-8 border-t-4 border-white text-center">
-            <pre className="text-[#666666]">END OF TRANSMISSION</pre>
+            <pre className="text-xs md:text-sm text-[#666666]">END OF TRANSMISSION</pre>
         </footer>
       </main>
     </div>

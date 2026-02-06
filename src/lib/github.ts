@@ -103,16 +103,24 @@ export async function fetchLatestCommit(
   }
 }
 
-// Function to get all unique languages from repositories
+// Function to get all unique languages from repositories, sorted by count
 export async function fetchLanguages(): Promise<string[]> {
   try {
     const repos = await fetchRepositories();
-    const languages = repos
-      .filter((repo) => repo.language)
-      .map((repo) => repo.language as string);
 
-    // Create a unique list of languages
-    return Array.from(new Set(languages)).sort();
+    // Count languages
+    const languageCount = repos
+      .filter((repo) => repo.language)
+      .reduce((acc, repo) => {
+        const lang = repo.language as string;
+        acc[lang] = (acc[lang] || 0) + 1;
+        return acc;
+      }, {} as Record<string, number>);
+
+    // Sort by count (descending)
+    return Object.entries(languageCount)
+      .sort(([, a], [, b]) => b - a)
+      .map(([lang]) => lang);
   } catch (error) {
     console.error("Error fetching languages:", error);
     return [];
