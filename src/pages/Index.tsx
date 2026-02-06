@@ -1,14 +1,20 @@
 import FeaturedProjects from "@/components/home/FeaturedProjects";
 import RecentPosts from "@/components/blog/RecentPosts";
-import { useEffect, useState, useRef } from "react";
+import InteractiveGrid from "@/components/three/InteractiveGrid";
+import { useEffect, useState, useRef, useCallback, lazy, Suspense } from "react";
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { TextPlugin } from 'gsap/TextPlugin';
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, TextPlugin);
+
+const scrambleChars = "!<>-_\\/[]{}—=+*^?#________";
 
 const Index = () => {
   const [scroll, setScroll] = useState(0);
-  const nameRef = useRef(null);
+  const nameRef = useRef<HTMLHeadingElement>(null);
+  const skillsRef = useRef<HTMLPreElement>(null);
+  const [skillsRevealed, setSkillsRevealed] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -82,18 +88,90 @@ const Index = () => {
     });
   }, []);
 
+  const scrambleText = useCallback((element: HTMLElement, finalText: string) => {
+    let iteration = 0;
+    const maxIterations = finalText.length;
+    
+    const interval = setInterval(() => {
+      element.innerText = finalText
+        .split("")
+        .map((char, index) => {
+          if (index < iteration) return char;
+          if (char === " " || char === "\n") return char;
+          return scrambleChars[Math.floor(Math.random() * scrambleChars.length)];
+        })
+        .join("");
+      
+      iteration += 1/3;
+      
+      if (iteration >= maxIterations) {
+        clearInterval(interval);
+        element.innerText = finalText;
+      }
+    }, 30);
+  }, []);
+
+  useEffect(() => {
+    if (skillsRef.current && !skillsRevealed) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting && !skillsRevealed) {
+              setSkillsRevealed(true);
+              const finalText = `├── frontend/
+│   ├── react.tsx
+│   ├── vue.ts
+│   └── typescript.d.ts
+├── backend/
+│   ├── node.js
+│   ├── python.py
+│   └── fastapi.py
+└── devops/
+    ├── docker
+    └── aws`;
+              scrambleText(skillsRef.current!, finalText);
+            }
+          });
+        },
+        { threshold: 0.5 }
+      );
+      
+      observer.observe(skillsRef.current);
+      return () => observer.disconnect();
+    }
+  }, [skillsRevealed, scrambleText]);
+
   const glitchEffect = () => {
-    gsap.to(nameRef.current, {
-      x: '+=5',
+    if (!nameRef.current) return;
+    
+    const tl = gsap.timeline();
+    tl.to(nameRef.current, {
+      x: -5,
       duration: 0.05,
-      yoyo: true,
-      repeat: 3
-    });
-    gsap.to(nameRef.current, {
-      textShadow: '2px 2px #ff3333, -2px -2px #00ff00',
-      duration: 0.1,
-      yoyo: true,
-      repeat: 1
+      ease: 'power1.inOut'
+    })
+    .to(nameRef.current, {
+      x: 5,
+      textShadow: '3px 0 #ff3333, -3px 0 #00ff00',
+      duration: 0.05,
+      ease: 'power1.inOut'
+    })
+    .to(nameRef.current, {
+      x: -3,
+      textShadow: '-2px 0 #ff3333, 2px 0 #00ff00',
+      duration: 0.05,
+      ease: 'power1.inOut'
+    })
+    .to(nameRef.current, {
+      x: 3,
+      duration: 0.05,
+      ease: 'power1.inOut'
+    })
+    .to(nameRef.current, {
+      x: 0,
+      textShadow: 'none',
+      duration: 0.05,
+      ease: 'power1.inOut'
     });
   };
 
@@ -106,19 +184,13 @@ const Index = () => {
 
   return (
     <div className="bg-[#0a0a0a] text-white font-ibm-mono min-h-screen overflow-x-hidden">
+      <div className="scanlines" />
+      <div className="noise-overlay" />
+      
+      <InteractiveGrid />
+      
       <div className="fixed top-4 right-4 text-[#ff3333] z-50 mix-blend-difference scroll-indicator">
         [SCROLL: {scroll}%]
-      </div>
-
-      <div className="fixed top-0 left-0 w-full h-full grid grid-cols-6 md:grid-cols-12 gap-0 pointer-events-none z-0 grid-lines">
-        {[...Array(12)].map((_, i) => (
-          <div key={i} className="border-r border-[#666666] border-opacity-20 h-full"></div>
-        ))}
-        <div className="absolute top-0 left-0 w-full h-full grid grid-rows-6 gap-0 pointer-events-none">
-            {[...Array(6)].map((_, i) => (
-                <div key={i} className="border-b border-[#666666] border-opacity-20 w-full"></div>
-            ))}
-        </div>
       </div>
       
       <main className="relative z-10">
@@ -126,7 +198,8 @@ const Index = () => {
           <div className="max-w-4xl mx-auto text-center">
             <h1 
               ref={nameRef}
-              className="font-bold uppercase text-center mb-8"
+              className="font-bold uppercase text-center mb-8 glitch-text"
+              data-text="LIANG-SHIH LIN"
               style={{
                   fontSize: 'clamp(2rem, 8vw, 5rem)',
                   letterSpacing: 'clamp(0.2rem, 1vw, 0.8rem)',
@@ -183,19 +256,9 @@ const Index = () => {
               </pre>
             </div>
             <div className="md:col-span-2">
-              <h2 className="text-[#ff3333] mb-4 text-xl">[SKILLS]</h2>
-              <pre className="text-sm md:text-base text-white">
-{`├── frontend/
-│   ├── react.tsx
-│   ├── vue.ts
-│   └── typescript.d.ts
-├── backend/
-│   ├── node.js
-│   ├── python.py
-│   └── fastapi.py
-└── devops/
-    ├── docker
-    └── aws`}
+              <h2 className="text-[#ff3333] mb-4 text-xl cursor-blink">[SKILLS]</h2>
+              <pre ref={skillsRef} className="text-sm md:text-base text-white">
+                {skillsRevealed ? '' : '> Loading...'}
               </pre>
             </div>
           </div>
@@ -205,7 +268,7 @@ const Index = () => {
         <RecentPosts />
 
         <footer className="py-12 px-4 md:px-8 border-t-4 border-white mt-20 text-center">
-            <h2 className="text-[#ff3333] text-xl mb-4">[CONTACT]</h2>
+            <h2 className="text-[#ff3333] text-xl mb-4 cursor-blink">[CONTACT]</h2>
             <a href="https://github.com/ll931217" target="_blank" rel="noopener noreferrer" className="hover:text-[#ff3333] transition-colors duration-75 text-lg">
                 github.com/ll931217
             </a>
