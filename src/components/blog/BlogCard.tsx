@@ -14,15 +14,15 @@ const BlogCard = ({ blog }: BlogCardProps) => {
       <GlowCard className="h-full">
         <article className="flex flex-col h-full">
           <div className="mb-4">
-            <h3 className="text-xl font-semibold text-tokyo-purple mb-2">
+            <h3 className="text-lg font-bold text-white group-hover:text-[#ff3333] transition-colors mb-2">
               {blog.title}
             </h3>
-            <time dateTime={blog.date} className="text-sm text-tokyo-comment">
+            <time dateTime={blog.date} className="text-sm text-[#666666]">
               {formatDate(blog.date)}
             </time>
           </div>
 
-          <p className="text-tokyo-fg/90 mb-4 flex-grow">{blog.excerpt}</p>
+          <p className="text-[#999999] mb-4 flex-grow text-sm">{blog.excerpt}</p>
 
           <div className="flex flex-wrap gap-2 mt-auto">
             {blog.tags.map((tag) => (

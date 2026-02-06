@@ -8,18 +8,18 @@ const RecentPosts = () => {
   const recentPosts = blogPosts.slice(0, 3);
 
   return (
-    <section className="py-16 border-t border-tokyo-selection">
-      <div className="max-w-4xl mx-auto">
+    <section className="py-16 px-4 md:px-8 border-t-2 border-dashed border-[#666666]">
+      <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center mb-10">
-          <h2 className="text-3xl font-bold text-tokyo-blue">
-            Recent Blog Posts
+          <h2 className="text-[#ff3333] text-xl font-bold">
+            [BLOG]
           </h2>
 
           <Link
             to="/blog"
-            className="text-tokyo-accent hover:text-tokyo-blue flex items-center transition-colors"
+            className="text-[#666666] hover:text-[#ff3333] flex items-center transition-colors text-sm"
           >
-            View All
+            VIEW ALL
             <ArrowRight className="ml-1 h-4 w-4" />
           </Link>
         </div>

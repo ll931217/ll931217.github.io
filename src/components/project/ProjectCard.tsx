@@ -13,7 +13,7 @@ const ProjectCard = ({ repo }: ProjectCardProps) => {
     <GlowCard className="h-full">
       <div className="flex flex-col h-full">
         <div className="flex items-start justify-between mb-4">
-          <h3 className="text-xl font-semibold text-tokyo-accent">
+          <h3 className="text-lg font-bold text-white hover:text-[#ff3333] transition-colors">
             {repo.name}
           </h3>
           <div className="flex space-x-3">
@@ -21,7 +21,7 @@ const ProjectCard = ({ repo }: ProjectCardProps) => {
               href={repo.html_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-tokyo-comment hover:text-tokyo-accent transition-colors"
+              className="text-[#666666] hover:text-[#ff3333] transition-colors"
               aria-label="GitHub Repository"
             >
               <SiGithub size={18} />
@@ -31,7 +31,7 @@ const ProjectCard = ({ repo }: ProjectCardProps) => {
                 href={repo.homepage}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-tokyo-comment hover:text-tokyo-accent transition-colors"
+                className="text-[#666666] hover:text-[#ff3333] transition-colors"
                 aria-label="Live Demo"
               >
                 <ExternalLink size={18} />
@@ -40,7 +40,7 @@ const ProjectCard = ({ repo }: ProjectCardProps) => {
           </div>
         </div>
 
-        <p className="text-tokyo-fg/90 mb-4 flex-grow">
+        <p className="text-[#999999] mb-4 flex-grow text-sm">
           {repo.description || "No description provided."}
         </p>
 
@@ -50,7 +50,7 @@ const ProjectCard = ({ repo }: ProjectCardProps) => {
               <LanguageBadge language={repo.language} />
 
               {repo.stargazers_count > 0 && (
-                <span className="ml-4 flex items-center text-sm text-tokyo-comment">
+                <span className="ml-4 flex items-center text-sm text-[#666666]">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
@@ -68,7 +68,7 @@ const ProjectCard = ({ repo }: ProjectCardProps) => {
               )}
 
               {repo.forks_count > 0 && (
-                <span className="ml-4 flex items-center text-sm text-tokyo-comment">
+                <span className="ml-4 flex items-center text-sm text-[#666666]">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"

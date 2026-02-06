@@ -18,18 +18,18 @@ const FeaturedProjects = () => {
   const featuredRepos = repos?.slice(0, 3) || [];
 
   return (
-    <section className="py-16 border-t border-tokyo-selection">
-      <div className="max-w-4xl mx-auto">
+    <section className="py-16 px-4 md:px-8 border-t-2 border-dashed border-[#666666]">
+      <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center mb-10">
-          <h2 className="text-3xl font-bold text-tokyo-cyan">
-            Featured Projects
+          <h2 className="text-[#ff3333] text-xl font-bold">
+            [PROJECTS]
           </h2>
 
           <Link
             to="/projects"
-            className="text-tokyo-accent hover:text-tokyo-cyan flex items-center transition-colors"
+            className="text-[#666666] hover:text-[#ff3333] flex items-center transition-colors text-sm"
           >
-            View All
+            VIEW ALL
             <ArrowRight className="ml-1 h-4 w-4" />
           </Link>
         </div>
@@ -39,15 +39,15 @@ const FeaturedProjects = () => {
             {[1, 2, 3].map((item) => (
               <div
                 key={item}
-                className="h-48 bg-tokyo-selection/20 rounded-lg"
+                className="h-48 bg-[#1a1a1a] border border-[#333333]"
               ></div>
             ))}
           </div>
         ) : error ? (
-          <div className="tokyo-card bg-tokyo-selection/10 text-center py-8">
-            <p className="text-tokyo-magenta mb-4">Unable to load projects</p>
-            <Link to="/projects" className="tokyo-button">
-              Try Again
+          <div className="border-2 border-[#ff3333] bg-[#1a1a1a] text-center py-8">
+            <p className="text-[#ff3333] mb-4">ERROR: Unable to load projects</p>
+            <Link to="/projects" className="border border-[#666666] px-4 py-2 text-[#666666] hover:border-[#ff3333] hover:text-[#ff3333] transition-colors">
+              RETRY
             </Link>
           </div>
         ) : (
