@@ -3,6 +3,7 @@ import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { defineConfig } from "vite";
 import { Mode, plugin as mdPlugin } from "vite-plugin-markdown";
+import Sitemap from "vite-plugin-sitemap";
 import { md } from "./src/lib/utils";
 
 // https://vitejs.dev/config/
@@ -31,6 +32,7 @@ export default defineConfig(() => ({
       // Auth tokens can be obtained from https://sentry.io/orgredirect/organizations/:orgslug/settings/auth-tokens/
       authToken: process.env.SENTRY_AUTH_TOKEN,
     }),
+    Sitemap({ hostname: "https://baoge.dev" }),
   ].filter(Boolean),
   resolve: {
     alias: {
