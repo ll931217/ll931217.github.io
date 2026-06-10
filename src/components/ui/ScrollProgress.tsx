@@ -1,98 +1,46 @@
 import { useEffect, useState } from "react";
-import { cn } from "@/lib/utils";
-
-interface ScrollProgressProps {
-  className?: string;
-  color?: string;
-  height?: string;
-  showGlitchAtComplete?: boolean;
-}
 
 /**
- * Scroll progress indicator bar
+ * Minimal scroll progress indicator.
  *
- * Displays a thin progress bar at the top of the page that fills
- * as the user scrolls down. Features a cyberpunk glitch effect
- * when scrolling reaches 100%.
+ * A fixed 2px bar at the top of the viewport that fills with the
+ * scroll percentage. Hidden when the page isn't scrollable.
  */
-export function ScrollProgress({
-  className,
-  color = "#ff3333",
-  height = "2px",
-  showGlitchAtComplete = true,
-}: ScrollProgressProps) {
-  const [progress, setProgress] = useState(0);
-  const [isComplete, setIsComplete] = useState(false);
+export function ScrollProgress() {
+  const [progress, setProgress] = useState<number | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const currentProgress = scrollableHeight > 0
-        ? (window.scrollY / scrollableHeight) * 100
-        : 0;
+      const scrollableHeight =
+        document.documentElement.scrollHeight - window.innerHeight;
 
-      setProgress(Math.min(100, Math.max(0, currentProgress)));
-      setIsComplete(currentProgress >= 99);
+      if (scrollableHeight <= 0) {
+        setProgress(null);
+        return;
+      }
+
+      const percentage = (window.scrollY / scrollableHeight) * 100;
+      setProgress(Math.min(100, Math.max(0, percentage)));
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll(); // Initial check
+    window.addEventListener("resize", handleScroll, { passive: true });
+    handleScroll();
 
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+    };
   }, []);
+
+  if (progress === null) return null;
 
   return (
     <div
-      className={cn(
-        "fixed top-0 left-0 right-0 z-[60] pointer-events-none",
-        className
-      )}
+      className="fixed top-0 left-0 h-0.5 bg-emerald-400/70 z-50 pointer-events-none"
+      style={{ width: `${progress}%` }}
       aria-hidden="true"
-    >
-      {/* Background track */}
-      <div
-        className="absolute inset-0 bg-[#666666]/20"
-        style={{ height }}
-      />
-
-      {/* Progress bar */}
-      <div
-        className={cn(
-          "absolute left-0 top-0 bottom-0 transition-all duration-150 ease-out",
-          showGlitchAtComplete && isComplete && "animate-glitch-progress"
-        )}
-        style={{
-          width: `${progress}%`,
-          height,
-          backgroundColor: color,
-          boxShadow: progress > 0
-            ? `0 0 10px ${color}80, 0 0 20px ${color}40`
-            : "none",
-        }}
-      />
-
-      {/* Glitch overlay at 100% */}
-      {showGlitchAtComplete && isComplete && (
-        <>
-          <div
-            className="absolute top-0 bottom-0 w-full animate-glitch-shift-1"
-            style={{
-              height,
-              backgroundColor: "#00ff00",
-              opacity: 0.5,
-            }}
-          />
-          <div
-            className="absolute top-0 bottom-0 w-full animate-glitch-shift-2"
-            style={{
-              height,
-              backgroundColor: "#0000ff",
-              opacity: 0.5,
-            }}
-          />
-        </>
-      )}
-    </div>
+    />
   );
 }
 
