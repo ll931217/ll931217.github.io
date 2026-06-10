@@ -56,13 +56,13 @@ const Blog = () => {
 
   useEffect(() => {
     // Section reveals
-    gsap.utils.toArray('section').forEach((section) => {
-      gsap.from(section as any, {
+    gsap.utils.toArray<Element>('section').forEach((section) => {
+      gsap.from(section, {
         opacity: 0,
         y: 50,
         duration: 1,
         scrollTrigger: {
-          trigger: section as any,
+          trigger: section,
           start: 'top 80%',
           toggleActions: 'play none none none'
         }

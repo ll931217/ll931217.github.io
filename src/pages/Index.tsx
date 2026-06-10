@@ -77,13 +77,13 @@ const CurrentHome = () => {
     });
 
     // Section reveals (skip first hero section)
-    gsap.utils.toArray('section:not(:first-child)').forEach((section) => {
-      gsap.from(section as any, {
+    gsap.utils.toArray<Element>('section:not(:first-child)').forEach((section) => {
+      gsap.from(section, {
         opacity: 0,
         y: 50,
         duration: 1,
         scrollTrigger: {
-          trigger: section as any,
+          trigger: section,
           start: 'top 80%',
           toggleActions: 'play none none none'
         }
