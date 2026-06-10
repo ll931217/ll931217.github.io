@@ -11,10 +11,10 @@ interface EmptyStateProps {
 }
 
 /**
- * Cyberpunk-styled empty state component
+ * Terminal-styled empty state component
  *
- * Displays an ASCII art message when no results are found.
- * Commonly used for search results, error states, or empty lists.
+ * Displays an ASCII box when no results are found. Commonly used for
+ * search results, error states, or empty lists.
  */
 export function EmptyState({
   type = "generic",
@@ -26,33 +26,33 @@ export function EmptyState({
 }: EmptyStateProps) {
   const defaultContent = {
     search: {
-      title: "NO_RESULTS_FOUND",
+      title: "no results found",
       message: "Try adjusting your search or filters",
       icon: Search,
       ascii: `
-   ╔═════════════════════════════════╗
-   ║  [NO_SIGNAL] - NO DATA DETECTED ║
-   ╚═════════════════════════════════╝
+   ╔═══════════════════════════╗
+   ║  $ grep … | wc -l → 0     ║
+   ╚═══════════════════════════╝
       `,
     },
     error: {
-      title: "SYSTEM_ERROR",
-      message: "Something went wrong",
+      title: "something went wrong",
+      message: "The request failed — try again",
       icon: FileX,
       ascii: `
-   ╔═════════════════════════════════╗
-   ║  [ERROR] - CONNECTION LOST      ║
-   ╚═════════════════════════════════╝
+   ╔═══════════════════════════╗
+   ║  $ curl … → exit code 1   ║
+   ╚═══════════════════════════╝
       `,
     },
     generic: {
-      title: "NO_DATA",
+      title: "nothing here",
       message: "Nothing to display",
       icon: FileX,
       ascii: `
-   ╔═════════════════════════════════╗
-   ║  [EMPTY] - VOID DETECTED        ║
-   ╚═════════════════════════════════╝
+   ╔═══════════════════════════╗
+   ║  $ ls → (empty)           ║
+   ╚═══════════════════════════╝
       `,
     },
   };
@@ -66,41 +66,32 @@ export function EmptyState({
     <div
       className={cn(
         "flex flex-col items-center justify-center py-16 px-4",
-        className
+        className,
       )}
     >
-      {/* ASCII Art Header */}
-      <pre className="text-[#ff3333] text-xs md:text-sm mb-6 font-mono leading-tight opacity-80">
+      <pre className="text-night-faint text-xs md:text-sm mb-6 font-mono leading-tight">
         {content.ascii}
       </pre>
 
-      {/* Icon */}
       <div className="mb-4">
-        <Icon className="w-12 h-12 text-[#666666]" />
+        <Icon className="w-12 h-12 text-night-faint" />
       </div>
 
-      {/* Title */}
-      <h3 className="text-xl font-bold text-[#ff3333] mb-2 font-mono uppercase tracking-wider">
-        [{displayTitle}]
+      <h3 className="text-xl font-bold text-emerald-400 mb-2 font-mono tracking-wide">
+        {displayTitle}
       </h3>
 
-      {/* Message */}
-      <p className="text-[#666666] mb-6 text-center">
-        {displayMessage}
-      </p>
+      <p className="text-night-muted mb-6 text-center">{displayMessage}</p>
 
-      {/* Action Button */}
       {actionLabel && onAction && (
         <button
           onClick={onAction}
           className={cn(
-            "px-6 py-2 border border-[#ff3333] text-[#ff3333]",
-            "hover:bg-[#ff3333]/10 hover:shadow-[0_0_15px_rgba(255,51,51,0.3)]",
-            "transition-all duration-300 font-mono text-sm uppercase",
-            "active:scale-95"
+            "px-6 py-2 border border-emerald-400/40 text-emerald-400",
+            "hover:bg-emerald-400/10 transition-colors font-mono text-sm",
           )}
         >
-          &gt; {actionLabel}
+          $ {actionLabel}
         </button>
       )}
     </div>

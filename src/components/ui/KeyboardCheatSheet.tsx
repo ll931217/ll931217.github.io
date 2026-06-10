@@ -21,9 +21,7 @@ const defaultShortcuts: ShortcutItem[] = [
 ];
 
 /**
- * Modal dialog showing keyboard shortcuts
- *
- * Displays a cyberpunk-styled keyboard shortcut cheat sheet.
+ * Modal dialog showing keyboard shortcuts.
  * Press '?' or click the help button to open.
  */
 export function KeyboardCheatSheet({
@@ -43,46 +41,38 @@ export function KeyboardCheatSheet({
     >
       <div
         className={cn(
-          "relative bg-[#0a0a0a] border-2 border-[#ff3333]",
+          "relative bg-night border border-white/10",
           "max-w-md w-full mx-4 p-6",
-          "shadow-[0_0_30px_rgba(255,51,51,0.3)]"
         )}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <h2
             id="keyboard-shortcuts-title"
-            className="text-xl font-bold text-[#ff3333] uppercase tracking-wider"
+            className="text-lg font-bold text-emerald-400 tracking-wide"
           >
-            [ KEYBOARD_SHORTCUTS ]
+            keyboard shortcuts
           </h2>
           <button
             onClick={onClose}
-            className="text-[#666666] hover:text-[#ff3333] transition-colors"
+            className="text-night-muted hover:text-emerald-400 transition-colors"
             aria-label="Close keyboard shortcuts"
           >
             <X size={20} />
           </button>
         </div>
 
-        {/* Scanline effect */}
-        <div className="absolute inset-0 pointer-events-none opacity-[0.03] bg-[repeating-linear-gradient(0deg,transparent,transparent_1px,rgba(255,255,255,0.03)_1px,rgba(255,255,255,0.03)_2px)]" />
-
-        {/* Shortcuts List */}
-        <div className="space-y-3 relative z-10">
+        <div className="space-y-3">
           {shortcuts.map((shortcut) => (
             <div
               key={shortcut.key}
-              className="flex items-center justify-between py-2 border-b border-[#666666]/30 last:border-0"
+              className="flex items-center justify-between py-2 border-b border-white/10 last:border-0"
             >
-              <span className="text-[#cccccc]">{shortcut.description}</span>
+              <span className="text-night-fg">{shortcut.description}</span>
               <kbd
                 className={cn(
-                  "px-3 py-1 text-sm font-mono",
-                  "bg-[#666666]/20 border border-[#666666]",
-                  "text-[#ff3333] rounded",
-                  "shadow-[0_0_10px_rgba(255,51,51,0.2)]"
+                  "px-3 py-1 text-sm font-mono rounded",
+                  "bg-white/5 border border-white/10 text-emerald-400",
                 )}
               >
                 {shortcut.key}
@@ -91,10 +81,13 @@ export function KeyboardCheatSheet({
           ))}
         </div>
 
-        {/* Footer hint */}
-        <div className="mt-6 pt-4 border-t border-[#666666]/30 text-center">
-          <p className="text-xs text-[#666666]">
-            Press <kbd className="px-1.5 py-0.5 bg-[#666666]/20 border border-[#666666] text-[#ff3333] rounded text-xs">Esc</kbd> or click outside to close
+        <div className="mt-6 pt-4 border-t border-white/10 text-center">
+          <p className="text-xs text-night-muted">
+            Press{" "}
+            <kbd className="px-1.5 py-0.5 bg-white/5 border border-white/10 text-emerald-400 rounded text-xs">
+              Esc
+            </kbd>{" "}
+            or click outside to close
           </p>
         </div>
       </div>
@@ -112,13 +105,11 @@ export function KeyboardHelpButton({ onClick }: { onClick: () => void }) {
       className={cn(
         "fixed bottom-4 right-4 z-40",
         "w-10 h-10 rounded-full",
-        "bg-[#ff3333]/10 border border-[#ff3333]/30",
-        "text-[#ff3333] hover:bg-[#ff3333]/20",
-        "transition-all duration-300",
+        "bg-emerald-400/10 border border-emerald-400/30",
+        "text-emerald-400 hover:bg-emerald-400/20",
+        "transition-colors duration-300",
         "flex items-center justify-center",
-        "shadow-[0_0_15px_rgba(255,51,51,0.2)]",
-        "hover:shadow-[0_0_20px_rgba(255,51,51,0.4)]",
-        "font-mono text-sm font-bold"
+        "font-mono text-sm font-bold",
       )}
       aria-label="Show keyboard shortcuts"
       title="Keyboard shortcuts (press ?)"

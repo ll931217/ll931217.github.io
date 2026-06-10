@@ -1,5 +1,4 @@
-
-import { cn } from '@/lib/utils';
+import { cn } from "@/lib/utils";
 
 interface LanguageBadgeProps {
   language: string;
@@ -8,10 +7,10 @@ interface LanguageBadgeProps {
 
 const LanguageBadge = ({ language, className }: LanguageBadgeProps) => {
   return (
-    <span 
+    <span
       className={cn(
-        'inline-flex items-center px-2 py-1 text-xs font-mono border border-[#444444] text-[#888888] hover:border-[#ff3333] hover:text-[#ff3333] transition-colors whitespace-nowrap',
-        className
+        "inline-flex items-center px-2 py-1 text-xs font-mono border border-white/10 text-night-muted hover:border-emerald-400/60 hover:text-emerald-400 transition-colors whitespace-nowrap",
+        className,
       )}
     >
       {language}
