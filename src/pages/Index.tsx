@@ -1,10 +1,11 @@
-import IdentitySidebar, { HomeSection } from "@/components/home/IdentitySidebar";
+import SidebarLayout from "@/components/layout/SidebarLayout";
+import { SidebarSection } from "@/components/layout/SiteSidebar";
 import AboutSection from "@/components/home/AboutSection";
 import ProjectsSection from "@/components/home/ProjectsSection";
 import WritingSection from "@/components/home/WritingSection";
 
 // Keep in sync with the numbered headings each section renders.
-const SECTIONS: HomeSection[] = [
+const SECTIONS: SidebarSection[] = [
   { id: "about", label: "about" },
   { id: "projects", label: "projects" },
   { id: "writing", label: "writing" },
@@ -13,10 +14,8 @@ const SECTIONS: HomeSection[] = [
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-night text-night-fg font-mono md:flex">
-      <IdentitySidebar sections={SECTIONS} />
-
-      <main className="md:ml-72 flex-1 px-8 md:px-16 py-16 space-y-24 max-w-4xl">
+    <SidebarLayout sections={SECTIONS}>
+      <div className="space-y-24">
         <AboutSection />
         <ProjectsSection />
         <WritingSection />
@@ -35,8 +34,8 @@ const Index = () => {
             $ open github.com/ll931217
           </a>
         </section>
-      </main>
-    </div>
+      </div>
+    </SidebarLayout>
   );
 };
 
