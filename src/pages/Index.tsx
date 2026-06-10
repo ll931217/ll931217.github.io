@@ -1,17 +1,19 @@
 import FeaturedProjects from "@/components/home/FeaturedProjects";
 import RecentPosts from "@/components/blog/RecentPosts";
 import InteractiveGrid from "@/components/three/InteractiveGrid";
-import { useEffect, useState, useRef, useCallback } from "react";
+import { lazy, Suspense, useEffect, useState, useRef, useCallback } from "react";
+import { useSearchParams } from "react-router-dom";
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { TextPlugin } from 'gsap/TextPlugin';
 import { NameParticles } from "@/components/ui/NameParticles";
+import { PrototypeSwitcher } from "@/components/ui/PrototypeSwitcher";
 
 gsap.registerPlugin(ScrollTrigger, TextPlugin);
 
 const scrambleChars = "!<>-_\\/[]{}—=+*^?#________";
 
-const Index = () => {
+const CurrentHome = () => {
   const [scroll, setScroll] = useState(0);
   const nameRef = useRef<HTMLHeadingElement>(null);
   const skillsRef = useRef<HTMLPreElement>(null);
@@ -244,6 +246,46 @@ const Index = () => {
         </footer>
       </main>
     </div>
+  );
+};
+
+// PROTOTYPE — redesign variants for the home page, switchable via ?variant=.
+// Dev-only: production always renders CurrentHome. Delete the block below
+// (and src/pages/prototype-redesign/) once a winner is folded in.
+const VariantEditorial = lazy(() => import("./prototype-redesign/VariantEditorial"));
+const VariantBento = lazy(() => import("./prototype-redesign/VariantBento"));
+const VariantSidebar = lazy(() => import("./prototype-redesign/VariantSidebar"));
+
+const PROTOTYPE_VARIANTS = [
+  { key: "current", name: "Current (brutalist terminal)" },
+  { key: "A", name: "Editorial" },
+  { key: "B", name: "Bento" },
+  { key: "C", name: "Sidebar" },
+];
+
+const Index = () => {
+  const [searchParams] = useSearchParams();
+  const variant = import.meta.env.DEV
+    ? (searchParams.get("variant") ?? "current")
+    : "current";
+
+  return (
+    <>
+      <Suspense fallback={null}>
+        {variant === "A" ? (
+          <VariantEditorial />
+        ) : variant === "B" ? (
+          <VariantBento />
+        ) : variant === "C" ? (
+          <VariantSidebar />
+        ) : (
+          <CurrentHome />
+        )}
+      </Suspense>
+      {import.meta.env.DEV && (
+        <PrototypeSwitcher variants={PROTOTYPE_VARIANTS} defaultKey="current" />
+      )}
+    </>
   );
 };
 
