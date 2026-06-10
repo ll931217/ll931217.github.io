@@ -1,85 +1,77 @@
-import { ExternalLink } from "lucide-react";
-import GlowCard from "../ui/GlowCard";
-import LanguageBadge from "../ui/LanguageBadge";
+import { GitFork, Star } from "lucide-react";
+import LanguageBadge from "@/components/ui/LanguageBadge";
 import { Repository } from "@/types/repository";
 
 interface ProjectCardProps {
   repo: Repository;
 }
 
+const formatDate = (iso: string) => new Date(iso).toISOString().slice(0, 10);
+
+/**
+ * Calm list row for a GitHub repository. The repo name is a stretched link
+ * covering the whole row; the homepage link (when present) sits above it.
+ */
 const ProjectCard = ({ repo }: ProjectCardProps) => {
+  const topics = repo.topics ?? [];
+
   return (
-    <a
-      href={repo.html_url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="block h-full pointer-events-auto group"
-    >
-      <GlowCard className="h-full hover:border-[#ff3333] transition-colors">
-        <div className="flex flex-col h-full">
-          <div className="flex items-start justify-between mb-4">
-            <h3 className="text-lg font-bold text-white hover:text-[#ff3333] transition-colors">
-              {repo.name}
-            </h3>
-            <ExternalLink
-              size={18}
-              className="text-[#666666] group-hover:text-[#ff3333] transition-colors"
-            />
-          </div>
+    <article className="relative group border-l-2 border-white/10 hover:border-emerald-400 pl-6 py-4 transition-colors">
+      <div className="flex items-baseline justify-between gap-4">
+        <a
+          href={repo.html_url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-bold text-white group-hover:text-emerald-400 transition-colors after:absolute after:inset-0"
+        >
+          {repo.name}
+        </a>
 
-        <p className="text-[#999999] mb-4 flex-grow text-sm">
-          {repo.description || "No description provided."}
-        </p>
-
-        <div className="mt-auto">
-          {repo.language && (
-            <div className="flex items-center mt-2">
-              <LanguageBadge language={repo.language} />
-
-              {repo.stargazers_count > 0 && (
-                <span className="ml-4 flex items-center text-sm text-[#666666]">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="w-4 h-4 mr-1"
-                  >
-                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                  </svg>
-                  {repo.stargazers_count}
-                </span>
-              )}
-
-              {repo.forks_count > 0 && (
-                <span className="ml-4 flex items-center text-sm text-[#666666]">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="w-4 h-4 mr-1"
-                  >
-                    <line x1="6" y1="3" x2="6" y2="15" />
-                    <circle cx="18" cy="6" r="3" />
-                    <circle cx="6" cy="18" r="3" />
-                    <path d="M18 9a9 9 0 0 1-9 9" />
-                  </svg>
-                  {repo.forks_count}
-                </span>
-              )}
-            </div>
+        <span className="flex items-center gap-3 text-xs text-night-muted whitespace-nowrap">
+          {repo.stargazers_count > 0 && (
+            <span className="flex items-center gap-1">
+              <Star size={12} aria-hidden="true" />
+              {repo.stargazers_count}
+            </span>
           )}
-        </div>
+          {repo.forks_count > 0 && (
+            <span className="flex items-center gap-1">
+              <GitFork size={12} aria-hidden="true" />
+              {repo.forks_count}
+            </span>
+          )}
+        </span>
       </div>
-    </GlowCard>
-    </a>
+
+      <p className="mt-1 text-sm text-night-muted leading-relaxed max-w-lg">
+        {repo.description ?? "No description provided."}
+      </p>
+
+      {(repo.language || topics.length > 0) && (
+        <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2 text-xs">
+          {repo.language && <LanguageBadge language={repo.language} />}
+          {topics.map((topic) => (
+            <span key={topic} className="text-night-faint">
+              #{topic}
+            </span>
+          ))}
+        </div>
+      )}
+
+      <div className="mt-2 flex items-center gap-4 text-xs text-night-faint">
+        <span>updated {formatDate(repo.updated_at)}</span>
+        {repo.homepage && (
+          <a
+            href={repo.homepage}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="relative z-10 text-emerald-400/80 hover:text-emerald-400 transition-colors"
+          >
+            live ↗
+          </a>
+        )}
+      </div>
+    </article>
   );
 };
 
