@@ -1,36 +1,30 @@
-import GlowCard from "../ui/GlowCard";
-import { Skeleton } from "../ui/skeleton";
-
 /**
  * Loading skeleton for BlogCard
  *
- * Displays a pulsing placeholder that matches the BlogCard layout
+ * Displays a pulsing placeholder that matches the BlogCard row layout
  * while blog posts are being loaded.
  */
 const BlogCardSkeleton = () => {
   return (
-    <div className="pointer-events-auto">
-      <GlowCard className="h-full">
-        <article className="flex flex-col h-full p-4">
-          {/* Title and date row */}
-          <div className="mb-4">
-            <Skeleton className="h-6 w-full mb-2 bg-[#666666]/20" />
-            <Skeleton className="h-4 w-24 bg-[#666666]/20" />
-          </div>
+    <div className="border-l-2 border-white/10 pl-6 py-4 animate-pulse">
+      {/* Title and date row */}
+      <div className="flex items-baseline justify-between gap-4">
+        <div className="h-5 w-2/3 bg-white/5" />
+        <div className="h-3 w-20 bg-white/5" />
+      </div>
 
-          {/* Excerpt */}
-          <Skeleton className="h-4 w-full mb-2 bg-[#666666]/20" />
-          <Skeleton className="h-4 w-full mb-2 bg-[#666666]/20" />
-          <Skeleton className="h-4 w-2/3 mb-4 bg-[#666666]/20" />
+      {/* Excerpt */}
+      <div className="mt-3 space-y-2 max-w-lg">
+        <div className="h-3 w-full bg-white/5" />
+        <div className="h-3 w-5/6 bg-white/5" />
+      </div>
 
-          {/* Tags */}
-          <div className="flex flex-wrap gap-2 mt-auto">
-            <Skeleton className="h-6 w-16 rounded-full bg-[#666666]/20" />
-            <Skeleton className="h-6 w-20 rounded-full bg-[#666666]/20" />
-            <Skeleton className="h-6 w-14 rounded-full bg-[#666666]/20" />
-          </div>
-        </article>
-      </GlowCard>
+      {/* Reading time and tags */}
+      <div className="mt-4 flex items-center gap-2">
+        <div className="h-3 w-14 bg-white/5" />
+        <div className="h-6 w-16 bg-white/5" />
+        <div className="h-6 w-12 bg-white/5" />
+      </div>
     </div>
   );
 };
