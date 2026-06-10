@@ -1,40 +1,39 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,700&family=Source+Serif+4:wght@400;600&family=Archivo:wght@500;700&family=VT323&family=Fira+Code:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;1,300&family=Jost:wght@200;300;400;500&family=Bebas+Neue&family=DM+Sans:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
+  /* shadcn theme vars, aligned with the night palette */
   :root {
-    --background: 225 27% 13%;
-    --foreground: 226 70% 86%;
+    --background: 217 28% 7%;
+    --foreground: 210 17% 82%;
 
-    --card: 225 27% 16%;
-    --card-foreground: 226 70% 86%;
+    --card: 217 24% 10%;
+    --card-foreground: 210 17% 82%;
 
-    --popover: 225 27% 13%;
-    --popover-foreground: 226 70% 86%;
+    --popover: 217 24% 10%;
+    --popover-foreground: 210 17% 82%;
 
-    --primary: 226 100% 73%;
-    --primary-foreground: 225 27% 13%;
+    --primary: 158 64% 52%;
+    --primary-foreground: 217 28% 7%;
 
-    --secondary: 235 23% 44%;
-    --secondary-foreground: 226 70% 86%;
+    --secondary: 217 15% 16%;
+    --secondary-foreground: 210 17% 82%;
 
-    --muted: 225 27% 20%;
-    --muted-foreground: 226 30% 70%;
+    --muted: 217 15% 16%;
+    --muted-foreground: 212 9% 58%;
 
-    --accent: 250 78% 76%;
-    --accent-foreground: 225 27% 13%;
+    --accent: 217 15% 16%;
+    --accent-foreground: 210 17% 82%;
 
-    --destructive: 0 72% 70%;
+    --destructive: 0 72% 60%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 225 27% 22%;
-    --input: 225 27% 22%;
-    --ring: 226 100% 73%;
+    --border: 217 15% 18%;
+    --input: 217 15% 18%;
+    --ring: 158 64% 52%;
 
     --radius: 0.5rem;
   }
@@ -44,12 +43,13 @@
   }
 
   body {
-    @apply bg-[#0a0a0a] text-white antialiased;
+    @apply bg-night text-night-fg antialiased;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 
+  /* Headings inherit the surrounding font (mono on most of the site) */
   h1, h2, h3, h4, h5, h6 {
-    @apply font-sans font-semibold;
+    @apply font-semibold;
   }
 
   pre, code {
@@ -57,36 +57,9 @@
   }
 }
 
-@layer components {
-  .tokyo-card {
-    @apply bg-tokyo-bg border border-tokyo-selection rounded-lg p-6 transition-all duration-300 hover:shadow-md hover:shadow-tokyo-selection/20 hover:border-tokyo-accent/30;
-  }
-
-  .tokyo-button {
-    @apply px-4 py-2 bg-tokyo-selection text-tokyo-fg rounded-md hover:bg-tokyo-accent hover:text-tokyo-bg transition-colors duration-300;
-  }
-
-  .tokyo-badge {
-    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
-  }
-
-  .nav-link {
-    @apply relative px-3 py-2 text-tokyo-fg hover:text-tokyo-accent transition-colors duration-200;
-  }
-
-  .nav-link.active {
-    @apply text-tokyo-accent;
-  }
-
-  .nav-link.active::after {
-    content: '';
-    @apply absolute bottom-0 left-0 w-full h-0.5 bg-tokyo-accent rounded-full;
-  }
-}
-
-/* Markdown styling */
+/* Markdown styling (blog posts) */
 .markdown {
-  @apply text-[#cccccc];
+  @apply text-night-fg;
 }
 
 .markdown h1 {
@@ -98,7 +71,7 @@
 }
 
 .markdown h3 {
-  @apply text-xl font-bold mt-6 mb-3 text-[#ff3333];
+  @apply text-xl font-bold mt-6 mb-3 text-emerald-400;
 }
 
 .markdown p {
@@ -114,235 +87,21 @@
 }
 
 .markdown a {
-  @apply text-[#ff3333] hover:text-white hover:underline;
+  @apply text-emerald-400 hover:text-white hover:underline;
 }
 
 .markdown blockquote {
-  @apply border-l-4 border-[#666666] pl-4 py-1 my-4 bg-[#666666]/10 italic;
+  @apply border-l-2 border-emerald-400/40 pl-4 py-1 my-4 bg-white/[0.03] italic;
 }
 
 .markdown pre {
-  @apply bg-[#111] border border-[#666666] rounded-md p-4 my-4 overflow-x-auto;
+  @apply bg-black/40 border border-white/10 rounded-md p-4 my-4 overflow-x-auto;
 }
 
 .markdown code {
-  @apply bg-[#666666]/20 rounded px-1.5 py-0.5 text-[#ff3333];
+  @apply bg-white/5 rounded px-1.5 py-0.5 text-emerald-400;
 }
 
 .markdown pre code {
-  @apply bg-transparent p-0 text-[#cccccc];
+  @apply bg-transparent p-0 text-night-fg;
 }
-
-/* Brutalist Animations */
-
-/* Scanline overlay effect */
-.scanlines {
-  pointer-events: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 100;
-  opacity: 0.03;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 1px,
-    rgba(255, 255, 255, 0.03) 1px,
-    rgba(255, 255, 255, 0.03) 2px
-  );
-  animation: scanlines-move 8s linear infinite;
-}
-
-@keyframes scanlines-move {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(4px); }
-}
-
-/* Blinking cursor */
-.cursor-blink::after {
-  content: '█';
-  animation: blink 1s step-end infinite;
-  color: #ff3333;
-  margin-left: 4px;
-}
-
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
-}
-
-/* Text scramble animation helper */
-.scramble-text {
-  display: inline-block;
-}
-
-/* Noise texture overlay */
-.noise-overlay {
-  pointer-events: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 99;
-  opacity: 0.015;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-}
-
-/* Scroll Progress Glitch Animations */
-@keyframes glitch-progress {
-  0% {
-    transform: translateX(0);
-    opacity: 1;
-  }
-  20% {
-    transform: translateX(-2px);
-    opacity: 0.8;
-  }
-  40% {
-    transform: translateX(2px);
-    opacity: 1;
-  }
-  60% {
-    transform: translateX(-1px);
-    opacity: 0.9;
-  }
-  80% {
-    transform: translateX(1px);
-    opacity: 1;
-  }
-  100% {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-@keyframes glitch-shift-1 {
-  0%, 100% {
-    transform: translateX(0);
-    opacity: 0;
-  }
-  10% {
-    transform: translateX(-5px);
-    opacity: 0.8;
-  }
-  20% {
-    transform: translateX(5px);
-    opacity: 0;
-  }
-  30% {
-    transform: translateX(-3px);
-    opacity: 0.6;
-  }
-  40% {
-    transform: translateX(3px);
-    opacity: 0;
-  }
-  50% {
-    transform: translateX(-2px);
-    opacity: 0.4;
-  }
-}
-
-@keyframes glitch-shift-2 {
-  0%, 100% {
-    transform: translateX(0);
-    opacity: 0;
-  }
-  15% {
-    transform: translateX(5px);
-    opacity: 0.7;
-  }
-  25% {
-    transform: translateX(-5px);
-    opacity: 0;
-  }
-  35% {
-    transform: translateX(3px);
-    opacity: 0.5;
-  }
-  45% {
-    transform: translateX(-3px);
-    opacity: 0;
-  }
-  55% {
-    transform: translateX(2px);
-    opacity: 0.3;
-  }
-}
-
-.animate-glitch-progress {
-  animation: glitch-progress 0.3s infinite;
-}
-
-.animate-glitch-shift-1 {
-  animation: glitch-shift-1 0.5s infinite;
-}
-
-.animate-glitch-shift-2 {
-  animation: glitch-shift-2 0.5s infinite;
-}
-
-/* Custom Cursor Animations */
-@keyframes glitch-cursor-1 {
-  0%, 100% {
-    transform: translate(0);
-    opacity: 0;
-  }
-  20% {
-    transform: translate(-2px, 1px);
-    opacity: 0.8;
-  }
-  40% {
-    transform: translate(2px, -1px);
-    opacity: 0;
-  }
-}
-
-@keyframes glitch-cursor-2 {
-  0%, 100% {
-    transform: translate(0);
-    opacity: 0;
-  }
-  30% {
-    transform: translate(2px, -1px);
-    opacity: 0.7;
-  }
-  50% {
-    transform: translate(-2px, 1px);
-    opacity: 0;
-  }
-}
-
-@keyframes shockwave-ring {
-  0% {
-    transform: scale(0);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 0;
-  }
-}
-
-.animate-glitch-cursor-1 {
-  animation: glitch-cursor-1 0.2s infinite;
-}
-
-.animate-glitch-cursor-2 {
-  animation: glitch-cursor-2 0.25s infinite;
-}
-
-.animate-shockwave-ring {
-  animation: shockwave-ring 0.5s ease-out;
-}
-
-/* Hide default cursor when custom cursor is active */
-body.custom-cursor,
-body.custom-cursor * {
-  cursor: none !important;
-}
-
-
