@@ -53,6 +53,13 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        // Calm sidebar redesign palette (GitHub-dark derived)
+        night: {
+          DEFAULT: "#0d1117",
+          fg: "#c9d1d9",
+          muted: "#8b949e",
+          faint: "#484f58",
+        },
         // Tokyo Night Moon theme colors
         tokyo: {
           bg: "#1a1b26",
