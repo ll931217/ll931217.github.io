@@ -17,4 +17,9 @@ export const HOME_VARIANTS: PrototypeVariantDef[] = [
     name: "kinetic editorial (GSAP)",
     Component: lazy(() => import("./VariantEditorial")),
   },
+  {
+    key: "webgl",
+    name: "webgl depth (Three.js)",
+    Component: lazy(() => import("./VariantWebgl")),
+  },
 ];
