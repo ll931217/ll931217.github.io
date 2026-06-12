@@ -28,7 +28,16 @@ const VariantWebgl = ({ repos, reposLoading, posts }: HomeVariantProps) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+    // WebGLRenderer throws where no GL context is available (headless,
+    // remote desktops) — degrade to the static content instead of crashing
+    // the whole React tree.
+    let renderer: THREE.WebGLRenderer;
+    try {
+      renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+    } catch (error) {
+      console.error("webgl variant: no GL context, skipping background", error);
+      return;
+    }
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(window.innerWidth, window.innerHeight);
 
