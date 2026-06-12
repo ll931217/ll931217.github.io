@@ -1,88 +1,93 @@
-import { Suspense } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { useSearchParams } from "react-router-dom";
-import SidebarLayout from "@/components/layout/SidebarLayout";
-import { SidebarSection } from "@/components/layout/SiteSidebar";
-import AboutSection from "@/components/home/AboutSection";
-import ProjectsSection from "@/components/home/ProjectsSection";
-import WritingSection from "@/components/home/WritingSection";
-import PrototypeSwitcher from "@/components/prototype/PrototypeSwitcher";
-import { HOME_VARIANTS } from "@/components/prototype/variants";
-import { fetchRepositories } from "@/lib/github";
-import { getAllBlogPosts } from "@/lib/blogLoader";
+import BootSequence from "@/components/home/BootSequence";
+import CommandBlock from "@/components/home/CommandBlock";
+import CrtOverlay from "@/components/home/CrtOverlay";
+import LivePrompt from "@/components/home/LivePrompt";
+import ProjectsCommand from "@/components/home/ProjectsCommand";
+import TerminalChrome from "@/components/home/TerminalChrome";
+import WritingCommand from "@/components/home/WritingCommand";
 
-// PROTOTYPE — awwwards-redesign exploration: variants of this page are
-// switchable via `?variant=` (dev only; prod always renders `current`).
-// Cycle with the floating bar or ←/→ keys. The current design is untouched
-// below. Delete src/components/prototype/ and this wiring once a variant wins.
-
-// Keep in sync with the numbered headings each section renders.
-const SECTIONS: SidebarSection[] = [
-  { id: "about", label: "about" },
-  { id: "projects", label: "projects" },
-  { id: "writing", label: "writing" },
-  { id: "contact", label: "contact" },
+const SKILL_TREE = [
+  "skills/",
+  "├── frontend",
+  "│   ├── react",
+  "│   ├── vue",
+  "│   └── typescript",
+  "├── backend",
+  "│   ├── node.js",
+  "│   ├── python",
+  "│   └── fastapi",
+  "└── devops",
+  "    ├── docker",
+  "    └── aws",
 ];
 
-const CurrentHome = () => {
-  return (
-    <SidebarLayout sections={SECTIONS}>
-      <div className="space-y-24">
-        <AboutSection />
-        <ProjectsSection />
-        <WritingSection />
-
-        <section id="contact" className="pb-16">
-          <h2 className="text-emerald-400 text-sm mb-6">
-            <span className="text-night-faint">04.</span> contact
-          </h2>
-          <p className="text-lg text-white">Got an interesting problem?</p>
-          <a
-            href="https://github.com/ll931217"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-4 inline-block border border-emerald-400/40 text-emerald-400 px-6 py-3 text-sm hover:bg-emerald-400/10 transition-colors"
-          >
-            $ open github.com/ll931217
-          </a>
-        </section>
-      </div>
-    </SidebarLayout>
-  );
-};
-
+/**
+ * Home — the whole page is a terminal session: boot lines, then each section
+ * is a command that types itself into view with its output.
+ */
 const Index = () => {
-  const [searchParams] = useSearchParams();
-  const requested = searchParams.get("variant") ?? "current";
-  const active = import.meta.env.PROD
-    ? HOME_VARIANTS[0]
-    : (HOME_VARIANTS.find((v) => v.key === requested) ?? HOME_VARIANTS[0]);
-
-  // Fetched once here and handed to every variant so flipping never refetches.
-  // Same query key as ProjectsSection, so `current` shares the cache too.
-  const { data: repos, isLoading: reposLoading } = useQuery({
-    queryKey: ["featured-repos"],
-    queryFn: () => fetchRepositories("featuredOnly"),
-  });
-  const posts = getAllBlogPosts();
-
-  const Variant = active.Component;
-
   return (
-    <>
-      {Variant ? (
-        <Suspense fallback={<div className="min-h-screen bg-night" />}>
-          <Variant
-            repos={repos ?? []}
-            reposLoading={reposLoading}
-            posts={posts}
-          />
-        </Suspense>
-      ) : (
-        <CurrentHome />
-      )}
-      <PrototypeSwitcher variants={HOME_VARIANTS} current={active.key} />
-    </>
+    <div
+      className="min-h-screen bg-[#0a0e14] font-mono text-night-fg"
+      style={{ textShadow: "0 0 10px rgba(52,211,153,0.18)" }}
+    >
+      <CrtOverlay />
+      <TerminalChrome />
+
+      <main className="mx-auto max-w-3xl px-6 pb-40 pt-24">
+        <BootSequence />
+
+        <CommandBlock command="whoami">
+          <h1 className="text-lg text-white">liang-shih lin</h1>
+          <p>full-stack developer — systems that work</p>
+          <p>
+            8+ years turning complex problems into clean, efficient solutions.
+          </p>
+          <p className="text-emerald-400">status: available — taiwan, utc+8</p>
+        </CommandBlock>
+
+        <CommandBlock command="tree skills/">
+          {SKILL_TREE.map((line) => (
+            <p key={line} className="whitespace-pre">
+              {line}
+            </p>
+          ))}
+        </CommandBlock>
+
+        <ProjectsCommand />
+        <WritingCommand />
+
+        <CommandBlock command="echo $CONTACT">
+          <p className="text-white">got an interesting problem?</p>
+          <p className="space-x-6">
+            <a
+              href="https://github.com/ll931217"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-emerald-400 hover:underline"
+            >
+              github.com/ll931217
+            </a>
+            <a
+              href="https://www.linkedin.com/in/ll931217/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-emerald-400 hover:underline"
+            >
+              linkedin/ll931217
+            </a>
+            <a
+              href="mailto:liangshihlin@gmail.com"
+              className="text-emerald-400 hover:underline"
+            >
+              liangshihlin@gmail.com
+            </a>
+          </p>
+        </CommandBlock>
+
+        <LivePrompt />
+      </main>
+    </div>
   );
 };
 
