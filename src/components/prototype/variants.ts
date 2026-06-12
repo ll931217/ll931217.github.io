@@ -12,4 +12,9 @@ export interface PrototypeVariantDef {
 
 export const HOME_VARIANTS: PrototypeVariantDef[] = [
   { key: "current", name: "night sidebar (current)" },
+  {
+    key: "editorial",
+    name: "kinetic editorial (GSAP)",
+    Component: lazy(() => import("./VariantEditorial")),
+  },
 ];
