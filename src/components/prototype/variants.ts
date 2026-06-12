@@ -22,4 +22,9 @@ export const HOME_VARIANTS: PrototypeVariantDef[] = [
     name: "webgl depth (Three.js)",
     Component: lazy(() => import("./VariantWebgl")),
   },
+  {
+    key: "terminal",
+    name: "terminal takeover (GSAP)",
+    Component: lazy(() => import("./VariantTerminal")),
+  },
 ];
