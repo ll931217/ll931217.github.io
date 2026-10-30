@@ -27,7 +27,7 @@ bun run lint         # eslint . (ts/tsx only)
 
 What does **not** exist, so do not claim it passed:
 - No test runner and no test script.
-- No typecheck script. `tsconfig` has `strict`, `strictNullChecks`, and `noImplicitAny` all **off**, and eslint's `no-unused-vars` is off. A green build is not a type guarantee. If you want a real check, run `bunx tsc -p tsconfig.app.json --noEmit` and say you did.
+- No typecheck script. `tsconfig` has `strict`, `strictNullChecks`, and `noImplicitAny` all **off**, and eslint's `no-unused-vars` is off. A green build is not a type guarantee. If you want a real check, run `bunx tsc -p tsconfig.app.json --noEmit` and say you did (clean as of 2026-10-30).
 - Local builds work without env vars. `SENTRY_ORG`, `SENTRY_PROJECT`, `SENTRY_AUTH_TOKEN` are CI-only secrets; without them the Sentry plugin just warns and skips the sourcemap upload. `VITE_GITHUB_PAT` is set in CI but nothing in `src/` reads it.
 
 Lint currently reports warnings only (react-refresh `only-export-components` in shadcn files). Do not "fix" those.
@@ -53,7 +53,7 @@ The Konami code (hook in `src/hooks/useKonamiCode.ts`) opens `TerminalModal`, a 
 To add a post: drop a `.md` file in the folder. Nothing else to register.
 
 Gotchas:
-- `date` must be valid ISO. The home page calls `toISOString()` on it; an invalid date throws and blanks the page.
+- `date` is parsed with `new Date()` and the home page calls `toISOString()` on it. Use full ISO 8601 with a `T`; a string that fails to parse would throw and blank the home page. (Node is lenient: `2026-07-29:00:00.000Z` without the `T` still parses, as local time.)
 - `BlogPost.tsx` runs the already-rendered HTML through `parseMarkdown` again, which ends with a DOMPurify pass using an explicit `ALLOWED_TAGS` list in `src/lib/utils.ts`. Tags not on that list (tables, iframes, etc.) are stripped. Add them there if a post needs them.
 - Because `vite.config.ts` imports `src/lib/utils.ts`, that module executes in Node at config load. Do not add browser globals at its top level.
 
