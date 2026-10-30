@@ -50,7 +50,7 @@ layer(base);
   --color-night: #0d1117;
   --color-night-fg: #c9d1d9;
   --color-night-muted: #8b949e;
-  --color-night-faint: #484f58;
+  --color-night-faint: #89939f;
 
   --radius-lg: var(--radius);
   --radius-md: calc(var(--radius) - 2px);
@@ -149,6 +149,11 @@ layer(base);
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 
+  :where(a, button, input, select, textarea):focus-visible {
+    outline: 2px solid var(--color-emerald-400);
+    outline-offset: 4px;
+  }
+
   /* Headings inherit the surrounding font (mono on most of the site) */
   h1, h2, h3, h4, h5, h6 {
     @apply font-semibold;
@@ -161,7 +166,7 @@ layer(base);
 
 /* Markdown styling (blog posts) */
 .markdown {
-  @apply text-night-fg;
+  @apply font-sans text-base text-night-fg;
 }
 
 .markdown h1 {
@@ -177,7 +182,7 @@ layer(base);
 }
 
 .markdown p {
-  @apply mb-4 leading-relaxed;
+  @apply mb-4 leading-7;
 }
 
 .markdown ul {
@@ -232,4 +237,15 @@ layer(base);
 
 .markdown figcaption {
   @apply text-xs text-night-muted text-center -mt-6 mb-8;
+}
+
+/* A brief terminal flourish. Content never waits for this animation. */
+@media (prefers-reduced-motion: no-preference) {
+  .command-cursor {
+    animation: command-cursor 0.8s step-end 3;
+  }
+}
+
+@keyframes command-cursor {
+  50% { opacity: 0; }
 }

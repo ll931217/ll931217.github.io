@@ -43,7 +43,7 @@ const ProjectCard = ({ repo }: ProjectCardProps) => {
         </span>
       </div>
 
-      <p className="mt-1 text-sm text-night-muted leading-relaxed max-w-lg">
+      <p className="mt-1 text-base text-night-muted leading-relaxed max-w-lg">
         {repo.description ?? "No description provided."}
       </p>
 

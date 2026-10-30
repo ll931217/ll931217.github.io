@@ -1,3 +1,4 @@
+import SiteNavigation from "./SiteNavigation";
 import { Link, NavLink } from "react-router-dom";
 
 export interface SidebarSection {
@@ -6,9 +7,9 @@ export interface SidebarSection {
 }
 
 const PAGE_NAV = [
-  { to: "/", label: "index" },
-  { to: "/projects", label: "projects" },
-  { to: "/blog", label: "writing" },
+  { to: "/", label: "/home" },
+  { to: "/projects", label: "/projects" },
+  { to: "/blog", label: "/writing" },
 ];
 
 interface SiteSidebarProps {
@@ -25,14 +26,17 @@ interface SiteSidebarProps {
  */
 const SiteSidebar = ({ sections }: SiteSidebarProps) => {
   return (
-    <aside className="md:fixed md:inset-y-0 md:left-0 md:w-72 border-b md:border-b-0 md:border-r border-white/10 p-8 flex flex-col justify-between bg-night z-10">
+    <aside className="md:fixed md:inset-y-0 md:left-0 md:w-72 border-b md:border-b-0 md:border-r border-white/10 p-6 md:p-8 flex flex-col justify-between bg-night z-10">
       <div>
-        <p className="text-emerald-400 text-xs mb-6">~/baoge.dev</p>
+        <div className="-mx-3 -mt-4 mb-6 flex justify-center border-b border-white/10 pb-2 md:hidden">
+          <SiteNavigation />
+        </div>
+        <p className="text-emerald-400 text-xs mb-3 md:mb-6">~/baoge.dev</p>
         <Link to="/" className="block group">
           <h1 className="text-2xl font-bold text-white leading-tight group-hover:text-emerald-400 transition-colors">
             Liang-Shih
-            <br />
-            Lin
+            <br className="hidden md:block" />
+            <span className="md:hidden"> </span>Lin
           </h1>
         </Link>
         <p className="mt-3 text-sm text-night-muted leading-relaxed">
@@ -89,10 +93,10 @@ const SiteSidebar = ({ sections }: SiteSidebarProps) => {
       </div>
 
       <div className="mt-8 md:mt-0 flex flex-wrap md:flex-col gap-4 md:gap-2 text-xs text-night-muted">
-        <Link to="/projects" className="hover:text-emerald-400 transition-colors">
+        <Link to="/projects" className="hidden md:inline hover:text-emerald-400 transition-colors">
           all projects →
         </Link>
-        <Link to="/blog" className="hover:text-emerald-400 transition-colors">
+        <Link to="/blog" className="hidden md:inline hover:text-emerald-400 transition-colors">
           all posts →
         </Link>
         <span className="flex gap-4 md:mt-3">

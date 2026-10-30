@@ -14,7 +14,7 @@ const ProjectsCommand = () => {
   const featured = (repos ?? []).slice(0, 5);
 
   return (
-    <CommandBlock command="ls -la projects/" animKey={featured.length}>
+    <CommandBlock command="ls -la projects/">
       {isLoading ? (
         <p className="text-night-muted">fetching repositories…</p>
       ) : featured.length === 0 ? (

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import BootSequence from "@/components/home/BootSequence";
 import CommandBlock from "@/components/home/CommandBlock";
 import CrtOverlay from "@/components/home/CrtOverlay";
@@ -29,7 +30,6 @@ const Index = () => {
   return (
     <div
       className="min-h-screen bg-[#0a0e14] font-mono text-night-fg"
-      style={{ textShadow: "0 0 10px rgba(52,211,153,0.18)" }}
     >
       <CrtOverlay />
       <TerminalChrome />
@@ -38,12 +38,28 @@ const Index = () => {
         <BootSequence />
 
         <CommandBlock command="whoami">
-          <h1 className="text-lg text-white">liang-shih lin</h1>
-          <p>full-stack developer — systems that work</p>
+          <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+            liang-shih lin
+          </h1>
+          <p className="text-lg text-white">full-stack developer — systems that work</p>
           <p>
             8+ years turning complex problems into clean, efficient solutions.
           </p>
-          <p className="text-emerald-400">status: available — taiwan, utc+8</p>
+          <p className="text-sm text-emerald-400">status: available — taiwan, utc+8</p>
+          <div className="flex flex-wrap gap-3 pt-4">
+            <Link
+              to="/projects"
+              className="inline-flex min-h-11 items-center rounded-sm border border-emerald-400/60 bg-emerald-400/10 px-4 text-sm text-emerald-400 transition-colors hover:bg-emerald-400/20"
+            >
+              view projects →
+            </Link>
+            <a
+              href="mailto:liangshihlin@gmail.com"
+              className="inline-flex min-h-11 items-center rounded-sm border border-white/20 px-4 text-sm text-white transition-colors hover:border-emerald-400 hover:text-emerald-400"
+            >
+              contact me ↗
+            </a>
+          </div>
         </CommandBlock>
 
         <CommandBlock command="tree skills/">

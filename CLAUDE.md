@@ -53,7 +53,7 @@ Collapsing these back to a single `typescript` entry breaks either lint (on 7) o
 
 `src/App.tsx` holds the router: `/` (Index), `/projects`, `/blog`, `/blog/:slug`, `*`. Two visual shells:
 
-- **Home (`src/pages/Index.tsx`)** is a fake terminal session. It composes `CommandBlock` sections from `src/components/home/`. `CommandBlock` uses GSAP ScrollTrigger + TextPlugin to type the command when scrolled into view, then staggers the output. Pass `animKey` when the output is async (see `ProjectsCommand`) so it re-types on data arrival. All motion is gated with `gsap.matchMedia` on `prefers-reduced-motion`; keep that pattern for any new animation. The prompt string lives in `src/components/home/prompt.ts`.
+- **Home (`src/pages/Index.tsx`)** is a fake terminal session. It composes `CommandBlock` sections from `src/components/home/`. `CommandBlock` renders commands and output immediately. Only its decorative cursor briefly animates through CSS, gated on `prefers-reduced-motion: no-preference`. The decorative boot sequence still uses GSAP with a reduced-motion guard. Never hide essential content behind an animation. The prompt string lives in `src/components/home/prompt.ts`.
 - **Every other page** wraps in `SidebarLayout` (`src/components/layout/`), a fixed left rail with page nav.
 
 The Konami code (hook in `src/hooks/useKonamiCode.ts`) opens `TerminalModal`, a separate interactive terminal with its own static command table in `src/lib/terminalCommands.ts`. It shares nothing with the home-page terminal besides the look.
