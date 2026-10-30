@@ -78,7 +78,7 @@ Gotchas:
 
 ### Styling
 
-- `@` aliases `src/`. shadcn/ui components are in `src/components/ui/` (config in `components.json`). Only the ones actually imported are kept (select, toast, tooltip, sonner, plus custom PascalCase ones like EmptyState and KeyboardCheatSheet); the unused shadcn set and its radix packages were deleted on 2026-10-30. If you need another shadcn component, add it with the shadcn CLI and its radix dependency together.
+- `@` aliases `src/`. shadcn/ui components are in `src/components/ui/` (config in `components.json`). Only the ones actually imported are kept (select, tooltip, plus custom PascalCase ones like EmptyState and KeyboardCheatSheet); the unused shadcn set, the never-called toast/sonner stack, and their radix packages were deleted on 2026-10-30. If you need another shadcn component, add it with the shadcn CLI and its radix dependency together.
 - **Tailwind CSS 4, CSS-first config.** There is no `tailwind.config.ts`. The theme lives in `@theme {}` in `src/index.css`: shadcn CSS vars, the custom `night` palette (`night`, `night-fg`, `night-muted`, `night-faint`), `font-mono` = JetBrains Mono, keyframes. Tailwind runs through `@tailwindcss/vite` in `vite.config.ts` (no PostCSS). `tw-animate-css` provides `animate-in`, `fade-in-0`, `slide-in-from-*` for the radix components. Two v4 preflight changes to know: buttons no longer get `cursor: pointer` by default (a base rule in `index.css` restores it), and `hover:` variants only apply on devices that support hover. Most of the site is mono; emerald-400 is the accent.
 - Code blocks use the `tokyo-night-dark` highlight.js theme imported in `src/main.tsx`.
 
