@@ -34,7 +34,11 @@ export function useKeyboardShortcut(options: KeyboardShortcutOptions) {
   } = options;
 
   const handlerRef = useRef(handler);
-  handlerRef.current = handler;
+  // Keep the latest handler without re-binding the listener. Written in an
+  // effect, not during render, so the react-hooks/refs rule is satisfied.
+  useEffect(() => {
+    handlerRef.current = handler;
+  });
 
   useEffect(() => {
     if (!enabled) return;
