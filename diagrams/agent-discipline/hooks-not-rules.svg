@@ -17,6 +17,7 @@
       .edge { fill: none; stroke: #8b949e; stroke-width: 1.2; }
     </style>
   </defs>
+  <rect width="100%" height="100%" fill="#0d1117"/>
 
   <!-- arrows first, boxes after -->
   <!-- start -> decision -->
