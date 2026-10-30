@@ -12,7 +12,7 @@ tags:
 ---
 # Teaching my AI agents some discipline
 
-In my last post I said AI should be treated as an automation tool. Two months ago I decided to actually live by that. I wanted to hand my coding agents real tickets from work and have them come back done, tested and merged, while I worked on something else.
+In [my last post](/blog/ai-as-automation-tool) I said AI should be treated as an automation tool. Two months ago I decided to actually live by that. I wanted to hand my coding agents real tickets from work and have them come back done, tested and merged, while I worked on something else.
 
 It didn't go well at first.
 
