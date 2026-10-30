@@ -59,7 +59,7 @@ const Index = () => {
 
         <CommandBlock command="echo $CONTACT">
           <p className="text-white">got an interesting problem?</p>
-          <p className="space-x-6">
+          <p className="flex flex-wrap gap-x-6 gap-y-1">
             <a
               href="https://github.com/ll931217"
               target="_blank"

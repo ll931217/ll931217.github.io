@@ -65,12 +65,12 @@ const Blog = () => {
           <span className="text-night-faint">01.</span> writing
         </h2>
 
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
           <p className="text-sm text-night-muted leading-relaxed max-w-md">
             Thoughts, tutorials, and insights about programming and tech.
           </p>
 
-          <div className="relative w-full md:w-72 shrink-0">
+          <div className="relative w-full lg:w-72 shrink-0">
             <Search
               className="absolute left-3 top-1/2 -translate-y-1/2 text-night-faint"
               size={14}
