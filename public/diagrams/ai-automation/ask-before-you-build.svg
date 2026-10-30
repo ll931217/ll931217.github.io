@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="430" viewBox="0 0 720 430" role="img" aria-labelledby="ask-title ask-desc">
+  <title id="ask-title">Two mental models, one check before you build</title>
+  <desc id="ask-desc">Flowchart. You meet a term you think you know. First principles: can you explain it in the simplest terms? Yes, build on it. No, circle of competence: is it inside what you really know? No, ask the person who owns it before you build. Yes, dig until you can explain it, then check again.</desc>
+  <defs>
+    <marker id="ask-arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#8b949e"/>
+    </marker>
+    <style>
+      .name { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 13px; font-weight: 600; fill: #e6edf3; }
+      .sub  { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 10px; fill: #8b949e; }
+      .lbl  { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 9px; letter-spacing: 0.08em; fill: #8b949e; }
+      .eyebrow { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 9px; letter-spacing: 0.14em; fill: #6e7681; }
+      .mask { fill: #0d1117; }
+      .box  { fill: #161b22; stroke: rgba(201,209,217,0.28); stroke-width: 1; }
+      .edge { fill: none; stroke: #8b949e; stroke-width: 1.2; }
+    </style>
+  </defs>
+
+  <!-- which mental model each question comes from -->
+  <text x="40" y="153" class="eyebrow">FIRST PRINCIPLES</text>
+  <text x="40" y="289" class="eyebrow">CIRCLE OF COMPETENCE</text>
+
+  <!-- arrows first -->
+  <line x1="360" y1="64" x2="360" y2="100" class="edge" marker-end="url(#ask-arrow)"/>
+  <!-- q1 yes -> build -->
+  <line x1="490" y1="150" x2="540" y2="150" class="edge" marker-end="url(#ask-arrow)"/>
+  <rect x="494" y="130" width="36" height="12" rx="2" class="mask"/>
+  <text x="512" y="139" text-anchor="middle" class="lbl">YES</text>
+  <!-- q1 no -> q2 -->
+  <line x1="360" y1="200" x2="360" y2="236" class="edge" marker-end="url(#ask-arrow)"/>
+  <rect x="372" y="210" width="28" height="12" rx="2" class="mask"/>
+  <text x="386" y="219" text-anchor="middle" class="lbl">NO</text>
+  <!-- q2 no -> ask the owner -->
+  <line x1="490" y1="286" x2="540" y2="286" class="edge" marker-end="url(#ask-arrow)"/>
+  <rect x="494" y="266" width="36" height="12" rx="2" class="mask"/>
+  <text x="512" y="275" text-anchor="middle" class="lbl">NO</text>
+  <!-- ask the owner -> build -->
+  <line x1="610" y1="262" x2="610" y2="170" class="edge" marker-end="url(#ask-arrow)"/>
+  <!-- q2 yes -> dig -->
+  <line x1="360" y1="336" x2="360" y2="364" class="edge" marker-end="url(#ask-arrow)"/>
+  <rect x="372" y="342" width="36" height="12" rx="2" class="mask"/>
+  <text x="390" y="351" text-anchor="middle" class="lbl">YES</text>
+  <!-- dig -> q1 (loop on the left) -->
+  <path d="M 250,386 H 198 Q 190,386 190,378 V 158 Q 190,150 198,150 H 230" class="edge" marker-end="url(#ask-arrow)"/>
+  <rect x="112" y="212" width="72" height="12" rx="2" class="mask"/>
+  <text x="148" y="221" text-anchor="middle" class="lbl">CHECK AGAIN</text>
+
+  <!-- start -->
+  <rect x="250" y="24" width="220" height="40" rx="20" class="mask"/>
+  <rect x="250" y="24" width="220" height="40" rx="20" class="box"/>
+  <text x="360" y="49" text-anchor="middle" class="name">A term you think you know</text>
+
+  <!-- q1: first principles -->
+  <polygon points="360,100 490,150 360,200 230,150" class="mask"/>
+  <polygon points="360,100 490,150 360,200 230,150" class="box"/>
+  <text x="360" y="146" text-anchor="middle" class="name">Can you explain it</text>
+  <text x="360" y="164" text-anchor="middle" class="sub">in the simplest terms?</text>
+
+  <!-- build (end) -->
+  <rect x="540" y="130" width="140" height="40" rx="20" class="mask"/>
+  <rect x="540" y="130" width="140" height="40" rx="20" class="box"/>
+  <text x="610" y="155" text-anchor="middle" class="name">Build on it</text>
+
+  <!-- q2: circle of competence -->
+  <polygon points="360,236 490,286 360,336 230,286" class="mask"/>
+  <polygon points="360,236 490,286 360,336 230,286" class="box"/>
+  <text x="360" y="282" text-anchor="middle" class="name">Is it inside your</text>
+  <text x="360" y="300" text-anchor="middle" class="sub">circle of competence?</text>
+
+  <!-- ask the owner (focal) -->
+  <rect x="540" y="262" width="140" height="48" rx="6" class="mask"/>
+  <rect x="540" y="262" width="140" height="48" rx="6" fill="rgba(52,211,153,0.10)" stroke="#34d399" stroke-width="1.2"/>
+  <text x="610" y="283" text-anchor="middle" class="name">Ask the owner</text>
+  <text x="610" y="299" text-anchor="middle" class="sub">before you build</text>
+
+  <!-- dig -->
+  <rect x="250" y="364" width="220" height="44" rx="6" class="mask"/>
+  <rect x="250" y="364" width="220" height="44" rx="6" class="box"/>
+  <text x="360" y="383" text-anchor="middle" class="name">Dig until you can explain it</text>
+  <text x="360" y="399" text-anchor="middle" class="sub">docs, code, the simplest questions</text>
+</svg>

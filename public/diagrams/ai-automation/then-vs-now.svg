@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="300" viewBox="0 0 720 300" role="img" aria-labelledby="tvn-title tvn-desc">
+  <title id="tvn-title">How work gets planned, then and now</title>
+  <desc id="tvn-desc">Two columns. Then: the CEO hands a vague vision to managers and leads, who turn it into a tangible plan, which employees turn into tasks. Now: the CEO hands the same vague vision straight to you, you turn it into a plan with the context AI lacks, and AI agents do the mundane work in minutes and hand the results back.</desc>
+  <defs>
+    <marker id="tvn-arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#8b949e"/>
+    </marker>
+    <style>
+      .name { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 13px; font-weight: 600; fill: #e6edf3; }
+      .sub  { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 10px; fill: #8b949e; }
+      .lbl  { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 9px; letter-spacing: 0.08em; fill: #8b949e; }
+      .eyebrow { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 9px; letter-spacing: 0.14em; fill: #6e7681; }
+      .mask { fill: #0d1117; }
+      .box  { fill: #161b22; stroke: rgba(201,209,217,0.28); stroke-width: 1; }
+      .edge { fill: none; stroke: #8b949e; stroke-width: 1.2; }
+      .ret  { fill: none; stroke: #8b949e; stroke-width: 1; stroke-dasharray: 5,4; }
+    </style>
+  </defs>
+
+  <!-- column headers + divider -->
+  <text x="40" y="30" class="eyebrow">THEN</text>
+  <text x="440" y="30" class="eyebrow">NOW · WITH AI</text>
+  <line x1="340" y1="20" x2="340" y2="284" stroke="rgba(201,209,217,0.14)" stroke-width="0.8" stroke-dasharray="3,4"/>
+
+  <!-- arrows, then column (x = 140) -->
+  <line x1="140" y1="96" x2="140" y2="136" class="edge" marker-end="url(#tvn-arrow)"/>
+  <rect x="148" y="110" width="80" height="12" rx="2" class="mask"/>
+  <text x="152" y="119" class="lbl">VAGUE VISION</text>
+  <line x1="140" y1="184" x2="140" y2="224" class="edge" marker-end="url(#tvn-arrow)"/>
+  <rect x="148" y="198" width="88" height="12" rx="2" class="mask"/>
+  <text x="152" y="207" class="lbl">TANGIBLE PLAN</text>
+
+  <!-- arrows, now column (x = 540) -->
+  <line x1="540" y1="96" x2="540" y2="136" class="edge" marker-end="url(#tvn-arrow)"/>
+  <rect x="548" y="110" width="80" height="12" rx="2" class="mask"/>
+  <text x="552" y="119" class="lbl">VAGUE VISION</text>
+  <line x1="540" y1="184" x2="540" y2="224" class="edge" marker-end="url(#tvn-arrow)"/>
+  <rect x="548" y="198" width="92" height="12" rx="2" class="mask"/>
+  <text x="552" y="207" class="lbl">PLAN + CONTEXT</text>
+  <!-- agents -> you (dashed results loop on the right) -->
+  <path d="M 640,248 H 656 Q 664,248 664,240 V 168 Q 664,160 656,160 H 640" class="ret" marker-end="url(#tvn-arrow)"/>
+  <rect x="670" y="198" width="48" height="12" rx="2" class="mask"/>
+  <text x="672" y="207" class="lbl">RESULTS</text>
+
+  <!-- then column nodes -->
+  <rect x="40" y="48" width="200" height="48" rx="6" class="mask"/>
+  <rect x="40" y="48" width="200" height="48" rx="6" class="box"/>
+  <text x="140" y="69" text-anchor="middle" class="name">CEO</text>
+  <text x="140" y="85" text-anchor="middle" class="sub">the vision, very vague</text>
+
+  <rect x="40" y="136" width="200" height="48" rx="6" class="mask"/>
+  <rect x="40" y="136" width="200" height="48" rx="6" class="box"/>
+  <text x="140" y="157" text-anchor="middle" class="name">Managers &amp; leads</text>
+  <text x="140" y="173" text-anchor="middle" class="sub">make it tangible</text>
+
+  <rect x="40" y="224" width="200" height="48" rx="6" class="mask"/>
+  <rect x="40" y="224" width="200" height="48" rx="6" class="box"/>
+  <text x="140" y="245" text-anchor="middle" class="name">Employees</text>
+  <text x="140" y="261" text-anchor="middle" class="sub">turn the plan into tasks</text>
+
+  <!-- now column nodes -->
+  <rect x="440" y="48" width="200" height="48" rx="6" class="mask"/>
+  <rect x="440" y="48" width="200" height="48" rx="6" class="box"/>
+  <text x="540" y="69" text-anchor="middle" class="name">CEO</text>
+  <text x="540" y="85" text-anchor="middle" class="sub">the vision, still vague</text>
+
+  <rect x="440" y="136" width="200" height="48" rx="6" class="mask"/>
+  <rect x="440" y="136" width="200" height="48" rx="6" fill="rgba(52,211,153,0.10)" stroke="#34d399" stroke-width="1.2"/>
+  <text x="540" y="157" text-anchor="middle" class="name">You</text>
+  <text x="540" y="173" text-anchor="middle" class="sub">adds context, makes the plan</text>
+
+  <rect x="440" y="224" width="200" height="48" rx="6" class="mask"/>
+  <rect x="440" y="224" width="200" height="48" rx="6" class="box"/>
+  <text x="540" y="245" text-anchor="middle" class="name">AI agents</text>
+  <text x="540" y="261" text-anchor="middle" class="sub">the mundane work, in minutes</text>
+</svg>
