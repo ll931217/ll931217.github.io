@@ -81,7 +81,7 @@ const Blog = () => {
               placeholder="search… (press /)"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-4 h-10 bg-transparent border border-white/10 text-night-fg placeholder:text-night-faint focus:outline-none focus:border-emerald-400 transition-colors text-sm"
+              className="w-full pl-9 pr-4 h-10 bg-transparent border border-white/10 text-night-fg placeholder:text-night-faint focus:outline-hidden focus:border-emerald-400 transition-colors text-sm"
             />
           </div>
         </div>

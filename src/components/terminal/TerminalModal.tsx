@@ -170,7 +170,7 @@ export function TerminalModal({ isOpen, onClose }: TerminalModalProps) {
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-sm"
+      className="fixed inset-0 z-100 flex items-center justify-center bg-black/90 backdrop-blur-xs"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
@@ -228,7 +228,7 @@ export function TerminalModal({ isOpen, onClose }: TerminalModalProps) {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
-              className="flex-1 bg-transparent border-none outline-none text-gray-300"
+              className="flex-1 bg-transparent border-none outline-hidden text-gray-300"
               autoFocus
               autoComplete="off"
             />

@@ -107,7 +107,7 @@ const Projects = () => {
                 value={search}
                 onChange={handleSearchInput}
                 placeholder="search… (press /)"
-                className="w-full pl-9 pr-3 py-2 text-sm font-mono bg-night border border-white/10 text-night-fg placeholder:text-night-faint focus:border-emerald-400 focus:outline-none transition-colors"
+                className="w-full pl-9 pr-3 py-2 text-sm font-mono bg-night border border-white/10 text-night-fg placeholder:text-night-faint focus:border-emerald-400 focus:outline-hidden transition-colors"
               />
             </div>
 
