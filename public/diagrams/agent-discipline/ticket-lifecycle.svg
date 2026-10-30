@@ -18,6 +18,7 @@
       .ret  { fill: none; stroke: #34d399; stroke-width: 1; stroke-dasharray: 5,4; }
     </style>
   </defs>
+  <rect width="100%" height="100%" fill="#0d1117"/>
 
   <!-- transitions -->
   <!-- start dot -> picked -->

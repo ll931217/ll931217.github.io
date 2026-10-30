@@ -20,6 +20,7 @@
       .drop { fill: none; stroke: #34d399; stroke-width: 1.2; stroke-dasharray: 5,4; }
     </style>
   </defs>
+  <rect width="100%" height="100%" fill="#0d1117"/>
 
   <!-- rung numbers -->
   <text x="130" y="318" text-anchor="middle" class="eyebrow">RUNG 1 · START HERE</text>
