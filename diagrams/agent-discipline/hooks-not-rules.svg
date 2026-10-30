@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="420" viewBox="0 0 720 420" role="img" aria-labelledby="hooks-title hooks-desc">
+  <title id="hooks-title">A hook that blocks, with the fix one command away</title>
+  <desc id="hooks-desc">Flowchart: when the agent tries to edit implementation code, a hook checks whether a test has gone red. If yes the edit is allowed. If no the edit is denied with the exact command that clears it, the agent runs that command, and the check runs again.</desc>
+  <defs>
+    <marker id="hooks-arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#8b949e"/>
+    </marker>
+    <marker id="hooks-arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#34d399"/>
+    </marker>
+    <style>
+      .name { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 13px; font-weight: 600; fill: #e6edf3; }
+      .sub  { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 10px; fill: #8b949e; }
+      .lbl  { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 9px; letter-spacing: 0.08em; fill: #8b949e; }
+      .mask { fill: #0d1117; }
+      .box  { fill: #161b22; stroke: rgba(201,209,217,0.28); stroke-width: 1; }
+      .edge { fill: none; stroke: #8b949e; stroke-width: 1.2; }
+    </style>
+  </defs>
+
+  <!-- arrows first, boxes after -->
+  <!-- start -> decision -->
+  <line x1="360" y1="64" x2="360" y2="100" class="edge" marker-end="url(#hooks-arrow)"/>
+  <!-- decision -> allowed (YES, right) -->
+  <line x1="470" y1="144" x2="520" y2="144" class="edge" marker-end="url(#hooks-arrow)"/>
+  <rect x="474" y="124" width="36" height="12" rx="2" class="mask"/>
+  <text x="492" y="133" text-anchor="middle" class="lbl">YES</text>
+  <!-- decision -> denied (NO, down) -->
+  <line x1="360" y1="188" x2="360" y2="244" class="edge" marker-end="url(#hooks-arrow)"/>
+  <rect x="372" y="206" width="28" height="12" rx="2" class="mask"/>
+  <text x="386" y="215" text-anchor="middle" class="lbl">NO</text>
+  <!-- denied -> runs the command -->
+  <line x1="360" y1="300" x2="360" y2="334" class="edge" marker-end="url(#hooks-arrow)"/>
+  <!-- runs the command -> back to decision (left loop) -->
+  <path d="M 240,358 H 208 Q 200,358 200,350 V 152 Q 200,144 208,144 H 250" class="edge" marker-end="url(#hooks-arrow)"/>
+  <rect x="124" y="238" width="68" height="12" rx="2" class="mask"/>
+  <text x="158" y="247" text-anchor="middle" class="lbl">CHECK AGAIN</text>
+
+  <!-- start -->
+  <rect x="250" y="24" width="220" height="40" rx="20" class="mask"/>
+  <rect x="250" y="24" width="220" height="40" rx="20" class="box"/>
+  <text x="360" y="49" text-anchor="middle" class="name">Agent wants to edit src/</text>
+
+  <!-- decision diamond -->
+  <polygon points="360,100 470,144 360,188 250,144" class="mask"/>
+  <polygon points="360,100 470,144 360,188 250,144" class="box"/>
+  <text x="360" y="140" text-anchor="middle" class="name">Has a test</text>
+  <text x="360" y="158" text-anchor="middle" class="sub">gone red yet?</text>
+
+  <!-- allowed (end) -->
+  <rect x="520" y="124" width="160" height="40" rx="20" class="mask"/>
+  <rect x="520" y="124" width="160" height="40" rx="20" class="box"/>
+  <text x="600" y="149" text-anchor="middle" class="name">Edit allowed</text>
+
+  <!-- denied (focal) -->
+  <rect x="240" y="244" width="240" height="56" rx="6" class="mask"/>
+  <rect x="240" y="244" width="240" height="56" rx="6" fill="rgba(52,211,153,0.10)" stroke="#34d399" stroke-width="1.2"/>
+  <text x="360" y="268" text-anchor="middle" class="name">Denied</text>
+  <text x="360" y="286" text-anchor="middle" class="sub">with the one command that fixes it</text>
+
+  <!-- runs the command -->
+  <rect x="240" y="334" width="240" height="48" rx="6" class="mask"/>
+  <rect x="240" y="334" width="240" height="48" rx="6" class="box"/>
+  <text x="360" y="355" text-anchor="middle" class="name">Agent runs that command</text>
+  <text x="360" y="371" text-anchor="middle" class="sub">writes the failing test first</text>
+</svg>

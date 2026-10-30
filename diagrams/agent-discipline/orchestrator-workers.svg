@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="490" viewBox="0 0 720 490" role="img" aria-labelledby="orch-title orch-desc">
+  <title id="orch-title">One orchestrator, many workers</title>
+  <desc id="orch-desc">Architecture: I hand tickets to one orchestrator session that cannot edit code. It hands each ticket, with a definition of done, to a worker in its own git worktree. Workers push to the CI pipeline, a green pipeline closes the ticket and a red one reopens it, the orchestrator picks the next ticket, and after three review rounds it escalates to me.</desc>
+  <defs>
+    <marker id="orch-arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#8b949e"/>
+    </marker>
+    <marker id="orch-arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#34d399"/>
+    </marker>
+    <style>
+      .name { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 13px; font-weight: 600; fill: #e6edf3; }
+      .sub  { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 10px; fill: #8b949e; }
+      .lbl  { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 9px; letter-spacing: 0.08em; fill: #8b949e; }
+      .eyebrow { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 9px; letter-spacing: 0.14em; fill: #6e7681; }
+      .mask { fill: #0d1117; }
+      .box  { fill: #161b22; stroke: rgba(201,209,217,0.28); stroke-width: 1; }
+      .edge { fill: none; stroke: #8b949e; stroke-width: 1.2; }
+      .ret  { fill: none; stroke: #8b949e; stroke-width: 1; stroke-dasharray: 5,4; }
+    </style>
+  </defs>
+
+  <!-- zone: workers (painted first) -->
+  <rect x="40" y="172" width="440" height="120" rx="8" fill="rgba(201,209,217,0.03)" stroke="rgba(201,209,217,0.10)" stroke-width="0.8"/>
+  <rect x="52" y="176" width="60" height="12" rx="2" class="mask"/>
+  <text x="56" y="185" class="eyebrow">WORKERS</text>
+
+  <!-- arrows -->
+  <!-- me -> orchestrator -->
+  <line x1="160" y1="72" x2="280" y2="72" class="edge" marker-end="url(#orch-arrow)"/>
+  <rect x="196" y="52" width="48" height="12" rx="2" class="mask"/>
+  <text x="220" y="61" text-anchor="middle" class="lbl">TICKETS</text>
+  <!-- orchestrator -> me (dashed escalation, enters Me from below) -->
+  <path d="M 280,96 H 208 Q 200,96 200,104 V 132 Q 200,140 192,140 H 108 Q 100,140 100,132 V 104" class="ret" marker-end="url(#orch-arrow)"/>
+  <rect x="112" y="148" width="76" height="12" rx="2" class="mask"/>
+  <text x="150" y="157" text-anchor="middle" class="lbl">ROUND 4: ASK</text>
+  <!-- orchestrator -> worker A -->
+  <path d="M 320,120 V 152 Q 320,160 312,160 H 162 Q 154,160 154,168 V 204" class="edge" marker-end="url(#orch-arrow)"/>
+  <rect x="200" y="142" width="80" height="12" rx="2" class="mask"/>
+  <text x="240" y="151" text-anchor="middle" class="lbl">TICKET + DOD</text>
+  <!-- orchestrator -> worker B -->
+  <path d="M 380,120 V 152 Q 380,160 372,160 H 358 Q 350,160 350,168 V 204" class="edge" marker-end="url(#orch-arrow)"/>
+  <!-- worker B -> orchestrator (dashed review verdict loop) -->
+  <path d="M 420,204 V 176 Q 420,168 428,168 H 436 Q 444,168 444,160 V 120" class="ret" marker-end="url(#orch-arrow)"/>
+  <rect x="452" y="132" width="64" height="12" rx="2" class="mask"/>
+  <text x="484" y="141" text-anchor="middle" class="lbl">REVIEW ×3</text>
+  <!-- worker A -> pipeline -->
+  <line x1="154" y1="268" x2="154" y2="360" class="edge" marker-end="url(#orch-arrow)"/>
+  <rect x="162" y="306" width="88" height="12" rx="2" class="mask"/>
+  <text x="206" y="315" text-anchor="middle" class="lbl">REBASE · PUSH</text>
+  <!-- worker B -> pipeline -->
+  <path d="M 350,268 V 322 Q 350,330 342,330 H 198 Q 190,330 190,338 V 360" class="edge" marker-end="url(#orch-arrow)"/>
+  <!-- pipeline -> ticket -->
+  <line x1="244" y1="388" x2="320" y2="388" class="edge" marker-end="url(#orch-arrow)"/>
+  <rect x="250" y="368" width="64" height="12" rx="2" class="mask"/>
+  <text x="282" y="377" text-anchor="middle" class="lbl">GREEN/RED</text>
+  <!-- ticket -> orchestrator (dashed next ticket) -->
+  <path d="M 480,388 H 552 Q 560,388 560,380 V 108 Q 560,100 552,100 H 480" class="ret" marker-end="url(#orch-arrow)"/>
+  <rect x="568" y="234" width="76" height="12" rx="2" class="mask"/>
+  <text x="606" y="243" text-anchor="middle" class="lbl">NEXT TICKET</text>
+
+  <!-- me -->
+  <rect x="40" y="56" width="120" height="48" rx="6" class="mask"/>
+  <rect x="40" y="56" width="120" height="48" rx="6" class="box"/>
+  <text x="100" y="77" text-anchor="middle" class="name">Me</text>
+  <text x="100" y="93" text-anchor="middle" class="sub">the only human</text>
+
+  <!-- orchestrator (focal) -->
+  <rect x="280" y="40" width="200" height="80" rx="6" class="mask"/>
+  <rect x="280" y="40" width="200" height="80" rx="6" fill="rgba(52,211,153,0.10)" stroke="#34d399" stroke-width="1.2"/>
+  <text x="380" y="66" text-anchor="middle" class="name">Orchestrator</text>
+  <text x="380" y="84" text-anchor="middle" class="sub">cannot edit code</text>
+  <text x="380" y="100" text-anchor="middle" class="sub">picks · defines done · reviews</text>
+
+  <!-- worker A -->
+  <rect x="64" y="204" width="180" height="64" rx="6" class="mask"/>
+  <rect x="64" y="204" width="180" height="64" rx="6" class="box"/>
+  <text x="154" y="228" text-anchor="middle" class="name">Worker A</text>
+  <text x="154" y="244" text-anchor="middle" class="sub">own branch · owned files</text>
+  <text x="154" y="258" text-anchor="middle" class="sub">DoD → code → reviewer agents</text>
+
+  <!-- worker B -->
+  <rect x="276" y="204" width="180" height="64" rx="6" class="mask"/>
+  <rect x="276" y="204" width="180" height="64" rx="6" class="box"/>
+  <text x="366" y="228" text-anchor="middle" class="name">Worker B</text>
+  <text x="366" y="244" text-anchor="middle" class="sub">own branch · owned files</text>
+  <text x="366" y="258" text-anchor="middle" class="sub">DoD → code → reviewer agents</text>
+
+  <!-- pipeline -->
+  <rect x="64" y="360" width="180" height="56" rx="6" class="mask"/>
+  <rect x="64" y="360" width="180" height="56" rx="6" class="box"/>
+  <text x="154" y="383" text-anchor="middle" class="name">CI pipeline</text>
+  <text x="154" y="400" text-anchor="middle" class="sub">tests it touched</text>
+
+  <!-- ticket -->
+  <rect x="320" y="356" width="160" height="64" rx="6" class="mask"/>
+  <rect x="320" y="356" width="160" height="64" rx="6" class="box"/>
+  <text x="400" y="377" text-anchor="middle" class="name">Ticket</text>
+  <text x="400" y="393" text-anchor="middle" class="sub">green → closed</text>
+  <text x="400" y="407" text-anchor="middle" class="sub">red → reopened</text>
+
+  <!-- legend strip -->
+  <line x1="30" y1="446" x2="690" y2="446" stroke="rgba(201,209,217,0.10)" stroke-width="0.8"/>
+  <text x="30" y="466" class="eyebrow">LEGEND</text>
+  <line x1="110" y1="462" x2="140" y2="462" class="edge"/>
+  <text x="148" y="466" class="lbl">HAND-OFF</text>
+  <line x1="250" y1="462" x2="280" y2="462" class="ret"/>
+  <text x="288" y="466" class="lbl">RETURN / ESCALATION</text>
+  <rect x="460" y="456" width="30" height="12" rx="2" fill="rgba(52,211,153,0.10)" stroke="#34d399" stroke-width="1"/>
+  <text x="498" y="466" class="lbl">THE ONLY ONE THAT TALKS TO ME</text>
+</svg>
