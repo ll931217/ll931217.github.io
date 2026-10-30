@@ -207,3 +207,29 @@ layer(base);
 .markdown pre code {
   @apply bg-transparent p-0 text-night-fg;
 }
+
+/* Tables (GFM) — hairline grid in the night palette; inline styles are stripped so alignment is fixed here */
+.markdown table {
+  @apply w-full my-6 text-sm border-collapse;
+}
+
+.markdown th {
+  @apply text-left font-semibold text-white border-b border-white/20 px-3 py-2;
+}
+
+.markdown td {
+  @apply align-top border-b border-white/10 px-3 py-2;
+}
+
+.markdown tbody tr:hover {
+  @apply bg-white/3;
+}
+
+/* Diagrams are standalone SVGs served from /public and embedded as <img> */
+.markdown img {
+  @apply block max-w-full h-auto mx-auto my-8;
+}
+
+.markdown figcaption {
+  @apply text-xs text-night-muted text-center -mt-6 mb-8;
+}

@@ -82,8 +82,28 @@ export function parseMarkdown(content: string): string {
       "hr",
       "br",
       "span",
+      // markdown-it emits GFM tables; without these the whole table is stripped
+      "table",
+      "thead",
+      "tbody",
+      "tr",
+      "th",
+      "td",
+      "figure",
+      "figcaption",
     ],
-    ALLOWED_ATTR: ["href", "src", "alt", "title", "class", "target", "rel"],
+    ALLOWED_ATTR: [
+      "href",
+      "src",
+      "alt",
+      "title",
+      "class",
+      "target",
+      "rel",
+      "width",
+      "height",
+      "loading",
+    ],
   });
 
   return sanitizedHtml;
