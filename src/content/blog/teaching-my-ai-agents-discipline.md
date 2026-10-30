@@ -30,6 +30,8 @@ The idea is simple. Instead of telling the agent "write the test first" and hopi
 
 That last part is important. A gate that is hard to satisfy just becomes something the agent tries to route around. If the fix is one command away, it just runs the command.
 
+[![Flowchart: the agent wants to edit src. A hook asks whether a test has gone red yet. Yes: the edit is allowed. No: the edit is denied together with the one command that fixes it, the agent runs that command, and the check runs again.](/diagrams/agent-discipline/hooks-not-rules.svg)](/diagrams/agent-discipline/hooks-not-rules.svg)
+
 Right now there are 18 gates that can say no, things like:
 
 - no merge request without a `## Proof` section showing it actually works
@@ -50,7 +52,18 @@ There is one **orchestrator** session that I talk to. It is not allowed to edit 
 
 Each worker gets its own git worktree (a separate copy of the repo on its own branch), its own terminal tab and a list of files it owns. If it touches a file it doesn't own, it gets blocked. Before it writes any code it writes a definition of done, then a few small reviewer agents check its work against that list. The orchestrator gets three rounds to accept or send it back, after the third round it has to come ask me.
 
+[![Architecture: I hand tickets to one orchestrator that cannot edit code. It hands each ticket plus a definition of done to a worker in its own git worktree. Workers rebase and push to the CI pipeline. Green closes the ticket, red reopens it, and the orchestrator picks the next one. After three review rounds the orchestrator has to come ask me.](/diagrams/agent-discipline/orchestrator-workers.svg)](/diagrams/agent-discipline/orchestrator-workers.svg)
+
+| Who | Can edit code? | Job |
+| --- | --- | --- |
+| Me | yes, but I try not to | hand over tickets, answer round-four questions |
+| Orchestrator | **no** | pick the next ticket, write down what "done" means, review, send back or accept |
+| Worker | only files it owns | write the definition of done, then the code, then push |
+| Reviewer agents | no | check the worker's output against its own definition of done |
+
 When the work is accepted, the worker rebases, runs the tests it touched, and pushes. When the pipeline goes green, the ticket closes, the worktree gets cleaned up and the next ticket gets picked up automatically. If the pipeline goes red, the ticket reopens and a fix goes in before anything new.
+
+[![State machine: a ticket is picked, gets a definition of done, is coded, then reviewed. Review can send it back to coding up to three times. Once accepted it is pushed and run through the pipeline. Green closes it, red reopens it and sends it back to coding.](/diagrams/agent-discipline/ticket-lifecycle.svg)](/diagrams/agent-discipline/ticket-lifecycle.svg)
 
 It's a bit like being a tech lead for a team that never sleeps but also never remembers anything from yesterday.
 
@@ -79,20 +92,27 @@ That's not a question, that's a permission slip.
 
 So the next thing I'm building is a **trust ladder**. Every area of the code starts with full review. After a few clean landings in a row, it moves to sampled review. After more, only the tests need to pass. If anything goes wrong, like a revert, a red pipeline or work sent back, it drops back down a step. Trust gets earned, and it gets lost faster than it's earned, which is how it works with people too.
 
-# Key lessons
+[![Trust ladder: three rungs, full review, sampled review, tests only. Clean landings move an area of the code up one rung. Any failure, a revert, a red pipeline or work sent back, drops it down one rung.](/diagrams/agent-discipline/trust-ladder.svg)](/diagrams/agent-discipline/trust-ladder.svg)
 
-## Enforce at the moment, don't remind
+## By the numbers
 
-If a rule matters, put it where the action happens. A rule in a file is a suggestion, a hook that blocks the action is a rule.
+Everything above, in one place.
 
-## Make the right thing the easy thing
+| What I counted | Number | What it told me |
+| --- | --- | --- |
+| Always-loaded rules the agent actually acted on | 16.4% | rules in a file are suggestions |
+| Tool calls the hooks denied in 4 weeks | 5,743 | each one was a review comment I didn't have to write |
+| Gates that can say no | 18 | every other hook only reminds |
+| Score, with plugin vs without | 7/7 vs 4/7 | the review found the bugs, not the first draft |
+| Time, with plugin vs without | 38 min vs 8 min | discipline costs almost 5x |
+| Times an agent parked on a question for me, per month | 538 | too many |
+| …of which it already knew the answer | 231 | permission slips, not questions |
 
-Every block should come with the exact command that fixes it. Otherwise you're just teaching the agent to find a way around you.
+## Key lessons
 
-## Measure it
-
-I was sure my rules were working until I counted. 16.4% was a humbling number. If you can't measure whether it worked, you don't know whether it worked.
-
-## Discipline costs time
-
-The plugin version was slower, a lot slower. Discipline isn't free for agents either, choose where you actually need it.
+| Lesson | In one line |
+| --- | --- |
+| **Enforce at the moment, don't remind** | A rule in a file is a suggestion. A hook that blocks the action is a rule. |
+| **Make the right thing the easy thing** | Every block comes with the exact command that fixes it. Otherwise you are teaching the agent to route around you. |
+| **Measure it** | I was sure my rules worked until I counted. 16.4% was humbling. If you can't measure it, you don't know. |
+| **Discipline costs time** | The plugin version was a lot slower. Discipline isn't free for agents either. Choose where you actually need it. |

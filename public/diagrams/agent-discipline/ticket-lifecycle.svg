@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="290" viewBox="0 0 720 290" role="img" aria-labelledby="life-title life-desc">
+  <title id="life-title">Life of one ticket</title>
+  <desc id="life-desc">State machine: a ticket is picked, gets a definition of done, is coded, then reviewed. Review can send it back to coding up to three times. Once accepted it is pushed and run through the pipeline; green closes the ticket, red reopens it and sends it back to coding.</desc>
+  <defs>
+    <marker id="life-arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#8b949e"/>
+    </marker>
+    <marker id="life-arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#34d399"/>
+    </marker>
+    <style>
+      .name { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 13px; font-weight: 600; fill: #e6edf3; }
+      .sub  { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 10px; fill: #8b949e; }
+      .lbl  { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 9px; letter-spacing: 0.08em; fill: #8b949e; }
+      .mask { fill: #0d1117; }
+      .box  { fill: #161b22; stroke: rgba(201,209,217,0.28); stroke-width: 1; }
+      .edge { fill: none; stroke: #8b949e; stroke-width: 1.2; }
+      .ret  { fill: none; stroke: #34d399; stroke-width: 1; stroke-dasharray: 5,4; }
+    </style>
+  </defs>
+
+  <!-- transitions -->
+  <!-- start dot -> picked -->
+  <circle cx="20" cy="86" r="6" fill="#c9d1d9"/>
+  <line x1="26" y1="86" x2="40" y2="86" class="edge" marker-end="url(#life-arrow)"/>
+  <!-- picked -> dod -> coding -> review -->
+  <line x1="160" y1="86" x2="200" y2="86" class="edge" marker-end="url(#life-arrow)"/>
+  <line x1="320" y1="86" x2="360" y2="86" class="edge" marker-end="url(#life-arrow)"/>
+  <line x1="480" y1="86" x2="520" y2="86" class="edge" marker-end="url(#life-arrow)"/>
+  <!-- review -> coding (sent back, loop over the top) -->
+  <path d="M 600,64 V 36 Q 600,28 592,28 H 448 Q 440,28 440,36 V 64" class="ret" marker-end="url(#life-arrow-accent)"/>
+  <rect x="478" y="8" width="84" height="12" rx="2" class="mask"/>
+  <text x="520" y="17" text-anchor="middle" class="lbl">SENT BACK ≤3×</text>
+  <!-- review -> pushed (accepted) -->
+  <line x1="580" y1="108" x2="580" y2="200" class="edge" marker-end="url(#life-arrow)"/>
+  <rect x="588" y="148" width="60" height="12" rx="2" class="mask"/>
+  <text x="618" y="157" text-anchor="middle" class="lbl">ACCEPTED</text>
+  <!-- pushed -> pipeline -> closed -->
+  <line x1="520" y1="222" x2="480" y2="222" class="edge" marker-end="url(#life-arrow)"/>
+  <line x1="360" y1="222" x2="320" y2="222" class="edge" marker-end="url(#life-arrow)"/>
+  <rect x="320" y="238" width="40" height="12" rx="2" class="mask"/>
+  <text x="340" y="247" text-anchor="middle" class="lbl">GREEN</text>
+  <!-- pipeline -> coding (red, reopen) -->
+  <line x1="420" y1="200" x2="420" y2="108" class="ret" marker-end="url(#life-arrow-accent)"/>
+  <rect x="428" y="148" width="76" height="12" rx="2" class="mask"/>
+  <text x="466" y="157" text-anchor="middle" class="lbl">RED · REOPEN</text>
+
+  <!-- states, row 1 -->
+  <rect x="40" y="64" width="120" height="44" rx="8" class="mask"/>
+  <rect x="40" y="64" width="120" height="44" rx="8" class="box"/>
+  <text x="100" y="90" text-anchor="middle" class="name">Picked</text>
+
+  <rect x="200" y="64" width="120" height="44" rx="8" class="mask"/>
+  <rect x="200" y="64" width="120" height="44" rx="8" class="box"/>
+  <text x="260" y="84" text-anchor="middle" class="name">Done defined</text>
+  <text x="260" y="99" text-anchor="middle" class="sub">before any code</text>
+
+  <rect x="360" y="64" width="120" height="44" rx="8" class="mask"/>
+  <rect x="360" y="64" width="120" height="44" rx="8" class="box"/>
+  <text x="420" y="90" text-anchor="middle" class="name">Coding</text>
+
+  <rect x="520" y="64" width="120" height="44" rx="8" class="mask"/>
+  <rect x="520" y="64" width="120" height="44" rx="8" class="box"/>
+  <text x="580" y="84" text-anchor="middle" class="name">Review</text>
+  <text x="580" y="99" text-anchor="middle" class="sub">3 rounds max</text>
+
+  <!-- states, row 2 -->
+  <rect x="520" y="200" width="120" height="44" rx="8" class="mask"/>
+  <rect x="520" y="200" width="120" height="44" rx="8" class="box"/>
+  <text x="580" y="220" text-anchor="middle" class="name">Pushed</text>
+  <text x="580" y="235" text-anchor="middle" class="sub">rebased + tested</text>
+
+  <rect x="360" y="200" width="120" height="44" rx="8" class="mask"/>
+  <rect x="360" y="200" width="120" height="44" rx="8" class="box"/>
+  <text x="420" y="226" text-anchor="middle" class="name">Pipeline</text>
+
+  <rect x="200" y="200" width="120" height="44" rx="8" class="mask"/>
+  <rect x="200" y="200" width="120" height="44" rx="8" fill="rgba(52,211,153,0.10)" stroke="#34d399" stroke-width="1.2"/>
+  <text x="260" y="220" text-anchor="middle" class="name">Closed</text>
+  <text x="260" y="235" text-anchor="middle" class="sub">worktree removed</text>
+</svg>

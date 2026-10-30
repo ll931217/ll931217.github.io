@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="330" viewBox="0 0 720 330" role="img" aria-labelledby="trust-title trust-desc">
+  <title id="trust-title">The trust ladder</title>
+  <desc id="trust-desc">Three rungs: full review, then sampled review, then tests only. Clean landings move an area of the code up one rung. Any failure, such as a revert, a red pipeline or work sent back, drops it down one rung.</desc>
+  <defs>
+    <marker id="trust-arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#8b949e"/>
+    </marker>
+    <marker id="trust-arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#34d399"/>
+    </marker>
+    <style>
+      .name { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 13px; font-weight: 600; fill: #e6edf3; }
+      .sub  { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 10px; fill: #8b949e; }
+      .lbl  { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 9px; letter-spacing: 0.08em; fill: #8b949e; }
+      .lbla { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 9px; letter-spacing: 0.08em; fill: #34d399; }
+      .eyebrow { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 9px; letter-spacing: 0.14em; fill: #6e7681; }
+      .mask { fill: #0d1117; }
+      .box  { fill: #161b22; stroke: rgba(201,209,217,0.28); stroke-width: 1; }
+      .edge { fill: none; stroke: #8b949e; stroke-width: 1.2; }
+      .drop { fill: none; stroke: #34d399; stroke-width: 1.2; stroke-dasharray: 5,4; }
+    </style>
+  </defs>
+
+  <!-- rung numbers -->
+  <text x="130" y="318" text-anchor="middle" class="eyebrow">RUNG 1 · START HERE</text>
+  <text x="360" y="318" text-anchor="middle" class="eyebrow">RUNG 2</text>
+  <text x="590" y="318" text-anchor="middle" class="eyebrow">RUNG 3</text>
+
+  <!-- up: full -> sampled -->
+  <path d="M 130,240 V 176 Q 130,168 138,168 H 270" class="edge" marker-end="url(#trust-arrow)"/>
+  <rect x="152" y="148" width="100" height="12" rx="2" class="mask"/>
+  <text x="202" y="157" text-anchor="middle" class="lbl">CLEAN LANDINGS</text>
+  <!-- up: sampled -> tests only -->
+  <path d="M 300,140 V 96 Q 300,88 308,88 H 500" class="edge" marker-end="url(#trust-arrow)"/>
+  <rect x="354" y="68" width="100" height="12" rx="2" class="mask"/>
+  <text x="404" y="77" text-anchor="middle" class="lbl">CLEAN LANDINGS</text>
+  <!-- down: tests only -> sampled -->
+  <path d="M 560,96 V 110 Q 560,118 552,118 H 408 Q 400,118 400,126 V 140" class="drop" marker-end="url(#trust-arrow-accent)"/>
+  <rect x="436" y="126" width="88" height="12" rx="2" class="mask"/>
+  <text x="480" y="135" text-anchor="middle" class="lbla">ANY FAILURE</text>
+  <!-- down: sampled -> full -->
+  <path d="M 330,196 V 210 Q 330,218 322,218 H 198 Q 190,218 190,226 V 240" class="drop" marker-end="url(#trust-arrow-accent)"/>
+  <rect x="216" y="226" width="88" height="12" rx="2" class="mask"/>
+  <text x="260" y="235" text-anchor="middle" class="lbla">ANY FAILURE</text>
+
+  <!-- rung 1: full review -->
+  <rect x="40" y="240" width="180" height="56" rx="6" class="mask"/>
+  <rect x="40" y="240" width="180" height="56" rx="6" class="box"/>
+  <text x="130" y="263" text-anchor="middle" class="name">Full review</text>
+  <text x="130" y="280" text-anchor="middle" class="sub">every change, every time</text>
+
+  <!-- rung 2: sampled review -->
+  <rect x="270" y="140" width="180" height="56" rx="6" class="mask"/>
+  <rect x="270" y="140" width="180" height="56" rx="6" class="box"/>
+  <text x="360" y="163" text-anchor="middle" class="name">Sampled review</text>
+  <text x="360" y="180" text-anchor="middle" class="sub">some changes get a look</text>
+
+  <!-- rung 3: tests only -->
+  <rect x="500" y="40" width="180" height="56" rx="6" class="mask"/>
+  <rect x="500" y="40" width="180" height="56" rx="6" class="box"/>
+  <text x="590" y="63" text-anchor="middle" class="name">Tests only</text>
+  <text x="590" y="80" text-anchor="middle" class="sub">green pipeline is enough</text>
+</svg>
