@@ -30,7 +30,20 @@ What does **not** exist, so do not claim it passed:
 - No typecheck script. `tsconfig` has `strict`, `strictNullChecks`, and `noImplicitAny` all **off**, and eslint's `no-unused-vars` is off. A green build is not a type guarantee. If you want a real check, run `bunx tsc -p tsconfig.app.json --noEmit` and say you did (clean as of 2026-10-30).
 - Local builds work without env vars. `SENTRY_ORG`, `SENTRY_PROJECT`, `SENTRY_AUTH_TOKEN` are CI-only secrets; without them the Sentry plugin just warns and skips the sourcemap upload. `VITE_GITHUB_PAT` is set in CI but nothing in `src/` reads it.
 
-Lint currently reports warnings only (react-refresh `only-export-components` in shadcn files). Do not "fix" those.
+### TypeScript 7 split (do not "simplify" this)
+
+`tsc` is TypeScript 7, the native Go compiler, which ships **no JS compiler API**. typescript-eslint still needs that API, so `package.json` uses two npm aliases, per the TS 7 release guidance:
+
+- `typescript` → `npm:@typescript/typescript6` (JS API + a `tsc6` binary). This is what `require("typescript")` and eslint see.
+- `@typescript/native` → `npm:typescript@7` (the `tsc` binary).
+
+Collapsing these back to a single `typescript` entry breaks either lint (on 7) or the fast compiler (on 6). Revisit once typescript-eslint supports TS 7.1+ (tracked in typescript-eslint issue 10940). TS 7 also removed `baseUrl`; the `@/*` path alias resolves relative to the tsconfig.
+
+### Toolchain notes
+
+- Vite 8 (rolldown). `vite-plugin-markdown` warns about missing sourcemaps on every `.md`; harmless.
+- ESLint 10 flat config with `eslint-plugin-react-hooks` 7, which includes the React Compiler rules (`react-hooks/refs`, etc.). Writing to a ref during render is an error; do it in an effect.
+- On the corporate network the Nexus npm proxy sometimes 404s a tarball that exists upstream (seen with `rolldown`). Retry with `bun add --registry https://registry.npmjs.org <pkg>`; the lockfile is registry-agnostic so CI is unaffected.
 
 ## Architecture
 
@@ -63,8 +76,8 @@ Gotchas:
 
 ### Styling
 
-- `@` aliases `src/`. shadcn/ui components are in `src/components/ui/` (config in `components.json`); generated files there follow upstream, keep custom components (EmptyState, KeyboardCheatSheet, etc.) PascalCase.
-- Tailwind theme in `tailwind.config.ts`: shadcn CSS vars plus a custom `night` palette (`night`, `night-fg`, `night-muted`, `night-faint`) and `font-mono` = JetBrains Mono. Most of the site is mono; emerald-400 is the accent.
+- `@` aliases `src/`. shadcn/ui components are in `src/components/ui/` (config in `components.json`). Only the ones actually imported are kept (select, toast, tooltip, sonner, plus custom PascalCase ones like EmptyState and KeyboardCheatSheet); the unused shadcn set and its radix packages were deleted on 2026-10-30. If you need another shadcn component, add it with the shadcn CLI and its radix dependency together.
+- **Tailwind CSS 4, CSS-first config.** There is no `tailwind.config.ts`. The theme lives in `@theme {}` in `src/index.css`: shadcn CSS vars, the custom `night` palette (`night`, `night-fg`, `night-muted`, `night-faint`), `font-mono` = JetBrains Mono, keyframes. Tailwind runs through `@tailwindcss/vite` in `vite.config.ts` (no PostCSS). `tw-animate-css` provides `animate-in`, `fade-in-0`, `slide-in-from-*` for the radix components. Most of the site is mono; emerald-400 is the accent.
 - Code blocks use the `tokyo-night-dark` highlight.js theme imported in `src/main.tsx`.
 
 ### Observability and SEO
