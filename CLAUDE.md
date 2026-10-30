@@ -37,13 +37,15 @@ What does **not** exist, so do not claim it passed:
 - `typescript` → `npm:@typescript/typescript6` (JS API + a `tsc6` binary). This is what `require("typescript")` and eslint see.
 - `@typescript/native` → `npm:typescript@7` (the `tsc` binary).
 
-Collapsing these back to a single `typescript` entry breaks either lint (on 7) or the fast compiler (on 6). Revisit once typescript-eslint supports TS 7.1+ (tracked in typescript-eslint issue 10940). TS 7 also removed `baseUrl`; the `@/*` path alias resolves relative to the tsconfig.
+Collapsing these back to a single `typescript` entry breaks either lint (on 7) or the fast compiler (on 6). typescript-eslint 8.x refuses to load on any TS 7 (its peer range is `<6.1`); revisit when it ships TS 7 support (github.com/typescript-eslint/typescript-eslint/issues/10940). TS 7 also removed `baseUrl`; the `@/*` path alias resolves relative to the tsconfig.
+
+`bunx tsc -p tsconfig.node.json --noEmit` (strict, covers `vite.config.ts` and what it imports) has two pre-existing implicit-any errors in `src/lib/utils.ts` from the self-referencing `md` renderer. They predate the upgrade and Vite does not typecheck, so they do not block the build.
 
 ### Toolchain notes
 
 - Vite 8 (rolldown). `vite-plugin-markdown` warns about missing sourcemaps on every `.md`; harmless.
 - ESLint 10 flat config with `eslint-plugin-react-hooks` 7, which includes the React Compiler rules (`react-hooks/refs`, etc.). Writing to a ref during render is an error; do it in an effect.
-- On the corporate network the Nexus npm proxy sometimes 404s a tarball that exists upstream (seen with `rolldown`). Retry with `bun add --registry https://registry.npmjs.org <pkg>`; the lockfile is registry-agnostic so CI is unaffected.
+- The lockfile is the text `bun.lock`. It must stay free of registry URLs (bun omits them only for the default npm registry) or the GitHub Actions `bun install` fails. If you install through a private registry mirror, check with `grep -c tgz bun.lock` (expect 0) before committing.
 
 ## Architecture
 
@@ -77,7 +79,7 @@ Gotchas:
 ### Styling
 
 - `@` aliases `src/`. shadcn/ui components are in `src/components/ui/` (config in `components.json`). Only the ones actually imported are kept (select, toast, tooltip, sonner, plus custom PascalCase ones like EmptyState and KeyboardCheatSheet); the unused shadcn set and its radix packages were deleted on 2026-10-30. If you need another shadcn component, add it with the shadcn CLI and its radix dependency together.
-- **Tailwind CSS 4, CSS-first config.** There is no `tailwind.config.ts`. The theme lives in `@theme {}` in `src/index.css`: shadcn CSS vars, the custom `night` palette (`night`, `night-fg`, `night-muted`, `night-faint`), `font-mono` = JetBrains Mono, keyframes. Tailwind runs through `@tailwindcss/vite` in `vite.config.ts` (no PostCSS). `tw-animate-css` provides `animate-in`, `fade-in-0`, `slide-in-from-*` for the radix components. Most of the site is mono; emerald-400 is the accent.
+- **Tailwind CSS 4, CSS-first config.** There is no `tailwind.config.ts`. The theme lives in `@theme {}` in `src/index.css`: shadcn CSS vars, the custom `night` palette (`night`, `night-fg`, `night-muted`, `night-faint`), `font-mono` = JetBrains Mono, keyframes. Tailwind runs through `@tailwindcss/vite` in `vite.config.ts` (no PostCSS). `tw-animate-css` provides `animate-in`, `fade-in-0`, `slide-in-from-*` for the radix components. Two v4 preflight changes to know: buttons no longer get `cursor: pointer` by default (a base rule in `index.css` restores it), and `hover:` variants only apply on devices that support hover. Most of the site is mono; emerald-400 is the accent.
 - Code blocks use the `tokyo-night-dark` highlight.js theme imported in `src/main.tsx`.
 
 ### Observability and SEO

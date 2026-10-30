@@ -138,6 +138,12 @@ layer(base);
     @apply border-border;
   }
 
+  /* Tailwind 4 preflight dropped cursor: pointer on buttons; keep the v3 behaviour for the tag/filter buttons */
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
   body {
     @apply bg-night text-night-fg antialiased;
     font-feature-settings: "rlig" 1, "calt" 1;
